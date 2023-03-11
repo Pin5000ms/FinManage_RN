@@ -1,11 +1,12 @@
 import * as actionTypes from './actionTypes'
 
-export function accountAdded(inputText, inputNumber){
+export function accountAdded(inputText, inputNumber, inputAccountType){
     return {
         type: actionTypes.ADD,
         payload: {
             text: inputText,
-            number: inputNumber
+            number: inputNumber,
+            accountType: inputAccountType
           }
     }
 
@@ -21,13 +22,14 @@ export function accountDeleted(inputKey){
 
 }
 
-export function accountEdited(inputKey, inputText, inputNumber){
+export function accountEdited(inputKey, inputText, inputNumber, inputAccountType){
     return {
         type: actionTypes.EDIT,
         payload: {
             key: inputKey,
             text: inputText,
-            number: inputNumber
+            number: inputNumber,
+            accountType: inputAccountType
           }
     }
 

@@ -46,7 +46,6 @@ function AddPage ({navigation}) {
           keyboardType="numeric"
         />
         <TouchableOpacity style={styles.editButton} onPress = {() => { 
-            //addFun(text, number) ,
             store.dispatch(accountAdded(text, number)), 
             navigation.navigate('HomeStack') }  
             }>

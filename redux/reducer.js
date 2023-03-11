@@ -18,7 +18,8 @@ export default function reducer(state = []/*預設為空*/, action){
                     {
                         key: newItemKey, 
                         name: action.payload.text, 
-                        value: action.payload.number    }]     
+                        value: action.payload.number,
+                        type: action.payload.accountType}]     
 
         case actionTypes.DELETE:
             return state.filter(item => item.key!==action.payload.key);
@@ -27,7 +28,7 @@ export default function reducer(state = []/*預設為空*/, action){
         case actionTypes.EDIT:
             
             return state.map(item => item.key===action.payload.key ? 
-                {...item, name: action.payload.text, value: action.payload.number} :
+                {...item, name: action.payload.text, value: action.payload.number, type: action.payload.accountType} :
                  item);
 
         default:
