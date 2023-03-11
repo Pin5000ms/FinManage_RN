@@ -7,11 +7,30 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 //import { Button, SafeAreaView } from 'react-native-web';
 import React, { useState } from 'react';
 
+
+
 import HomeStackScreen from './screens/HomeStackScreen';
 import AnalysisScreen from './screens/AnalysisScreen';
 import SettingsScreen from './screens/SettingScreen';
 
+
 import color from './config/colors';
+
+
+import store from './redux/store';
+import { accountAdded } from './redux/actionCreator';
+
+
+store.dispatch(accountAdded("Bank1",1000));
+store.dispatch(accountAdded("Bank2",1000));
+store.dispatch(accountAdded("Bank3",1000));
+store.dispatch(accountAdded("Bank4",1000));
+store.dispatch(accountAdded("Bank5",1000));
+store.dispatch(accountAdded("Bank6",1000));
+store.dispatch(accountAdded("Bank7",1000));
+store.dispatch(accountAdded("Bank8",1000));
+
+
 
 const getIsSignedIn = () => {
   // custom logic
@@ -23,7 +42,6 @@ const Tab = createBottomTabNavigator();
 
 
 function MainScreen() {
-
   return (
     <Tab.Navigator initialRouteName="Home" screenOptions={{tabBarActiveTintColor: color.kurenai, tabBarStyle:{height:50}}}>
       <Tab.Screen
@@ -91,9 +109,6 @@ export default function App() {
         </>)
         }
         </Stack.Navigator>
-        
-        
-        
       </NavigationContainer>
   );
 }

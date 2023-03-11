@@ -2,6 +2,9 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native
 import React, { useState } from 'react';
 import colors from '../../config/colors';
 
+import store from '../../redux/store'
+import { accountAdded } from '../../redux/actionCreator';
+
 const styles = StyleSheet.create({
       textInput: {
         height: 40,
@@ -23,8 +26,9 @@ const styles = StyleSheet.create({
     });
 
 
-function AddPage ({route, navigation}) {
-    const {addFun} = route.params;
+
+
+function AddPage ({navigation}) {
     const [text, setText] = useState('');
     const [number, setNum] = useState(0);
     
@@ -42,7 +46,8 @@ function AddPage ({route, navigation}) {
           keyboardType="numeric"
         />
         <TouchableOpacity style={styles.editButton} onPress = {() => { 
-            addFun(text, number) , 
+            //addFun(text, number) ,
+            store.dispatch(accountAdded(text, number)), 
             navigation.navigate('HomeStack') }  
             }>
           <Text style={styles.editButtonText}>Save</Text>

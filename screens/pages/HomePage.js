@@ -3,6 +3,14 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 import colors from '../../config/colors';
 
+
+import store from '../../redux/store'
+import { accountDeleted } from '../../redux/actionCreator';
+
+
+
+
+
 const styles = StyleSheet.create({
     /*整個List的容器 */
     container: {
@@ -75,7 +83,7 @@ const styles = StyleSheet.create({
     });
 
 /*自定義元件，開頭必須大寫 */
-function Account ({curitem, navigation, editFun, deleteFun}) {
+function Account ({curitem, navigation}) {
     return (
         <View style={styles.item}>
 
@@ -90,11 +98,11 @@ function Account ({curitem, navigation, editFun, deleteFun}) {
             </View>
           </View>
 
-          <View flex= {1}>
-            <TouchableOpacity onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value, editFun})}>
+          <View flex= {1} >
+            <TouchableOpacity onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value})}>
                 <Icon style={styles.editdelete} name = "edit"  size={25} color ={colors.shironeri} />
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=> deleteFun(curitem.key)}>
+            <TouchableOpacity onPress={()=> store.dispatch(accountDeleted(curitem.key))}>
                 <Icon style={styles.editdelete} name = "trash" size={25} color ={colors.shironeri} />
             </TouchableOpacity>
             
@@ -106,63 +114,18 @@ function Account ({curitem, navigation, editFun, deleteFun}) {
 
 function HomePage({navigation}) {
 
-  const [data, setData] = useState([
-    { key: '1', name: 'Bank 1', value: 1000 , icon: require('../../assets/bank.png')},
-    { key: '2', name: 'Bank 2', value: 1000 , icon: require('../../assets/bank.png')},
-    { key: '3', name: 'Bank 3', value: 1000 , icon: require('../../assets/bank.png')},
-    { key: '4', name: 'Bank 4', value: 1000 , icon: require('../../assets/bank.png')},
-    { key: '5', name: 'Bank 5', value: 1000 , icon: require('../../assets/bank.png')},
-    { key: '6', name: 'Bank 6', value: 1000 , icon: require('../../assets/bank.png')},
-    { key: '7', name: 'Bank 7', value: 1000 , icon: require('../../assets/bank.png')},
-    { key: '8', name: 'Bank 8', value: 2000 , icon: require('../../assets/bank.png')},
-    { key: '9', name: 'Bank 9', value: 1000 , icon: require('../../assets/bank.png')},
-    { key: '10', name: 'Bank 10', value: 1000, icon: require('../../assets/bank.png')},
-  ]);
+  
+  const [data,setData] = useState(store.getState());
+
+
+  const unsubscribe = store.subscribe(() => {
+    setData(store.getState())
+  })
+
   const totalValue = data.reduce((sum, next) => {
     return sum + parseInt(next.value)
   }, 0)
 
-
-  const handleEdit = (key, text, number) => {
-    setData(prevData => {
-      const newData = [...prevData]; // 複製一個新的數組，以免修改原始數組
-      const item = newData.find((item) => item.key === key);
-      item.name = text; // 更新指定索引的項目的名稱
-      item.value = number;
-      return newData;
-    });
-  }
-
-
-  const handleDelete = (key) => {
-    setData(prevData => {
-      const newData = [...prevData]; // 複製一個新的數組，以免修改原始數組
-      const index = newData.findIndex(function(element) {
-        return element.key === key
-      });
-      console.log(index)
-      newData.splice(index, 1)
-      return newData;
-    });
-  }
-
-  const handleAdd = (text,number) => {
-    let newItemKey = 0;
-    for(i = 0; i < 999999; i++)
-    {
-        const index = data.findIndex(function(element) {
-            return element.key == i
-        });
-        if(index == -1){
-            newItemKey = i;
-            break;
-        }
-    }
-
-    var newData = [...data , {key : newItemKey, name: text, value: number}];
-    setData(newData);
-  }
-  
   return (
     <View style={styles.container}>
       <Text style = {styles.header}>Total Balance</Text>
@@ -175,13 +138,12 @@ function HomePage({navigation}) {
           <Account
             curitem={item}
             navigation={navigation}
-            editFun={handleEdit}
-            deleteFun={handleDelete}
           />}
           /*告訴RN 每個item的辨別項是 叫做key (預設是id)*/
           keyExtractor={(item) => item.key}
       />
-      <TouchableOpacity style={styles.add} onPress={() => navigation.navigate('Add',{addFun: handleAdd})}>
+      
+      <TouchableOpacity style={styles.add} onPress={() => navigation.navigate('Add')}>
             <Icon  name = "plus" color ={colors.kurenai} size={30}/>
       </TouchableOpacity>
     </View>
