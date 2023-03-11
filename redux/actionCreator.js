@@ -11,7 +11,6 @@ export function accountAdded(inputText, inputNumber){
 
 }
 
-
 export function accountDeleted(inputKey){
     return {
         type: actionTypes.DELETE,

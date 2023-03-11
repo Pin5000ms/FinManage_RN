@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes'
-export default function reducer(state = [], action){
-    const newState = [...state];
+export default function reducer(state = []/*預設為空*/, action){
     switch(action.type){
 
         case actionTypes.ADD:
@@ -15,21 +14,22 @@ export default function reducer(state = [], action){
                     break;
                 }
             }
-            return [...newState,
+            return [...state,
                     {
                         key: newItemKey, 
                         name: action.payload.text, 
                         value: action.payload.number    }]     
 
         case actionTypes.DELETE:
-            return newState.filter(item => item.key!==action.payload.key);
+            return state.filter(item => item.key!==action.payload.key);
 
 
         case actionTypes.EDIT:
             
-            return newState.map(item => item.key===action.payload.key ? 
+            return state.map(item => item.key===action.payload.key ? 
                 {...item, name: action.payload.text, value: action.payload.number} :
-                 item);    
+                 item);
+
         default:
             return state;
     }
