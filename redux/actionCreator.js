@@ -23,7 +23,7 @@ export function accountDeleted(inputKey){
 
 export function accountEdited(inputKey, inputText, inputNumber){
     return {
-        type: actionTypes.DELETE,
+        type: actionTypes.EDIT,
         payload: {
             key: inputKey,
             text: inputText,
