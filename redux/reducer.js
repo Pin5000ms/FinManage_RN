@@ -3,23 +3,23 @@ export default function reducer(state = []/*預設為空*/, action){
     switch(action.type){
 
         case actionTypes.ADD:
-            let newItemKey = 0;
+            let newKey = 0;
             for(i = 0; i < 999999; i++)
             {
                 const index = state.findIndex(function(element) {
                     return element.key == i
                 });
                 if(index == -1){
-                    newItemKey = i;
+                    newKey = i;
                     break;
                 }
             }
             return [...state,
                     {
-                        key: newItemKey, 
-                        name: action.payload.text, 
-                        value: action.payload.number,
-                        type: action.payload.accountType}]     
+                        key: newKey, 
+                        name: action.payload.name, 
+                        value: action.payload.value,
+                        type: action.payload.type}]     
 
         case actionTypes.DELETE:
             return state.filter(item => item.key!==action.payload.key);
@@ -28,7 +28,7 @@ export default function reducer(state = []/*預設為空*/, action){
         case actionTypes.EDIT:
             
             return state.map(item => item.key===action.payload.key ? 
-                {...item, name: action.payload.text, value: action.payload.number, type: action.payload.accountType} :
+                {...item, name: action.payload.name, value: action.payload.value, type: action.payload.type} :
                  item);
 
         default:

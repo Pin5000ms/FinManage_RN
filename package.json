@@ -20,6 +20,7 @@
     "react-dom": "18.2.0",
     "react-hooks-global-state": "^2.1.0",
     "react-native": "0.71.3",
+    "react-native-dropdown-picker": "^5.4.6",
     "react-native-gesture-handler": "~2.9.0",
     "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",

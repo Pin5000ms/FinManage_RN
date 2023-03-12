@@ -15,7 +15,6 @@ const getIsSignedIn = () => {
   return true;
 };
 
-
 function LogInScreen() {
   return <View/>;
 }
