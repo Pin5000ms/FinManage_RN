@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     add: {
-        backgroundColor: colors.shironeri,
+        backgroundColor: colors._2,
         width:60,
         height:60,
         justifyContent: 'center',
@@ -74,8 +74,8 @@ function HomePage({navigation}) {
           // }
       />
       
-      <TouchableOpacity style={styles.add} onPress={() => navigation.navigate('Add')}>
-            <Icon  name = "plus" color ={colors.kurenai} size={30}/>
+      <TouchableOpacity style={styles.add} onPress={() => {navigation.navigate('Add'); unsubscribe();}}>
+            <Icon name = "plus" color ={colors._1} size={30}/>
       </TouchableOpacity>
     </View>
   );

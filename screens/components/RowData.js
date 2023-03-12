@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
       /*控制圖示及文字是以水平方式排列*/
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.kurenai,
+      backgroundColor: colors._1,
       /*item中的物件與邊緣的間隔 */
       padding: 20,
       /*每個item的上下間隔 */
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
       /*圖示右側與文字的間隔*/
       marginRight : 20,
       /*圓形圖示*/
-      borderRadius : 100,
+      borderRadius : 10,
     },
 
 
@@ -80,12 +80,12 @@ export default function RowData ({curitem, navigation}) {
             <>
             <Animated.View style ={ {transform:[{scale:scale}]}}>
                 <TouchableOpacity style = {styles.deleteBox} onPress={()=> store.dispatch(accountDeleted(curitem.key))}>
-                    <Icon name = "trash" size={25} color ={colors.shironeri} />
+                    <Icon name = "trash" size={25} color ={colors._2} />
                 </TouchableOpacity>
             </Animated.View>
             <Animated.View style ={ {transform:[{scale:scale}]}}>
                 <TouchableOpacity style = {styles.editBox} onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value, Type: curitem.type})}>
-                    <Icon name = "edit" size={25} color ={colors.shironeri} />
+                    <Icon name = "edit" size={25} color ={colors._2} />
                 </TouchableOpacity> 
             </Animated.View>
             </>
@@ -97,8 +97,8 @@ export default function RowData ({curitem, navigation}) {
                         <TouchableOpacity onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value, Type: curitem.type})}>
                             <View flex= {3} style = {{flexDirection:'row', alignItems: 'center'}} >
                                 <Image
-                                style={styles.icon}
-                                source={SwitchIconSrc(curitem.type)} //根據type選擇Icon
+                                    style={styles.icon}
+                                    source={SwitchIconSrc(curitem.type)} //根據type選擇Icon
                                 />
                                 <View style={{flexDirection: 'column',alignItems:"flex-start"}}>
                                 <Text style={styles.itemText}> {curitem.name}  </Text>

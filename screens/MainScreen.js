@@ -13,11 +13,11 @@ import { accountAdded } from '../redux/actionCreator';
 
 
 store.dispatch(accountAdded("Bank1",1000,'bank'));
-store.dispatch(accountAdded("Bank2",1000,'other'));
-store.dispatch(accountAdded("Bank3",1000,'bank'));
-store.dispatch(accountAdded("Bank4",1000,'bank'));
-store.dispatch(accountAdded("Bank5",1000,'bank'));
-store.dispatch(accountAdded("Bank6",1000,'bank'));
+store.dispatch(accountAdded("Bank2",1000,'cash'));
+store.dispatch(accountAdded("Bank3",1000,'stock'));
+store.dispatch(accountAdded("Bank4",1000,'foreign'));
+store.dispatch(accountAdded("Bank5",1000,'gold'));
+store.dispatch(accountAdded("Bank6",1000,'digit'));
 store.dispatch(accountAdded("Bank7",1000,'bank'));
 store.dispatch(accountAdded("Bank8",1000,'bank'));
 
@@ -27,7 +27,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MainScreen() {
   return (
-    <Tab.Navigator initialRouteName="Home" screenOptions={{tabBarActiveTintColor: colors.kurenai, tabBarStyle:{height:50}}}>
+    <Tab.Navigator initialRouteName="Home" screenOptions={{tabBarActiveTintColor: colors._1, tabBarStyle:{height:50}}}>
       <Tab.Screen
         name="Home"
         component={HomeStackScreen}

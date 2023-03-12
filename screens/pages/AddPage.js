@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import React, { useState } from 'react';
 import colors from '../../config/colors';
-
 import store from '../../redux/store'
-import { accountAdded } from '../../redux/actionCreator';
+
 import { SwitchIconSrc } from '../components/SwitchIconSrc';
+import { accountAdded } from '../../redux/actionCreator';
 
 const styles = StyleSheet.create({
       textInput: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
         padding: 10,
         },
       Button: {
-        backgroundColor: colors.shironeri,
+        backgroundColor: colors._2,
         margin: 20,
         paddingVertical: 10,
         paddingHorizontal: 20,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
       },
       selected: {
-        backgroundColor: colors.kurenai,
+        backgroundColor: colors._1,
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
       },
 
       unselected: {
-        backgroundColor: colors.shironeri,
+        backgroundColor: colors._2,
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
@@ -65,9 +65,8 @@ const styles = StyleSheet.create({
 function AddPage ({navigation}) {
     const [inputText, setText] = useState('');
     const [inputNumber, setNum] = useState(0);
-    
-    const [inputType, setType] = useState('bank');
 
+    const [inputType, setType] = useState('bank');
     function RadioButton( {label , id}) {
       return (
         <TouchableOpacity style={inputType === id ? styles.selected : styles.unselected} 
@@ -77,10 +76,10 @@ function AddPage ({navigation}) {
         
       );
     }
+    
   
   
 
-    
     return (
       <View>
 
@@ -93,7 +92,7 @@ function AddPage ({navigation}) {
           <View style={{flexDirection: 'row'}}>
             <RadioButton label={'外幣'} id={'foreign'} ></RadioButton>
             <RadioButton label={'黃金'} id={'gold'} ></RadioButton>
-            <RadioButton label={'其他'} id={'other'} ></RadioButton>
+            <RadioButton label={'數位'} id={'digit'} ></RadioButton>
           </View>
         </View>
 
@@ -108,13 +107,14 @@ function AddPage ({navigation}) {
             <TextInput
               style={styles.textInput}
               onChangeText={setText}
+              placeholder="請輸入名稱"
             />
             <TextInput
               style={styles.textInput}
               onChangeText={setNum} 
-              value = {inputNumber.toString()}
-              placeholder="useless placeholder"
+              placeholder="價值"
               keyboardType="numeric"
+              defaultValue = "0"
             />
           </View>
         </View>
@@ -125,9 +125,8 @@ function AddPage ({navigation}) {
           <Text style={styles.ButtonText}>Save</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.Button} onPress = {() => { 
-          store.dispatch(accountDeleted(Key)),
           navigation.navigate('HomeStack') }  }>
-          <Text style={styles.ButtonText}>Delete</Text>
+          <Text style={styles.ButtonText}>Cancle</Text>
         </TouchableOpacity>
         
       </View>
