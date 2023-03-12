@@ -119,17 +119,22 @@ function EditPage ({route, navigation}) {
               style={styles.textInput}
               onChangeText={setText}
               defaultValue={Name}
+              placeholder="請輸入名稱"
             />
             <TextInput
               style={styles.textInput}
               onChangeText={setNum} 
               defaultValue={`${Val}`}
               value = {inputNumber.toString()}
-              placeholder="useless placeholder"
+              placeholder="價值"
               keyboardType="numeric"
             />
           </View>
         </View>
+        
+
+
+
         
         <TouchableOpacity style={styles.Button} onPress = {() => { 
           store.dispatch(accountEdited(Key, inputText, inputNumber, inputType)),

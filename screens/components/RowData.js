@@ -5,6 +5,7 @@ import colors from '../../config/colors';
 import store from '../../redux/store';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SwitchIconSrc } from './SwitchIconSrc';
+import { Animated } from 'react-native';
 
 
 const styles = StyleSheet.create({
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
       padding: 20,
       /*每個item的上下間隔 */
       marginVertical: 6,
-      //marginHorizontal: 10,
+      marginHorizontal: 10,
       borderRadius: 10,
       shadowColor: colors.black,
       shadowOffset: {
@@ -31,7 +32,17 @@ const styles = StyleSheet.create({
 
     },
     deleteBox: {
+        flex:1,
         backgroundColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10,
+        marginVertical: 6,
+        width: 50
+    },
+    editBox: {
+        flex:1,
+        backgroundColor: 'green',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
@@ -51,10 +62,7 @@ const styles = StyleSheet.create({
       /*圓形圖示*/
       borderRadius : 100,
     },
-    editdelete: {
-        paddingVertical: 10,
-      },
-    
+
 
     });
 
@@ -62,22 +70,29 @@ const styles = StyleSheet.create({
 /*自定義元件，開頭必須大寫 */
 export default function RowData ({curitem, navigation}) {
     const swipeLeft = (progress, dragX) =>{
-        // const scale = dragX.interpolate({
-        //     inputRange: [0, 100],
-        //     outputRange: [0, 1],
-        //     extrapoloate : 'clamp'
-        // });
+
+        const scale = dragX.interpolate({
+            inputRange: [-500, -100, 0, 100, 500],
+            outputRange: [1, 1, 0.2, 1, 1],//大於100或小於-100都設為1
+        });
+
         return (
-            <TouchableOpacity style = {styles.deleteBox} onPress={()=> store.dispatch(accountDeleted(curitem.key))}>
-                <View>
-                    <Icon style={styles.editdelete} name = "trash" size={25} color ={colors.shironeri} />
-                </View>
-            </TouchableOpacity>
+            <>
+            <Animated.View style ={ {transform:[{scale:scale}]}}>
+                <TouchableOpacity style = {styles.deleteBox} onPress={()=> store.dispatch(accountDeleted(curitem.key))}>
+                    <Icon name = "trash" size={25} color ={colors.shironeri} />
+                </TouchableOpacity>
+            </Animated.View>
+            <Animated.View style ={ {transform:[{scale:scale}]}}>
+                <TouchableOpacity style = {styles.editBox} onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value, Type: curitem.type})}>
+                    <Icon name = "edit" size={25} color ={colors.shironeri} />
+                </TouchableOpacity> 
+            </Animated.View>
+            </>
         )
     }
     return (
             <Swipeable renderRightActions={swipeLeft}>
-                
                     <View style={styles.container}>
                         <TouchableOpacity onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value, Type: curitem.type})}>
                             <View flex= {3} style = {{flexDirection:'row', alignItems: 'center'}} >
