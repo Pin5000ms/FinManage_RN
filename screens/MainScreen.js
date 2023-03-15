@@ -8,8 +8,8 @@ import SettingsScreen from './SettingScreen';
 
 import colors from '../config/colors';
 
-import store from '../redux/store';
-import { accountAdded } from '../redux/actionCreator';
+import store from '../store/configureStore';
+import { accountAdded } from '../store/account';
 
 
 store.dispatch(accountAdded("Bank1",1000,'bank'));

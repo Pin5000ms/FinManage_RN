@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import React, { useState } from 'react';
 import colors from '../../config/colors';
-import store from '../../redux/store'
+import store from '../../store/configureStore';
+import {accountDeleted, accountEdited} from '../../store/account';
 import { SwitchIconSrc } from '../components/SwitchIconSrc';
-import {accountDeleted, accountEdited} from '../../redux/actionCreator';
+
+
 
 const styles = StyleSheet.create({
       textInput: {

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 import colors from '../../config/colors';
-import store from '../../redux/store'
+import store from '../../store/configureStore';
 import RowData from '../components/RowData';
 
 //import { DraggableFlatListProps } from "react-native-draggable-flatlist"

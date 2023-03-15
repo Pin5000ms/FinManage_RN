@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { accountDeleted } from '../../redux/actionCreator';
 import colors from '../../config/colors';
-import store from '../../redux/store';
+
 import { Swipeable } from 'react-native-gesture-handler';
 import { SwitchIconSrc } from './SwitchIconSrc';
 import { Animated } from 'react-native';
-
+import store from '../../store/configureStore';
+import { accountDeleted } from '../../store/account';
 
 const styles = StyleSheet.create({
     /*List中每個item的樣式 */
