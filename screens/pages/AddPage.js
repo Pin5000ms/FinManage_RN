@@ -123,7 +123,7 @@ function AddPage ({navigation}) {
         </View>
         
         <TouchableOpacity style={styles.Button} onPress = {() => { 
-          store.dispatch(accountAdded(inputText, inputNumber, inputType)),
+          store.dispatch(accountAdded({name: inputText, value: inputNumber, type: inputType})),
           navigation.navigate('HomeStack') }  }>
           <Text style={styles.ButtonText}>Save</Text>
         </TouchableOpacity>

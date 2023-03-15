@@ -131,12 +131,12 @@ function EditPage ({route, navigation}) {
 
 
         <TouchableOpacity style={styles.Button} onPress = {() => { 
-          store.dispatch(accountEdited(Key, inputText, inputNumber, inputType)),
+          store.dispatch(accountEdited({key: Key,name: inputText,value: inputNumber,type: inputType})),
           navigation.navigate('HomeStack') }  }>
           <Text style={styles.ButtonText}>Save</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.Button} onPress = {() => { 
-          store.dispatch(accountDeleted(Key)),
+          store.dispatch(accountDeleted({key: Key})),
           navigation.navigate('HomeStack') }  }>
           <Text style={styles.ButtonText}>Delete</Text>
         </TouchableOpacity>

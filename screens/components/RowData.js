@@ -79,7 +79,7 @@ export default function RowData ({curitem, navigation}) {
         return (
             <>
             <Animated.View style ={ {transform:[{scale:scale}]}}>
-                <TouchableOpacity style = {styles.deleteBox} onPress={()=> store.dispatch(accountDeleted(curitem.key))}>
+                <TouchableOpacity style = {styles.deleteBox} onPress={()=> store.dispatch(accountDeleted({key: curitem.key}))}>
                     <Icon name = "trash" size={25} color ={colors._2} />
                 </TouchableOpacity>
             </Animated.View>

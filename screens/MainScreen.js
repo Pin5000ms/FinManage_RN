@@ -12,14 +12,14 @@ import store from '../store/configureStore';
 import { accountAdded } from '../store/account';
 
 
-store.dispatch(accountAdded("Bank1",1000,'bank'));
-store.dispatch(accountAdded("Bank2",1000,'cash'));
-store.dispatch(accountAdded("Bank3",1000,'stock'));
-store.dispatch(accountAdded("Bank4",1000,'foreign'));
-store.dispatch(accountAdded("Bank5",1000,'gold'));
-store.dispatch(accountAdded("Bank6",1000,'digit'));
-store.dispatch(accountAdded("Bank7",1000,'bank'));
-store.dispatch(accountAdded("Bank8",1000,'bank'));
+store.dispatch(accountAdded({name: "Bank1",value: 1000, type: 'bank'}));
+store.dispatch(accountAdded({name: "Bank2",value: 1000, type: 'cash'}));
+store.dispatch(accountAdded({name: "Bank3",value: 1000, type: 'stock'}));
+store.dispatch(accountAdded({name: "Bank4",value: 1000, type: 'foreign'}));
+store.dispatch(accountAdded({name: "Bank5",value: 1000, type: 'gold'}));
+store.dispatch(accountAdded({name: "Bank6",value: 1000, type: 'digit'}));
+store.dispatch(accountAdded({name: "Bank7",value: 1000, type: 'bank'}));
+store.dispatch(accountAdded({name: "Bank8",value: 1000, type: 'bank'}));
 
 //MainScreen中有用到Tab
 const Tab = createBottomTabNavigator();
