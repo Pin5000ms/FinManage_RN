@@ -10,64 +10,197 @@ import { SwitchIconSrc } from '../components/SwitchIconSrc';
 
 
 const styles = StyleSheet.create({
-      textInput: {
-        height: 50,
-        margin: 12,
-        borderWidth: 1,
-        borderRadius: 10,
-        padding: 10,
-        },
-      Button: {
-        backgroundColor: colors._2,
-        margin: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 20,
-      },
-      ButtonText: {
-        textAlign: 'center',
-        color: colors.uguisucha,
-        fontWeight: 'bold',
-      },
-      selected: {
-        backgroundColor: colors._1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        margin: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 20,
-      },
+  textInput: {
+    height: 50,
+    margin: 10,
+    borderWidth: 1.5,
+    borderRadius: 10,
+    padding: 10,
+    },
+  Button: {
+    backgroundColor: colors._2,
+    margin: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+  },
+  ButtonText: {
+    textAlign: 'center',
+    color: colors.uguisucha,
+    fontWeight: 'bold',
+  },
 
-      unselected: {
-        backgroundColor: colors._2,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        margin: 20,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 20,
-      },
+  selected: {
+    backgroundColor: colors._1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    margin: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+  },
 
-      icon: {
-        /*圖示大小*/
-        width: 100,
-        height: 100,
-        /*圖示右側與文字的間隔*/
-        marginLeft : 20,
-        marginRight : 20,
-        /*圓形圖示*/
-      },
-    });
+  unselected: {
+    backgroundColor: colors._2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+    margin: 20,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 20,
+  },
+
+  icon: {
+    /*圖示大小*/
+    width: 100,
+    height: 100,
+    /*圖示右側與文字的間隔*/
+    marginLeft : 10,
+    marginRight : 10,
+    /*圓形圖示*/
+    borderRadius : 10
+  },
 
 
+});
+
+function SwitchNormalDetailEdit({navigation, id}){
+
+  const [inputText, setText] = useState('');
+  const [inputValue, setVal] = useState(0);
+  const [inputAmount, setAmount] = useState(0);
+  const [inputValPerUnit, setValPerUnit] = useState(0);
+
+  const handleValChange = (value) => {
+    var newValue = parseFloat(value)
+    if(value === ''){
+      newValue = 0;
+    }
+    setVal(newValue);
+  };
+
+  const handleAmountChange = (value) => {
+    var newValue = parseFloat(value)
+    if(value === ''){
+      newValue = 0;
+    }
+    setAmount(newValue);
+    
+    const totalValue = value * inputValPerUnit;
+    console.log(totalValue)
+    setVal(totalValue);
+  };
+
+  const handleValPerUnitChange = (value) => {
+    var newValue = parseFloat(value)
+    if(value === ''){
+      newValue = 0;
+    }
+    setValPerUnit(newValue);
+
+    const totalValue = inputAmount * value;
+    setVal(totalValue);
+  };
+
+  if (id == 'stock' || id == 'foreign' || id == 'gold' || id == 'digit')
+  {
+    return (
+      <>
+      <View  style = {{flexDirection:'column', justifyContent: 'center', alignItems: 'center'}} >
+        <View style = {{flexDirection:'row', alignItems: 'center'}}>
+          <TextInput flex = {1}
+                style={styles.textInput}
+                onChangeText={setText}
+                placeholder="請輸入名稱"
+              />
+        </View>
+      
+        <View style = {{flexDirection:'row', alignItems: 'center'}}>
+              <TextInput flex = {1}
+                style={styles.textInput}
+                onChangeText={handleValChange}  
+                placeholder="總價值"
+                keyboardType="numeric"
+                value={inputValue.toString()}
+              />
+              <Text>=</Text>
+              <TextInput flex = {1}
+                style={styles.textInput}
+                onChangeText={handleAmountChange}
+                placeholder="數量"
+                keyboardType="numeric"
+
+              />
+              <Text>x</Text>
+              <TextInput flex = {1}
+                style={styles.textInput}
+                onChangeText={handleValPerUnitChange}  
+                placeholder="價值/單位"
+                keyboardType="numeric"
+
+              />
+        </View>
+      </View>
+      <TouchableOpacity style={styles.Button} onPress = {() => { 
+          store.dispatch(accountAdded({name: inputText, value: inputValue, type: id})),
+          navigation.navigate('HomeStack') }  }>
+          <Text style={styles.ButtonText}>Save</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.Button} onPress = {() => { 
+        navigation.navigate('HomeStack') }  }>
+        <Text style={styles.ButtonText}>Cancle</Text>
+      </TouchableOpacity>
+      </>
+    )
+    
+  }
+  else
+  {
+    return(
+      <>
+      <View  style = {{flexDirection:'column', justifyContent: 'center', alignItems: 'center'}} >
+        <View style = {{flexDirection:'row', alignItems: 'center'}}>
+          <TextInput flex = {1}
+                style={styles.textInput}
+                onChangeText={setText}
+                placeholder="請輸入名稱"
+              />
+        </View>
+      
+        <View style = {{flexDirection:'row', alignItems: 'center'}}>
+              <TextInput flex = {1}
+                style={styles.textInput}
+                onChangeText={handleValChange}  
+                placeholder="總價值"
+                keyboardType="numeric"
+                value={inputValue.toString()}
+              />
+        </View>
+      </View>
+      <TouchableOpacity style={styles.Button} onPress = {() => { 
+          store.dispatch(accountAdded({name: inputText, value: inputValue, type: id})),
+          navigation.navigate('HomeStack') }  }>
+          <Text style={styles.ButtonText}>Save</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.Button} onPress = {() => { 
+        navigation.navigate('HomeStack') }  }>
+        <Text style={styles.ButtonText}>Cancle</Text>
+      </TouchableOpacity>
+      </>
+      
+    )
+  }
+
+}
 
 
 function AddPage ({navigation}) {
-    const [inputText, setText] = useState('');
-    const [inputNumber, setNum] = useState(0);
+
+
+
+
 
     const [inputType, setType] = useState('bank');
     function RadioButton( {label , id}) {
@@ -81,56 +214,30 @@ function AddPage ({navigation}) {
     }
     
   
-  
-
     return (
       <View>
-
-        <View style={{flexDirection: 'column'}}>
-          <View style={{flexDirection: 'row'}}>
-            <RadioButton label={'銀行'} id={'bank'}></RadioButton>
-            <RadioButton label={'現金'} id={'cash'} ></RadioButton>
-            <RadioButton label={'股票'} id={'stock'} ></RadioButton>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <RadioButton label={'外幣'} id={'foreign'} ></RadioButton>
-            <RadioButton label={'黃金'} id={'gold'} ></RadioButton>
-            <RadioButton label={'數位'} id={'digit'} ></RadioButton>
-          </View>
-        </View>
-
-        <View  style = {{flexDirection:'row', alignItems: 'center'}} >
-          <View flex= {1} style = {{flexDirection:'row', justifyContent: 'center'}}>
+        <View style={{flexDirection: 'row', alignItems:'center'}}>
+          <View flex= {1}>
             <Image
-              style={styles.icon}
-              source={SwitchIconSrc(inputType)} //根據option選擇Icon
-            />
+                style={styles.icon}
+                source={SwitchIconSrc(inputType)} //根據type選擇Icon
+              />
           </View>
-          <View flex= {2} style = {{flexDirection:'column', justifyContent: 'center'}}>
-            <TextInput
-              style={styles.textInput}
-              onChangeText={setText}
-              placeholder="請輸入名稱"
-            />
-            <TextInput
-              style={styles.textInput}
-              onChangeText={setNum} 
-              placeholder="價值"
-              keyboardType="numeric"
-              defaultValue = "0"
-            />
+          <View flex= {3} style={{flexDirection: 'column'}}>
+            <View style={{flexDirection: 'row'}}>
+              <RadioButton label={'銀行'} id={'bank'}></RadioButton>
+              <RadioButton label={'現金'} id={'cash'} ></RadioButton>
+              <RadioButton label={'股票'} id={'stock'} ></RadioButton>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <RadioButton label={'外幣'} id={'foreign'} ></RadioButton>
+              <RadioButton label={'黃金'} id={'gold'} ></RadioButton>
+              <RadioButton label={'數位'} id={'digit'} ></RadioButton>
+            </View>
           </View>
         </View>
-        
-        <TouchableOpacity style={styles.Button} onPress = {() => { 
-          store.dispatch(accountAdded({name: inputText, value: inputNumber, type: inputType})),
-          navigation.navigate('HomeStack') }  }>
-          <Text style={styles.ButtonText}>Save</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.Button} onPress = {() => { 
-          navigation.navigate('HomeStack') }  }>
-          <Text style={styles.ButtonText}>Cancle</Text>
-        </TouchableOpacity>
+
+        <SwitchNormalDetailEdit navigation={navigation} id={inputType}/>
         
       </View>
     );

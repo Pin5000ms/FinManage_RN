@@ -27,7 +27,9 @@ const Tab = createBottomTabNavigator();
 
 export default function MainScreen() {
   return (
-    <Tab.Navigator initialRouteName="Home" screenOptions={{tabBarActiveTintColor: colors._1, tabBarStyle:{height:50}}}>
+    <Tab.Navigator initialRouteName="Home" 
+    //tabBarHideOnKeyboard: true 鍵盤出現自動隱藏
+    screenOptions={{tabBarActiveTintColor: colors._1, tabBarStyle:{ display: "flex"}, tabBarHideOnKeyboard: true}}>
       <Tab.Screen
         name="Home"
         component={HomeStackScreen}
