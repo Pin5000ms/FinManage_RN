@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Button} from 'react-native';
 import React, { useState } from 'react';
 import colors from '../../config/colors';
 import store from '../../store/configureStore';
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
       },
       ButtonText: {
         textAlign: 'center',
-        color: colors.uguisucha,
+        color: colors._3,
         fontWeight: 'bold',
       },
 
@@ -64,12 +64,25 @@ const styles = StyleSheet.create({
     });
 
 
-function SwitchNormalDetailEdit({navigation, id, Key, p1, p2}){
+function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
 
   const [inputText, setText] = useState(p1);
   const [inputValue, setVal] = useState(p2);
-  const [inputAmount, setAmount] = useState(0);
-  const [inputValPerUnit, setValPerUnit] = useState(0);
+
+
+  let defaultAmount = 0;
+  let defaultUnitVal = 0;
+  if(p3 !== undefined){
+    defaultAmount = p3;
+  }
+  if(p4 !== undefined){
+    defaultUnitVal = p4;
+  }
+
+  const [inputAmount, setAmount] = useState(defaultAmount);
+  const [inputUnitVal, setValPerUnit] = useState(defaultUnitVal);
+
+  
 
   const handleValChange = (value) => {
     var newValue = parseFloat(value)
@@ -86,8 +99,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2}){
     }
     setAmount(newValue);
     
-    const totalValue = value * inputValPerUnit;
-    console.log(totalValue)
+    const totalValue = value * inputUnitVal;
     setVal(totalValue);
   };
 
@@ -130,20 +142,21 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2}){
                 onChangeText={handleAmountChange}
                 placeholder="數量"
                 keyboardType="numeric"
-
+                defaultValue={defaultAmount.toString()}
               />
               <Text>x</Text>
               <TextInput flex = {1}
                 style={styles.textInput}
                 onChangeText={handleValPerUnitChange}  
-                placeholder="價值/單位"
+                placeholder="單價"
                 keyboardType="numeric"
+                defaultValue={defaultUnitVal.toString()}
 
               />
         </View>
       </View>
       <TouchableOpacity style={styles.Button} onPress = {() => { 
-          store.dispatch(accountEdited({key: Key, name: inputText,value: inputValue,type: id})),
+          store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal})),
           navigation.navigate('HomeStack') }  }>
           <Text style={styles.ButtonText}>Save</Text>
       </TouchableOpacity>
@@ -181,7 +194,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2}){
         </View>
       </View>
       <TouchableOpacity style={styles.Button} onPress = {() => { 
-          store.dispatch(accountEdited({key: Key, name: inputText,value: inputValue,type: id})),
+          store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id})),
           navigation.navigate('HomeStack') }  }>
           <Text style={styles.ButtonText}>Save</Text>
       </TouchableOpacity>
@@ -204,20 +217,22 @@ function EditPage ({route, navigation}) {
     const {Name} = route.params;
     const {Val} = route.params;
     const {Type} = route.params;
+    const {Amount} = route.params;
+    const {UnitVal} = route.params;
   
     const [inputType, setType] = useState(Type);
     function RadioButton( {label , id}) {
       return (
         <TouchableOpacity style={inputType === id ? styles.selected : styles.unselected} 
                  onPress = {  () => setType(id)  }>
-                  <Text>{label}</Text>
+                  <Text style={styles.ButtonText}>{label}</Text>
         </TouchableOpacity>
       );
     }
 
     
     return (
-      <View>
+      <View flex= {1} backgroundColor={colors._3}>
         <View style={{flexDirection: 'row', alignItems:'center'}}>
           <View flex= {1}>
             <Image
@@ -239,7 +254,7 @@ function EditPage ({route, navigation}) {
           </View>
         </View>
 
-        <SwitchNormalDetailEdit navigation={navigation} id={inputType} Key={Key} p1={Name} p2={Val}/>
+        <SwitchNormalDetailEdit navigation={navigation} id={inputType} Key={Key} p1={Name} p2={Val} p3={Amount} p4={UnitVal}/>
         
       </View>
     );

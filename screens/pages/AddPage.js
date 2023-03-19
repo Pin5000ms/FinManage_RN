@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   ButtonText: {
     textAlign: 'center',
-    color: colors.uguisucha,
+    color: colors._3,
     fontWeight: 'bold',
   },
 
@@ -71,7 +71,7 @@ function SwitchNormalDetailEdit({navigation, id}){
   const [inputText, setText] = useState('');
   const [inputValue, setVal] = useState(0);
   const [inputAmount, setAmount] = useState(0);
-  const [inputValPerUnit, setValPerUnit] = useState(0);
+  const [inputUnitVal, setValPerUnit] = useState(0);
 
   const handleValChange = (value) => {
     var newValue = parseFloat(value)
@@ -88,8 +88,7 @@ function SwitchNormalDetailEdit({navigation, id}){
     }
     setAmount(newValue);
     
-    const totalValue = value * inputValPerUnit;
-    console.log(totalValue)
+    const totalValue = value * inputUnitVal;
     setVal(totalValue);
   };
 
@@ -137,14 +136,14 @@ function SwitchNormalDetailEdit({navigation, id}){
               <TextInput flex = {1}
                 style={styles.textInput}
                 onChangeText={handleValPerUnitChange}  
-                placeholder="價值/單位"
+                placeholder="單價"
                 keyboardType="numeric"
 
               />
         </View>
       </View>
       <TouchableOpacity style={styles.Button} onPress = {() => { 
-          store.dispatch(accountAdded({name: inputText, value: inputValue, type: id})),
+          store.dispatch(accountAdded({name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal})),
           navigation.navigate('HomeStack') }  }>
           <Text style={styles.ButtonText}>Save</Text>
       </TouchableOpacity>
@@ -207,7 +206,7 @@ function AddPage ({navigation}) {
       return (
         <TouchableOpacity style={inputType === id ? styles.selected : styles.unselected} 
                  onPress = {  () => setType(id)  }>
-                  <Text>{label}</Text>
+                  <Text style={styles.ButtonText}>{label}</Text>
         </TouchableOpacity>
         
       );

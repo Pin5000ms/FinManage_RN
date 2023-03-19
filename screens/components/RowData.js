@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 20,
-        color: colors.yamabuki,
+        color: colors._3,
       },
     icon: {
       /*圖示大小*/
@@ -84,7 +84,14 @@ export default function RowData ({curitem, navigation}) {
                 </TouchableOpacity>
             </Animated.View>
             <Animated.View style ={ {transform:[{scale:scale}]}}>
-                <TouchableOpacity style = {styles.editBox} onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value, Type: curitem.type})}>
+                <TouchableOpacity style = {styles.editBox} onPress={() => navigation.navigate('Edit', 
+                {
+                    Key: curitem.key, 
+                    Name : curitem.name, 
+                    Val : curitem.value, 
+                    Type: curitem.type, 
+                    Amount: curitem.amount, 
+                    UnitVal: curitem.unitValue})}>
                     <Icon name = "edit" size={25} color ={colors._2} />
                 </TouchableOpacity> 
             </Animated.View>
@@ -94,7 +101,15 @@ export default function RowData ({curitem, navigation}) {
     return (
             <Swipeable renderRightActions={swipeLeft}>
                     <View style={styles.container}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value, Type: curitem.type})}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Edit', 
+                        {
+                            Key: curitem.key, 
+                            Name : curitem.name, 
+                            Val : curitem.value, 
+                            Type: curitem.type, 
+                            Amount: curitem.amount, 
+                            UnitVal: curitem.unitValue})}>
+
                             <View flex= {3} style = {{flexDirection:'row', alignItems: 'center'}} >
                                 <Image
                                     style={styles.icon}

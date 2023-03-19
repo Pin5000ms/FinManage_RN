@@ -28,16 +28,26 @@ const reducer = createReducer([], (builder) => {
             key: newKey, 
             name: action.payload.name, 
             value: action.payload.value,
-            type: action.payload.type});
+            type: action.payload.type,
+            amount : action.payload.amount,
+            unitValue: action.payload.unitValue
+          });
       })
+
       .addCase(accountDeleted, (state, action) => {
         //沒有mutate state，要加return
         return state.filter(item => item.key!==action.payload.key);
       })
+
       .addCase(accountEdited, (state, action) => {
         return state.map(item => item.key===action.payload.key ? 
-            {...item, name: action.payload.name, value: action.payload.value, type: action.payload.type} :
-             item);
+            {...item, 
+              name: action.payload.name, 
+              value: action.payload.value, 
+              type: action.payload.type,
+              amount : action.payload.amount,
+              unitValue: action.payload.unitValue
+            } :item);
       })
 
 }

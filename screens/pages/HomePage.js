@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     header:{
       fontSize: 40,
       textAlign: 'center',
-      color: colors.uguisucha,
+      color: colors._3,
       fontWeight: 'bold',
     },
     add: {
