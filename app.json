@@ -1,8 +1,7 @@
 {
   "expo": {
     "slug": "finmanagement",
-    "name": "finmanagement",
-    "sdkVersion": "48.0.0"
+    "name": "finmanagement"
   },
   "name": "finmanagement"
 }
