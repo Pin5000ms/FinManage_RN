@@ -102,13 +102,13 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
       </View>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
           store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal})),
-          navigation.navigate('HomeStack') }  }>
-          <Text style={AddEditStyles.ButtonText}>Save</Text>
+          navigation.navigate('AssetStack') }  }>
+          <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
         store.dispatch(accountDeleted({key: Key})),
-        navigation.navigate('HomeStack') }  }>
-        <Text style={AddEditStyles.ButtonText}>Delete</Text>
+        navigation.navigate('AssetStack') }  }>
+        <Text style={AddEditStyles.buttonText}>Delete</Text>
       </TouchableOpacity>
       </>
     )
@@ -140,13 +140,13 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
       </View>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
           store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id})),
-          navigation.navigate('HomeStack') }  }>
-          <Text style={AddEditStyles.ButtonText}>Save</Text>
+          navigation.navigate('AssetStack') }  }>
+          <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
         store.dispatch(accountDeleted({key: Key})),
-        navigation.navigate('HomeStack') }  }>
-        <Text style={AddEditStyles.ButtonText}>Delete</Text>
+        navigation.navigate('AssetStack') }  }>
+        <Text style={AddEditStyles.buttonText}>Delete</Text>
       </TouchableOpacity>
       </>
       
@@ -168,16 +168,16 @@ function EditPage ({route, navigation}) {
     const [inputType, setType] = useState(Type);
     function RadioButton( {label , id}) {
       return (
-        <TouchableOpacity style={inputType === id ? AddEditStyles.selected : AddEditStyles.unselected} 
+          <TouchableOpacity style={inputType === id ? AddEditStyles.selected : AddEditStyles.unselected} 
                  onPress = {  () => setType(id)  }>
-                  <Text style={AddEditStyles.ButtonText}>{label}</Text>
-        </TouchableOpacity>
+                  <Text style={AddEditStyles.buttonText}>{label}</Text>
+          </TouchableOpacity>
       );
     }
 
     
     return (
-      <View flex= {1} backgroundColor={colors._3}>
+      <View flex= {1}>
         <View style={{flexDirection: 'row', alignItems:'center'}}>
           <View flex= {1}>
             <Image

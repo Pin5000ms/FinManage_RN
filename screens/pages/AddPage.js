@@ -84,11 +84,11 @@ function SwitchNormalDetailEdit({navigation, id}){
       </View>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
           store.dispatch(accountAdded({name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal})),
-          navigation.navigate('HomeStack') }  }>
+          navigation.navigate('AssetStack') }  }>
           <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-        navigation.navigate('HomeStack') }  }>
+        navigation.navigate('AssetStack') }  }>
         <Text style={AddEditStyles.buttonText}>Cancle</Text>
       </TouchableOpacity>
       </>
@@ -120,11 +120,11 @@ function SwitchNormalDetailEdit({navigation, id}){
       </View>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
           store.dispatch(accountAdded({name: inputText, value: inputValue, type: id})),
-          navigation.navigate('HomeStack') }  }>
+          navigation.navigate('AssetStack') }  }>
           <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-        navigation.navigate('HomeStack') }  }>
+        navigation.navigate('AssetStack') }  }>
         <Text style={AddEditStyles.buttonText}>Cancle</Text>
       </TouchableOpacity>
       </>

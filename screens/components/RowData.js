@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
 
 /*自定義元件，開頭必須大寫 */
 export default function RowData ({curitem, navigation}) {
-    const swipeLeft = (progress, dragX) =>{
+    const swipeRight = (progress, dragX) =>{
 
         const scale = dragX.interpolate({
             inputRange: [-500, -100, 0, 100, 500],
@@ -99,7 +99,7 @@ export default function RowData ({curitem, navigation}) {
         )
     }
     return (
-            <Swipeable renderRightActions={swipeLeft}>
+            <Swipeable renderLeftActions={swipeRight}>
                     <View style={styles.container}>
                         <TouchableOpacity onPress={() => navigation.navigate('Edit', 
                         {

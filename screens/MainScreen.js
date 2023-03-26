@@ -1,10 +1,11 @@
 
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import HomeStackScreen from './HomeStackScreen';
+import AssetStackScreen from './AssetStackScreen';
 import AnalysisScreen from './AnalysisScreen';
 import SettingsScreen from './SettingScreen';
+import NetIncomeScreen from './NetIncomeScreen';
 
 import colors from '../config/colors';
 
@@ -34,12 +35,12 @@ export default function MainScreen() {
     //tabBarHideOnKeyboard: true 鍵盤出現自動隱藏
     screenOptions={{tabBarActiveTintColor: colors._1, tabBarStyle:{ display: "flex"}, tabBarHideOnKeyboard: true}}>
       <Tab.Screen
-        name="Home"
-        component={HomeStackScreen}
+        name="Asset"
+        component={AssetStackScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Asset',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <Icon name="coins" color={color} size={size} />
           ),
         }}
       />
@@ -49,7 +50,17 @@ export default function MainScreen() {
         options={{
           tabBarLabel: 'Analysis',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="chart-pie" color={color} size={size} />
+            <Icon name="chart-pie" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="NetIncome"
+        component={NetIncomeScreen}
+        options={{
+          tabBarLabel: 'NetIncome',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="table" color={color} size={size} />
           ),
         }}
       />
@@ -59,7 +70,7 @@ export default function MainScreen() {
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <Icon name="user-alt" color={color} size={size} />
           ),
         }}
       />

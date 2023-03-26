@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     });
 
 
-function HomePage({navigation}) {
+function AssetPage({navigation}) {
 
   
   const [data,setData] = useState(store.getState());
@@ -81,4 +81,4 @@ function HomePage({navigation}) {
   );
 }
 
-export default HomePage;
+export default AssetPage;
