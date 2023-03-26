@@ -74,7 +74,7 @@ function HomePage({navigation}) {
           // }
       />
       
-      <TouchableOpacity style={styles.add} onPress={() => {navigation.navigate('Add'); unsubscribe();}}>
+      <TouchableOpacity style={styles.add} onPress={() => {navigation.navigate('Add');}}>
             <Icon name = "plus" color ={colors._1} size={30}/>
       </TouchableOpacity>
     </View>

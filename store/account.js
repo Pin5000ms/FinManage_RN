@@ -23,11 +23,21 @@ const reducer = createReducer([], (builder) => {
                 break;
             }
         }
+
+        //如果value沒有定義 改用amount*unitValue取代
+        let tmpVal = 0;
+        if(action.payload.value === undefined){
+          tmpVal = action.payload.amount*action.payload.unitValue;
+        }
+        else{
+          tmpVal = action.payload.value;
+        }
+
         //如果有mutate state，就不用return
         state.push({
             key: newKey, 
             name: action.payload.name, 
-            value: action.payload.value,
+            value: tmpVal,
             type: action.payload.type,
             amount : action.payload.amount,
             unitValue: action.payload.unitValue

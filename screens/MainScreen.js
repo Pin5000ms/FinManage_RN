@@ -12,14 +12,17 @@ import store from '../store/configureStore';
 import { accountAdded } from '../store/account';
 
 
-store.dispatch(accountAdded({name: "Bank1",value: 1000, type: 'bank'}));
-store.dispatch(accountAdded({name: "Bank2",value: 1000, type: 'cash'}));
-store.dispatch(accountAdded({name: "Bank3",value: 1000, type: 'stock'}));
-store.dispatch(accountAdded({name: "Bank4",value: 1000, type: 'foreign'}));
-store.dispatch(accountAdded({name: "Bank5",value: 1000, type: 'gold'}));
-store.dispatch(accountAdded({name: "Bank6",value: 1000, type: 'digit'}));
-store.dispatch(accountAdded({name: "Bank7",value: 1000, type: 'bank'}));
-store.dispatch(accountAdded({name: "Bank8",value: 1000, type: 'bank'}));
+store.dispatch(accountAdded({name: "Richart",value: 7000, type: 'bank'}));
+store.dispatch(accountAdded({name: "富邦",value: 423000, type: 'bank'}));
+store.dispatch(accountAdded({name: "台積電",amount:150, unitValue:580, type: 'stock'}));
+store.dispatch(accountAdded({name: "華南金",amount:1000, unitValue:22.1, type: 'stock'}));
+store.dispatch(accountAdded({name: "台中銀",amount:1000, unitValue:13.8, type: 'stock'}));
+store.dispatch(accountAdded({name: "開發金",amount:2000, unitValue:12.4, type: 'stock'}));
+store.dispatch(accountAdded({name: "兆豐金",amount:2000, unitValue:33.1, type: 'stock'}));
+store.dispatch(accountAdded({name: "永豐大戶",value: 504000, type: 'bank'}));
+store.dispatch(accountAdded({name: "聯邦銀行",value: 100000, type: 'bank'}));
+store.dispatch(accountAdded({name: "LineBank",value: 50000, type: 'bank'}));
+
 
 //MainScreen中有用到Tab
 const Tab = createBottomTabNavigator();

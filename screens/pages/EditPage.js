@@ -32,10 +32,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        margin: 20,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius: 20,
+        margin: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 10,
       },
 
       unselected: {
@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1,
-        margin: 20,
-        paddingVertical: 5,
-        paddingHorizontal: 10,
-        borderRadius: 20,
+        margin: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 10,
       },
 
       icon: {
@@ -69,7 +69,6 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
   const [inputText, setText] = useState(p1);
   const [inputValue, setVal] = useState(p2);
 
-
   let defaultAmount = 0;
   let defaultUnitVal = 0;
   if(p3 !== undefined){
@@ -78,6 +77,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
   if(p4 !== undefined){
     defaultUnitVal = p4;
   }
+  
 
   const [inputAmount, setAmount] = useState(defaultAmount);
   const [inputUnitVal, setValPerUnit] = useState(defaultUnitVal);
@@ -240,7 +240,7 @@ function EditPage ({route, navigation}) {
                 source={SwitchIconSrc(inputType)} //根據type選擇Icon
               />
           </View>
-          <View flex= {3} style={{flexDirection: 'column'}}>
+          <View flex= {2} style={{flexDirection: 'column'}}>
             <View style={{flexDirection: 'row'}}>
               <RadioButton label={'銀行'} id={'bank'}></RadioButton>
               <RadioButton label={'現金'} id={'cash'} ></RadioButton>
