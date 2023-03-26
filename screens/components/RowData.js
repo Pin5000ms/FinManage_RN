@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     },
     itemText: {
         fontSize: 20,
-        color: colors._3,
+        color: colors._2,
       },
     icon: {
       /*圖示大小*/
