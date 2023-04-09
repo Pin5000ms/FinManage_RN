@@ -42,11 +42,11 @@ function AddPage({route, navigation}){
                     type == 'pos'? 
                     store.dispatch(posIncomeAdded({name: inputText, value: inputValue})):
                     store.dispatch(negIncomeAdded({name: inputText, value: inputValue}))
-                    ,navigation.navigate('NetIncomePage') }  }>
+                    ,navigation.navigate('BalancePage') }  }>
                 <Text style={AddEditStyles.buttonText}>Save</Text>
             </TouchableOpacity>
             <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-                navigation.navigate('NetIncomePage') }  }>
+                navigation.navigate('BalancePage') }  }>
                 <Text style={AddEditStyles.buttonText}>Cancel</Text>
             </TouchableOpacity>
         </View>

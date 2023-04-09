@@ -31,6 +31,7 @@ const slice_n = createSlice({
     }
 })
 
+//收入和支出的合併成一個Reducer
 export default combineReducers({
     posIncomes: slice_p.reducer,
     negIncomes: slice_n.reducer,
