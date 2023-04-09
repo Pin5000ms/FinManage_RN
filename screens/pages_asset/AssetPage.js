@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 import colors from '../../config/colors';
@@ -13,13 +13,24 @@ const styles = StyleSheet.create({
     container: {
         flexDirection:'column', //避免下面的導覽列擋到
         flex : 1,
-
     },
-    header:{
+    header1:{
+      fontSize: 20,
+      textAlign: 'center',
+      color: colors._3,
+      fontWeight: 'bold',
+    },
+    header2:{
       fontSize: 40,
       textAlign: 'center',
       color: colors._3,
       fontWeight: 'bold',
+    },
+
+    headerContainer: {
+      flex:0.1,
+      backgroundColor: '#1E90FF',
+      marginTop:StatusBar.currentHeight
     },
     add: {
         backgroundColor: colors._2,
@@ -42,11 +53,11 @@ const styles = StyleSheet.create({
 function AssetPage({navigation}) {
 
   
-  const [data,setData] = useState(store.getState());
+  const [data,setData] = useState(store.getState().accounts);
 
 
   const unsubscribe = store.subscribe(() => {
-    setData(store.getState())
+    setData(store.getState().accounts)
   })
 
   const totalValue = data.reduce((sum, next) => {
@@ -54,9 +65,28 @@ function AssetPage({navigation}) {
   }, 0)
 
   return (
+
     <View style={styles.container}>
-      <Text style = {styles.header}>Total Balance</Text>
-      <Text style = {styles.header}>$ {totalValue}</Text>
+
+      {/* <View style={styles.headerContainer}>
+        <Text >Asset</Text>
+      </View> */}
+
+      <View style={{flexDirection: 'row', alignItems:'center'}}>
+        <View style={{flex:1, marginLeft:40}}>
+          <TouchableOpacity onPress={() => {navigation.navigate('PieChart');}}>
+                <Icon name = "chart-pie" color ={colors._3} size={50}/>
+          </TouchableOpacity>
+        </View>
+        <View style={{marginBottom:15,flex:3}}>
+          <Text style = {styles.header1}>Total Balance :</Text>
+          <Text style = {styles.header2}>$ {totalValue}</Text>
+        </View>
+        <View style={{flex:1, marginRight:40}}>
+        </View>
+        
+      </View>
+      
       
       <FlatList style={styles.container}
           data={data}
@@ -77,7 +107,10 @@ function AssetPage({navigation}) {
       <TouchableOpacity style={styles.add} onPress={() => {navigation.navigate('Add');}}>
             <Icon name = "plus" color ={colors._1} size={30}/>
       </TouchableOpacity>
+
     </View>
+      
+    
   );
 }
 

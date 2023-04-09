@@ -9,7 +9,7 @@ export const accountEdited = createAction("edit")
 
 //https://redux-toolkit.js.org/api/createReducer
 
-const reducer = createReducer([], (builder) => {
+const accountReducer = createReducer([], (builder) => {
     builder
       .addCase(accountAdded, (state, action) => {
         let newKey = 0;
@@ -63,7 +63,7 @@ const reducer = createReducer([], (builder) => {
 }
 
 )
-export default reducer;
+export default accountReducer;
 
 // export default function reducer(state = []/*預設為空*/, action){
 //     switch(action.type){

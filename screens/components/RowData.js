@@ -102,8 +102,7 @@ export default function RowData ({curitem, navigation}) {
             <Swipeable renderLeftActions={swipeRight}>
                     <View style={styles.container}>
                         <TouchableOpacity onPress={() => navigation.navigate('Edit', 
-                        {
-                            Key: curitem.key, 
+                        {   Key: curitem.key, 
                             Name : curitem.name, 
                             Val : curitem.value, 
                             Type: curitem.type, 

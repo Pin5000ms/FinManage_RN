@@ -1,6 +1,6 @@
 import { Text, View} from 'react-native';
 import React, { useState } from 'react';
-import store from '../store/configureStore';
+import store from '../../store/configureStore';
 import {
   PieChart
 } from "react-native-chart-kit";
@@ -50,22 +50,22 @@ function transformDataByType(inputData) {
   return result;
 }
 
-function AnalysisScreen() {
+function PieChartPage() {
 
 
-  const [data1,setData1] = useState(transformData(store.getState()));
+  const [data1,setData1] = useState(transformData(store.getState().accounts));
 
   const unsubscribe1 = store.subscribe(() => {
     setData1(
-      transformData(store.getState())
+      transformData(store.getState().accounts)
     )
   })
 
-  const [data2,setData2] = useState(transformDataByType(store.getState()));
+  const [data2,setData2] = useState(transformDataByType(store.getState().accounts));
 
   const unsubscribe2 = store.subscribe(() => {
     setData2(
-      transformDataByType(store.getState())
+      transformDataByType(store.getState().accounts)
     )
   })
 
@@ -120,4 +120,4 @@ function AnalysisScreen() {
     );
   }
 
-export default AnalysisScreen;
+export default PieChartPage;

@@ -1,17 +1,32 @@
-import { Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
+import {Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import React, { useState } from 'react';
-import store  from '../../store/configureStore';
-import { accountAdded } from '../../store/account';
+import store from '../../store/configureStore';
+import {accountDeleted, accountEdited} from '../../store/account';
 import { SwitchIconSrc } from '../components/SwitchIconSrc';
 import AddEditStyles from '../components/Styles';
 
 
-function SwitchNormalDetailEdit({navigation, id}){
 
-  const [inputText, setText] = useState('');
-  const [inputValue, setVal] = useState(0);
-  const [inputAmount, setAmount] = useState(0);
-  const [inputUnitVal, setValPerUnit] = useState(0);
+
+function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
+
+  const [inputText, setText] = useState(p1);
+  const [inputValue, setVal] = useState(p2);
+
+  let defaultAmount = 0;
+  let defaultUnitVal = 0;
+  if(p3 !== undefined){
+    defaultAmount = p3;
+  }
+  if(p4 !== undefined){
+    defaultUnitVal = p4;
+  }
+  
+
+  const [inputAmount, setAmount] = useState(defaultAmount);
+  const [inputUnitVal, setValPerUnit] = useState(defaultUnitVal);
+
+  
 
   const handleValChange = (value) => {
     var newValue = parseFloat(value)
@@ -53,6 +68,7 @@ function SwitchNormalDetailEdit({navigation, id}){
                 style={AddEditStyles.textInput}
                 onChangeText={setText}
                 placeholder="請輸入名稱"
+                defaultValue={p1}
               />
         </View>
       
@@ -70,7 +86,7 @@ function SwitchNormalDetailEdit({navigation, id}){
                 onChangeText={handleAmountChange}
                 placeholder="數量"
                 keyboardType="numeric"
-
+                defaultValue={defaultAmount.toString()}
               />
               <Text>x</Text>
               <TextInput flex = {1}
@@ -78,18 +94,20 @@ function SwitchNormalDetailEdit({navigation, id}){
                 onChangeText={handleValPerUnitChange}  
                 placeholder="單價"
                 keyboardType="numeric"
+                defaultValue={defaultUnitVal.toString()}
 
               />
         </View>
       </View>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-          store.dispatch(accountAdded({name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal})),
-          navigation.navigate('AssetStack') }  }>
+          store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal})),
+          navigation.navigate('AssetPage') }  }>
           <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-        navigation.navigate('AssetStack') }  }>
-        <Text style={AddEditStyles.buttonText}>Cancle</Text>
+        store.dispatch(accountDeleted({key: Key})),
+        navigation.navigate('AssetPage') }  }>
+        <Text style={AddEditStyles.buttonText}>Delete</Text>
       </TouchableOpacity>
       </>
     )
@@ -105,6 +123,7 @@ function SwitchNormalDetailEdit({navigation, id}){
                 style={AddEditStyles.textInput}
                 onChangeText={setText}
                 placeholder="請輸入名稱"
+                defaultValue={p1}
               />
         </View>
       
@@ -119,13 +138,14 @@ function SwitchNormalDetailEdit({navigation, id}){
         </View>
       </View>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-          store.dispatch(accountAdded({name: inputText, value: inputValue, type: id})),
-          navigation.navigate('AssetStack') }  }>
+          store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id})),
+          navigation.navigate('AssetPage') }  }>
           <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-        navigation.navigate('AssetStack') }  }>
-        <Text style={AddEditStyles.buttonText}>Cancle</Text>
+        store.dispatch(accountDeleted({key: Key})),
+        navigation.navigate('AssetPage') }  }>
+        <Text style={AddEditStyles.buttonText}>Delete</Text>
       </TouchableOpacity>
       </>
       
@@ -135,26 +155,28 @@ function SwitchNormalDetailEdit({navigation, id}){
 }
 
 
-function AddPage ({navigation}) {
 
-
-
-
-
-    const [inputType, setType] = useState('bank');
-    function RadioButton( {label , id}) {
+function EditPage ({route, navigation}) {
+    const {Key} = route.params;
+    const {Name} = route.params;
+    const {Val} = route.params;
+    const {Type} = route.params;
+    const {Amount} = route.params;
+    const {UnitVal} = route.params;
+  
+    const [inputType, setType] = useState(Type);
+    function RadioButton(props) {
       return (
-        <TouchableOpacity style={inputType === id ? AddEditStyles.selected : AddEditStyles.unselected} 
-                 onPress = {  () => setType(id)  }>
-                  <Text style={AddEditStyles.buttonText}>{label}</Text>
-        </TouchableOpacity>
-        
+          <TouchableOpacity style={inputType === props.id ? AddEditStyles.selected : AddEditStyles.unselected} 
+                 onPress = {  () => setType(props.id)  }>
+                  <Text style={AddEditStyles.buttonText}>{props.label}</Text>
+          </TouchableOpacity>
       );
     }
+
     
-  
     return (
-      <View>
+      <View flex= {1}>
         <View style={{flexDirection: 'row', alignItems:'center'}}>
           <View flex= {1}>
             <Image
@@ -176,11 +198,11 @@ function AddPage ({navigation}) {
           </View>
         </View>
 
-        <SwitchNormalDetailEdit navigation={navigation} id={inputType}/>
+        <SwitchNormalDetailEdit navigation={navigation} id={inputType} Key={Key} p1={Name} p2={Val} p3={Amount} p4={UnitVal}/>
         
       </View>
     );
   
 }
 
-export default AddPage;
+export default EditPage;

@@ -1,16 +1,20 @@
 
+import { TouchableOpacity} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import AssetStackScreen from './AssetStackScreen';
-import AnalysisScreen from './AnalysisScreen';
-import SettingsScreen from './SettingScreen';
-import NetIncomeScreen from './NetIncomeScreen';
+import AssetStackScreen from './Tabs/AssetStackScreen';
+import BalanceStackScreen from './Tabs/BalanceStackScreen';
+import SettingsScreen from './Tabs/SettingScreen';
+
 
 import colors from '../config/colors';
 
 import store from '../store/configureStore';
 import { accountAdded } from '../store/account';
+
+
 
 
 store.dispatch(accountAdded({name: "Richart",value: 7000, type: 'bank'}));
@@ -24,6 +28,14 @@ store.dispatch(accountAdded({name: "永豐大戶",value: 504000, type: 'bank'}))
 store.dispatch(accountAdded({name: "聯邦銀行",value: 100000, type: 'bank'}));
 store.dispatch(accountAdded({name: "LineBank",value: 50000, type: 'bank'}));
 
+import { negIncomeAdded, posIncomeAdded } from '../store/incomes';
+store.dispatch(posIncomeAdded({name:"薪水", value:84000}));
+store.dispatch(negIncomeAdded({name:'房租', value: 10000}));
+store.dispatch(negIncomeAdded({name:'生活費', value: 10000}));
+store.dispatch(negIncomeAdded({name:'學貸', value: 3000}));
+store.dispatch(negIncomeAdded({name:'家用', value: 12000}));
+store.dispatch(negIncomeAdded({name:'手機', value: 1000}));
+
 
 //MainScreen中有用到Tab
 const Tab = createBottomTabNavigator();
@@ -33,35 +45,30 @@ export default function MainScreen() {
   return (
     <Tab.Navigator initialRouteName="Home" 
     //tabBarHideOnKeyboard: true 鍵盤出現自動隱藏
-    screenOptions={{tabBarActiveTintColor: colors._1, tabBarStyle:{ display: "flex"}, tabBarHideOnKeyboard: true}}>
+    screenOptions={{
+      tabBarActiveTintColor: colors._1,
+       tabBarStyle:{ display: "flex"},
+        tabBarHideOnKeyboard: true,
+        //上方Header
+        headerShown: true
+        }}>
       <Tab.Screen
         name="Asset"
         component={AssetStackScreen}
         options={{
           tabBarLabel: 'Asset',
           tabBarIcon: ({ color, size }) => (
-            <Icon name="coins" color={color} size={size} />
-          ),
+            <Icon name="coins" color={color} size={size} />),
+          headerTitle :'資產'
         }}
       />
       <Tab.Screen
-        name="Analysis"
-        component={AnalysisScreen}
+        name="Balance"
+        component={BalanceStackScreen}
         options={{
-          tabBarLabel: 'Analysis',
+          tabBarLabel: 'Balance',
           tabBarIcon: ({ color, size }) => (
-            <Icon name="chart-pie" color={color} size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="NetIncome"
-        component={NetIncomeScreen}
-        options={{
-          tabBarLabel: 'NetIncome',
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="table" color={color} size={size} />
-          ),
+            <Icon name="table" color={color} size={size} />),
         }}
       />
       <Tab.Screen
@@ -70,8 +77,7 @@ export default function MainScreen() {
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <Icon name="user-alt" color={color} size={size} />
-          ),
+            <Icon name="user-alt" color={color} size={size} />),
         }}
       />
     </Tab.Navigator>
