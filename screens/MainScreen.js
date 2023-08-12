@@ -29,7 +29,7 @@ store.dispatch(accountAdded({name: "聯邦銀行",value: 100000, type: 'bank'}))
 store.dispatch(accountAdded({name: "LineBank",value: 50000, type: 'bank'}));
 
 import { negIncomeAdded, posIncomeAdded } from '../store/incomes';
-store.dispatch(posIncomeAdded({name:"薪水", value:84000}));
+store.dispatch(posIncomeAdded({name:"薪水", value:80000}));
 store.dispatch(negIncomeAdded({name:'房租', value: 10000}));
 store.dispatch(negIncomeAdded({name:'生活費', value: 10000}));
 store.dispatch(negIncomeAdded({name:'學貸', value: 3000}));
@@ -50,7 +50,7 @@ export default function MainScreen() {
        tabBarStyle:{ display: "flex"},
         tabBarHideOnKeyboard: true,
         //上方Header
-        headerShown: true
+        headerShown: false
         }}>
       <Tab.Screen
         name="Asset"

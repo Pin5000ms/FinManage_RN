@@ -69,6 +69,7 @@ const styles = StyleSheet.create({
 
 /*自定義元件，開頭必須大寫 */
 export default function RowData ({curitem, navigation}) {
+    //右滑動作
     const swipeRight = (progress, dragX) =>{
 
         const scale = dragX.interpolate({
@@ -76,6 +77,7 @@ export default function RowData ({curitem, navigation}) {
             outputRange: [1, 1, 0.2, 1, 1],//大於100或小於-100都設為1
         });
 
+        //右滑動作產生控件
         return (
             <>
             <Animated.View style ={ {transform:[{scale:scale}]}}>
@@ -129,7 +131,7 @@ export default function RowData ({curitem, navigation}) {
                             </TouchableOpacity>                        
                         </View> */}
                     </View>
-                
+                    
             </Swipeable>
 
     );

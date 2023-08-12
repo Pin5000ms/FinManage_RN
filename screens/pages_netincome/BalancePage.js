@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     container_sign:{
-        backgroundColor: colors._2,
         flexDirection:'row',
         alignItems:'center',
         borderRadius: 5,

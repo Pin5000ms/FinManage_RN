@@ -15,9 +15,11 @@ const accountReducer = createReducer([], (builder) => {
         let newKey = 0;
         for(i = 0; i < 999999; i++)
         {
+            //當前state內是否有key和i相同
             const index = state.findIndex(function(element) {
                 return element.key == i
             });
+            //若沒有，用i當作key
             if(index == -1){
                 newKey = i;
                 break;

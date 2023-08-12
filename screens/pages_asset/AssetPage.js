@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
     },
     header2:{
-      fontSize: 40,
+      fontSize: 30,
       textAlign: 'center',
       color: colors._3,
       fontWeight: 'bold',
@@ -56,9 +56,12 @@ function AssetPage({navigation}) {
   const [data,setData] = useState(store.getState().accounts);
 
 
+  //若store發生改變，觸發setData事件
   const unsubscribe = store.subscribe(() => {
     setData(store.getState().accounts)
   })
+
+
 
   const totalValue = data.reduce((sum, next) => {
     return sum + parseInt(next.value)
@@ -73,7 +76,7 @@ function AssetPage({navigation}) {
       </View> */}
 
       <View style={{flexDirection: 'row', alignItems:'center'}}>
-        <View style={{flex:1, marginLeft:40}}>
+        <View style={{flex:1, marginLeft:20, marginRight:20}}>
           <TouchableOpacity onPress={() => {navigation.navigate('PieChart');}}>
                 <Icon name = "chart-pie" color ={colors._3} size={50}/>
           </TouchableOpacity>
@@ -82,15 +85,19 @@ function AssetPage({navigation}) {
           <Text style = {styles.header1}>Total Balance :</Text>
           <Text style = {styles.header2}>$ {totalValue}</Text>
         </View>
-        <View style={{flex:1, marginRight:40}}>
+        <View style={{flex:1}}>
         </View>
-        
+        <View style={{flex:1, marginRight:20}}>
+          <TouchableOpacity onPress={() => {navigation.navigate('LineChart');}}>
+                <Icon name = "chart-line" color ={colors._3} size={50}/>
+          </TouchableOpacity>
+        </View>
       </View>
       
       
       <FlatList style={styles.container}
           data={data}
-          /*使用一個自定義的元件，將item和navigation傳入 */
+          /*使用一個自定義的元件RowData，將item和navigation傳入 */
           renderItem={({item}) => 
             <RowData
               curitem={item}
@@ -103,6 +110,7 @@ function AssetPage({navigation}) {
           //    <View style = {styles.separatorLine}></View>
           // }
       />
+      
       
       <TouchableOpacity style={styles.add} onPress={() => {navigation.navigate('Add');}}>
             <Icon name = "plus" color ={colors._1} size={30}/>
