@@ -4,6 +4,7 @@ import store  from '../../store/configureStore';
 import { accountAdded } from '../../store/account';
 import { SwitchIconSrc } from '../components/SwitchIconSrc';
 import AddEditStyles from '../components/Styles';
+import { assetHistoryAdded } from '../../store/assetHistory';
 
 
 function SwitchNormalDetailEdit({navigation, id}){
@@ -43,6 +44,7 @@ function SwitchNormalDetailEdit({navigation, id}){
     setVal(totalValue);
   };
 
+  //股票、外幣、黃金、虛擬貨幣，等有單位價值的東西
   if (id == 'stock' || id == 'foreign' || id == 'gold' || id == 'digit')
   {
     return (
@@ -82,9 +84,15 @@ function SwitchNormalDetailEdit({navigation, id}){
               />
         </View>
       </View>
-      <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-          store.dispatch(accountAdded({name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal})),
-          navigation.navigate('AssetPage') }  }>
+      <TouchableOpacity style={AddEditStyles.button} onPress = 
+          {() => 
+            { 
+              store.dispatch(accountAdded({name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal}));
+              var a = store.getState().accounts.find( o=>o.name === inputText);
+              store.dispatch(assetHistoryAdded({id: a.Key, value: inputValue}));//紀錄資產歷史
+              navigation.navigate('AssetPage');
+            }  
+          }>
           <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
@@ -95,6 +103,7 @@ function SwitchNormalDetailEdit({navigation, id}){
     )
     
   }
+  //銀行存款、現金等沒有單位價值的東西
   else
   {
     return(
@@ -118,9 +127,15 @@ function SwitchNormalDetailEdit({navigation, id}){
               />
         </View>
       </View>
-      <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-          store.dispatch(accountAdded({name: inputText, value: inputValue, type: id})),
-          navigation.navigate('AssetPage') }  }>
+      <TouchableOpacity style={AddEditStyles.button} onPress = 
+          {() => 
+            { 
+              store.dispatch(accountAdded({name: inputText, value: inputValue, type: id}));
+              var a = store.getState().accounts.find( o=>o.name === inputText);//TODO:如何對應accountAdded和assetHistoryAdded的key
+              store.dispatch(assetHistoryAdded({id: a.Key, value: inputValue}));//紀錄資產歷史
+              navigation.navigate('AssetPage');
+            }  
+          }>
           <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
       <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
@@ -136,10 +151,6 @@ function SwitchNormalDetailEdit({navigation, id}){
 
 
 function AddPage ({navigation}) {
-
-
-
-
 
     const [inputType, setType] = useState('bank');
     function RadioButton( {label , id}) {

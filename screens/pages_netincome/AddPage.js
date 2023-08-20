@@ -49,6 +49,7 @@ function AddPage({route, navigation}){
                 navigation.navigate('BalancePage') }  }>
                 <Text style={AddEditStyles.buttonText}>Cancel</Text>
             </TouchableOpacity>
+            
         </View>
     )
 }

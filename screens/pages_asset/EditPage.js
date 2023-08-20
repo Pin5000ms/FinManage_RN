@@ -5,6 +5,8 @@ import {accountDeleted, accountEdited} from '../../store/account';
 import { SwitchIconSrc } from '../components/SwitchIconSrc';
 import AddEditStyles from '../components/Styles';
 
+import { assetHistoryAdded } from '../../store/assetHistory';
+
 
 
 
@@ -58,6 +60,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
     setVal(totalValue);
   };
 
+  //股票、外幣、黃金、虛擬貨幣，等有單位價值的東西
   if (id == 'stock' || id == 'foreign' || id == 'gold' || id == 'digit')
   {
     return (
@@ -99,20 +102,31 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
               />
         </View>
       </View>
-      <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-          store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal})),
-          navigation.navigate('AssetPage') }  }>
+      <TouchableOpacity style={AddEditStyles.button} onPress = //Save
+          {() => 
+            { 
+              store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal}));
+              store.dispatch(assetHistoryAdded({id: Key, value: inputValue}));//紀錄資產歷史
+              navigation.navigate('AssetPage');
+            }  
+          }>
           <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-        store.dispatch(accountDeleted({key: Key})),
-        navigation.navigate('AssetPage') }  }>
+      <TouchableOpacity style={AddEditStyles.button} onPress = //Delete
+        {() => 
+          { 
+            store.dispatch(accountDeleted({key: Key}));
+            store.dispatch(assetHistoryAdded({id: Key, value: 0}));//紀錄資產歷史
+            navigation.navigate('AssetPage');
+          }
+        }>
         <Text style={AddEditStyles.buttonText}>Delete</Text>
       </TouchableOpacity>
       </>
     )
     
   }
+  //銀行存款、現金等沒有單位價值的東西
   else
   {
     return(
@@ -137,14 +151,24 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
               />
         </View>
       </View>
-      <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-          store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id})),
-          navigation.navigate('AssetPage') }  }>
+      <TouchableOpacity style={AddEditStyles.button} onPress = 
+          {() => 
+            { 
+              store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id}));
+              store.dispatch(assetHistoryAdded({id: Key, value: inputValue}));//紀錄資產歷史
+              navigation.navigate('AssetPage');
+            }  
+          }>
           <Text style={AddEditStyles.buttonText}>Save</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-        store.dispatch(accountDeleted({key: Key})),
-        navigation.navigate('AssetPage') }  }>
+      <TouchableOpacity style={AddEditStyles.button} onPress = 
+        {() => 
+          { 
+            store.dispatch(accountDeleted({key: Key}));
+            store.dispatch(assetHistoryAdded({id: Key, value: 0}));//紀錄資產歷史
+            navigation.navigate('AssetPage');
+          }  
+        }>
         <Text style={AddEditStyles.buttonText}>Delete</Text>
       </TouchableOpacity>
       </>

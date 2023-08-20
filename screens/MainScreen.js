@@ -14,19 +14,41 @@ import colors from '../config/colors';
 import store from '../store/configureStore';
 import { accountAdded } from '../store/account';
 
-
+import { assetHistoryAdded } from '../store/assetHistory';
 
 
 store.dispatch(accountAdded({name: "Richart",value: 7000, type: 'bank'}));
-store.dispatch(accountAdded({name: "富邦",value: 423000, type: 'bank'}));
-store.dispatch(accountAdded({name: "台積電",amount:150, unitValue:580, type: 'stock'}));
+store.dispatch(assetHistoryAdded({id: 0, value: 70000}));//紀錄資產歷史
+
+
+store.dispatch(accountAdded({name: "台新",value: 110000, type: 'bank'}));
+store.dispatch(assetHistoryAdded({id: 1, value: 110000}));//紀錄資產歷史
+
+
+store.dispatch(accountAdded({name: "富邦",value: 345000, type: 'bank'}));
+store.dispatch(assetHistoryAdded({id: 2, value: 345000}));//紀錄資產歷史
+
+store.dispatch(accountAdded({name: "台積電",amount:20, unitValue:550, type: 'stock'}));
+store.dispatch(assetHistoryAdded({id: 3, value: 20*550}));//紀錄資產歷史
+
 store.dispatch(accountAdded({name: "華南金",amount:1000, unitValue:22.1, type: 'stock'}));
+store.dispatch(assetHistoryAdded({id: 4, value: 1000*22.1}));//紀錄資產歷史
+
 store.dispatch(accountAdded({name: "台中銀",amount:1000, unitValue:13.8, type: 'stock'}));
-store.dispatch(accountAdded({name: "開發金",amount:2000, unitValue:12.4, type: 'stock'}));
+store.dispatch(assetHistoryAdded({id: 5, value: 1000*13.8}));//紀錄資產歷史
+
 store.dispatch(accountAdded({name: "兆豐金",amount:2000, unitValue:33.1, type: 'stock'}));
+store.dispatch(assetHistoryAdded({id: 6, value: 2000*33.1}));//紀錄資產歷史
+
 store.dispatch(accountAdded({name: "永豐大戶",value: 504000, type: 'bank'}));
+store.dispatch(assetHistoryAdded({id: 7, value: 504000}));//紀錄資產歷史
+
 store.dispatch(accountAdded({name: "聯邦銀行",value: 100000, type: 'bank'}));
+store.dispatch(assetHistoryAdded({id: 8, value: 100000}));//紀錄資產歷史
+
 store.dispatch(accountAdded({name: "LineBank",value: 50000, type: 'bank'}));
+store.dispatch(assetHistoryAdded({id: 9, value: 50000}));//紀錄資產歷史
+
 
 import { negIncomeAdded, posIncomeAdded } from '../store/incomes';
 store.dispatch(posIncomeAdded({name:"薪水", value:80000}));

@@ -3,7 +3,7 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 // const ADD = "add";
 // const DELETE = "delete";
 // const EDIT = "edit";
-export const accountAdded = createAction("add"); //"add"為accountAdded的type
+export const accountAdded = createAction("add"); //"add"為accountAdded的type  意即accountAdded.type = "add"
 export const accountDeleted = createAction("delete")
 export const accountEdited = createAction("edit")
 
@@ -13,7 +13,8 @@ const accountReducer = createReducer([], (builder) => {
     builder
       .addCase(accountAdded, (state, action) => {
         let newKey = 0;
-        for(i = 0; i < 999999; i++)
+        let i = 0;
+        for( i = 0; i < 999999; i++)
         {
             //當前state內是否有key和i相同
             const index = state.findIndex(function(element) {
@@ -34,7 +35,6 @@ const accountReducer = createReducer([], (builder) => {
         else{
           tmpVal = action.payload.value;
         }
-
         //如果有mutate state，就不用return
         state.push({
             key: newKey, 
@@ -54,12 +54,15 @@ const accountReducer = createReducer([], (builder) => {
       .addCase(accountEdited, (state, action) => {
         return state.map(item => item.key===action.payload.key ? 
             {...item, 
+              date: new Date().toLocaleDateString(),
+              time: new Date().toLocaleTimeString(),
               name: action.payload.name, 
               value: action.payload.value, 
               type: action.payload.type,
               amount : action.payload.amount,
               unitValue: action.payload.unitValue
             } :item);
+        
       })
 
 }

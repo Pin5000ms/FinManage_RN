@@ -2,9 +2,12 @@ import { combineReducers } from "redux";
 import accountReducer from "./account";
 import incomeReducer from "./incomes"
 
+import assetHistoryReducer from "./assetHistory";
 
-//資產Tab和收支表Tab合併成一個Reducer, accounts和incomes為兩個substate
+
+//資產Tab，收支表Tab，歷史紀錄 合併成一個Reducer, accounts，incomes和assetHistory為三個substate
 export default combineReducers({
     accounts: accountReducer,
     incomes: incomeReducer,
+    assetHistory: assetHistoryReducer,
 })

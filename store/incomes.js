@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 
 let lastIdp = 0;
+//createSlice => 結合createAction和createReducer
 const slice_p = createSlice({
     name: 'posIncome',
     initialState: [],
