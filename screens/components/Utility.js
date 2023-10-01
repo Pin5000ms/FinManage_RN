@@ -57,7 +57,7 @@ function Handler1(args1, args2, args3, args4, args5, args6) {
 }
 
 //記錄資產歷史
-function Handler2(args1, args2, args3, args4) {
+function Handler2(args1, args2, args3, args4, args5, args6) {
     store.dispatch(assetHistoryAdded({id: args1, value: args3}))
 }
 
