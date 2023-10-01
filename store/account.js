@@ -9,24 +9,9 @@ export const accountEdited = createAction("edit")
 
 //https://redux-toolkit.js.org/api/createReducer
 
-const accountReducer = createReducer([], (builder) => {
+export const accountReducer = createReducer([], (builder) => {
     builder
       .addCase(accountAdded, (state, action) => {
-        let newKey = 0;
-        let i = 0;
-        for( i = 0; i < 999999; i++)
-        {
-            //當前state內是否有key和i相同
-            const index = state.findIndex(function(element) {
-                return element.key == i
-            });
-            //若沒有，用i當作key
-            if(index == -1){
-                newKey = i;
-                break;
-            }
-        }
-
         //如果value沒有定義 改用amount*unitValue取代
         let tmpVal = 0;
         if(action.payload.value === undefined){
@@ -35,23 +20,27 @@ const accountReducer = createReducer([], (builder) => {
         else{
           tmpVal = action.payload.value;
         }
+        //assetHistoryAdded({id: newKey, value: tmpVal})
         //如果有mutate state，就不用return
         state.push({
-            key: newKey, 
+            key: action.payload.key, 
             name: action.payload.name, 
             value: tmpVal,
             type: action.payload.type,
             amount : action.payload.amount,
             unitValue: action.payload.unitValue
           });
+        
       })
 
       .addCase(accountDeleted, (state, action) => {
+        //assetHistoryAdded({id: action.payload.key, value: 0});
         //沒有mutate state，要加return
         return state.filter(item => item.key!==action.payload.key);
       })
 
       .addCase(accountEdited, (state, action) => {
+        //assetHistoryAdded({id: action.payload.key, value: action.payload.value})
         return state.map(item => item.key===action.payload.key ? 
             {...item, 
               date: new Date().toLocaleDateString(),
@@ -68,7 +57,7 @@ const accountReducer = createReducer([], (builder) => {
 }
 
 )
-export default accountReducer;
+//export default accountReducer;
 
 // export default function reducer(state = []/*預設為空*/, action){
 //     switch(action.type){

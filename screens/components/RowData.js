@@ -5,8 +5,7 @@ import colors from '../../config/colors';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SwitchIconSrc } from './SwitchIconSrc';
 import { Animated } from 'react-native';
-import store from '../../store/configureStore';
-import { accountDeleted } from '../../store/account';
+import { DeleteAccount } from './Utility';
 
 const styles = StyleSheet.create({
     /*List中每個item的樣式 */
@@ -80,28 +79,28 @@ export default function RowData ({curitem, navigation}) {
         //右滑動作產生控件
         return (
             <>
-            <Animated.View style ={ {transform:[{scale:scale}]}}>
-                <TouchableOpacity style = {styles.deleteBox} onPress={()=> store.dispatch(accountDeleted({key: curitem.key}))}>
-                    <Icon name = "trash" size={25} color ={colors._2} />
-                </TouchableOpacity>
-            </Animated.View>
-            <Animated.View style ={ {transform:[{scale:scale}]}}>
-                <TouchableOpacity style = {styles.editBox} onPress={() => navigation.navigate('Edit', 
-                {
-                    Key: curitem.key, 
-                    Name : curitem.name, 
-                    Val : curitem.value, 
-                    Type: curitem.type, 
-                    Amount: curitem.amount, 
-                    UnitVal: curitem.unitValue})}>
-                    <Icon name = "edit" size={25} color ={colors._2} />
-                </TouchableOpacity> 
-            </Animated.View>
+                <Animated.View style ={ {transform:[{scale:scale}]}}>
+                    <TouchableOpacity style = {styles.deleteBox} onPress={()=> DeleteAccount(curitem.key)}>
+                        <Icon name = "trash" size={25} color ={colors._2} />
+                    </TouchableOpacity>
+                </Animated.View>
+                <Animated.View style ={ {transform:[{scale:scale}]}}>
+                    <TouchableOpacity style = {styles.editBox} onPress={() => navigation.navigate('Edit', 
+                    {
+                        Key: curitem.key, 
+                        Name : curitem.name, 
+                        Val : curitem.value, 
+                        Type: curitem.type, 
+                        Amount: curitem.amount, 
+                        UnitVal: curitem.unitValue})}>
+                        <Icon name = "edit" size={25} color ={colors._2} />
+                    </TouchableOpacity> 
+                </Animated.View>
             </>
         )
     }
     return (
-            <Swipeable renderLeftActions={swipeRight}>
+            <Swipeable renderLeftActions={swipeRight} rightThreshold={0.7} friction={1.5}>
                     <View style={styles.container}>
                         <TouchableOpacity onPress={() => navigation.navigate('Edit', 
                         {   Key: curitem.key, 

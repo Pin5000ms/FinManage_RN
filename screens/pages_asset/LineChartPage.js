@@ -8,7 +8,7 @@ import store from '../../store/configureStore';
 // https://www.npmjs.com/package/react-native-calendar-picker
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-var datepicked = new Date();
+var datepicked = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59)
 
 
 const onDateChange = (date) => {
@@ -16,11 +16,9 @@ const onDateChange = (date) => {
     const year = datepicked.getFullYear()
     const month = datepicked.getMonth()
     const day = datepicked.getDate()
-    datepicked = new Date(year, month, day, 24, 0, 0)
+    datepicked = new Date(year, month, day, 23, 59, 59)
   }
 
-
-//item.date + item.time => new Date()
 function convertToDate(item) {
     const dateStr = item.timeStamp.split('-')[0]
     const timeStr = item.timeStamp.split('-')[1]
@@ -37,7 +35,7 @@ function convertToDate(item) {
 function calculateTotalValue(targetDate) {
   // 將資料以 id 為鍵進行分組，取每個 id 最新的一筆資料
   const latestDataById = store.getState().assetHistory.reduce((result, item) => {
-    if (!result[item.id] || item.date + ' ' + item.time > result[item.id].date + ' ' + result[item.id].time) 
+    if (!result[item.id] || new Date(item.timeStamp) > new Date(result[item.id].timeStamp) ) 
     {
       result[item.id] = item;
     }
@@ -56,7 +54,6 @@ function calculateTotalValue(targetDate) {
 
   return totalValue/1000;
 }
-
 
 function XMonthAgoDate(datepicked, n){
   if(datepicked !== undefined){
@@ -97,11 +94,6 @@ function XMonthAgoDateStr(datepicked, n){
 const LineChartPage = () => {
     const [showCalendar, setShowCalendar] = useState(false);
     const handleShowCalendar = () => {setShowCalendar(!showCalendar);};
-
-
-    //const totalValue = calculateTotalValue(new Date('2023-08-13T13:43:00'))
-
-    //console.log(totalValue);
 
     if (showCalendar)
     {

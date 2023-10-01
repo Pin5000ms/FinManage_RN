@@ -12,42 +12,22 @@ import SettingsScreen from './Tabs/SettingScreen';
 import colors from '../config/colors';
 
 import store from '../store/configureStore';
-import { accountAdded } from '../store/account';
 
-import { assetHistoryAdded } from '../store/assetHistory';
+import {generateUniqueKey, AddAccount} from './components/Utility';
 
+AddAccount(generateUniqueKey(), "Richart", 50000, 'bank')
+AddAccount(generateUniqueKey(), "富邦", 330000, 'bank')
+AddAccount(generateUniqueKey(), "永豐大戶", 500000, 'bank')
+AddAccount(generateUniqueKey(), "聯邦銀行", 100000, 'bank')
+AddAccount(generateUniqueKey(), "LineBank", 50000, 'bank')
+AddAccount(generateUniqueKey(), "合作金庫", 130000, 'bank')
+AddAccount(generateUniqueKey(), "國泰", 92000, 'bank')
 
-store.dispatch(accountAdded({name: "Richart",value: 7000, type: 'bank'}));
-store.dispatch(assetHistoryAdded({id: 0, value: 70000}));//紀錄資產歷史
+AddAccount(generateUniqueKey(), "台積電", 110*525, 110, 525, 'stock')
+AddAccount(generateUniqueKey(), "華南金", 2000*22.1, 2000, 22.1, 'stock')
+AddAccount(generateUniqueKey(), "台中銀", 1000*13.8, 1000, 13.8, 'stock')
+AddAccount(generateUniqueKey(), "兆豐金", 1000*33.1, 1000, 33.1, 'stock')
 
-
-store.dispatch(accountAdded({name: "台新",value: 110000, type: 'bank'}));
-store.dispatch(assetHistoryAdded({id: 1, value: 110000}));//紀錄資產歷史
-
-
-store.dispatch(accountAdded({name: "富邦",value: 345000, type: 'bank'}));
-store.dispatch(assetHistoryAdded({id: 2, value: 345000}));//紀錄資產歷史
-
-store.dispatch(accountAdded({name: "台積電",amount:20, unitValue:550, type: 'stock'}));
-store.dispatch(assetHistoryAdded({id: 3, value: 20*550}));//紀錄資產歷史
-
-store.dispatch(accountAdded({name: "華南金",amount:1000, unitValue:22.1, type: 'stock'}));
-store.dispatch(assetHistoryAdded({id: 4, value: 1000*22.1}));//紀錄資產歷史
-
-store.dispatch(accountAdded({name: "台中銀",amount:1000, unitValue:13.8, type: 'stock'}));
-store.dispatch(assetHistoryAdded({id: 5, value: 1000*13.8}));//紀錄資產歷史
-
-store.dispatch(accountAdded({name: "兆豐金",amount:2000, unitValue:33.1, type: 'stock'}));
-store.dispatch(assetHistoryAdded({id: 6, value: 2000*33.1}));//紀錄資產歷史
-
-store.dispatch(accountAdded({name: "永豐大戶",value: 504000, type: 'bank'}));
-store.dispatch(assetHistoryAdded({id: 7, value: 504000}));//紀錄資產歷史
-
-store.dispatch(accountAdded({name: "聯邦銀行",value: 100000, type: 'bank'}));
-store.dispatch(assetHistoryAdded({id: 8, value: 100000}));//紀錄資產歷史
-
-store.dispatch(accountAdded({name: "LineBank",value: 50000, type: 'bank'}));
-store.dispatch(assetHistoryAdded({id: 9, value: 50000}));//紀錄資產歷史
 
 
 import { negIncomeAdded, posIncomeAdded } from '../store/incomes';

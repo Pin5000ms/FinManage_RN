@@ -1,11 +1,8 @@
 import {Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import React, { useState } from 'react';
-import store from '../../store/configureStore';
-import {accountDeleted, accountEdited} from '../../store/account';
 import { SwitchIconSrc } from '../components/SwitchIconSrc';
 import AddEditStyles from '../components/Styles';
-
-import { assetHistoryAdded } from '../../store/assetHistory';
+import { EditAccount, DeleteAccount } from '../components/Utility';
 
 
 
@@ -105,8 +102,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = //Save
           {() => 
             { 
-              store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal}));
-              store.dispatch(assetHistoryAdded({id: Key, value: inputValue}));//紀錄資產歷史
+              EditAccount(Key, inputText, inputValue, inputAmount, inputUnitVal, id)
               navigation.navigate('AssetPage');
             }  
           }>
@@ -115,8 +111,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = //Delete
         {() => 
           { 
-            store.dispatch(accountDeleted({key: Key}));
-            store.dispatch(assetHistoryAdded({id: Key, value: 0}));//紀錄資產歷史
+            DeleteAccount(Key)
             navigation.navigate('AssetPage');
           }
         }>
@@ -154,8 +149,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = 
           {() => 
             { 
-              store.dispatch(accountEdited({key: Key, name: inputText, value: inputValue, type: id}));
-              store.dispatch(assetHistoryAdded({id: Key, value: inputValue}));//紀錄資產歷史
+              EditAccount(Key, inputText, inputValue, id)
               navigation.navigate('AssetPage');
             }  
           }>
@@ -164,8 +158,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = 
         {() => 
           { 
-            store.dispatch(accountDeleted({key: Key}));
-            store.dispatch(assetHistoryAdded({id: Key, value: 0}));//紀錄資產歷史
+            DeleteAccount(Key)
             navigation.navigate('AssetPage');
           }  
         }>

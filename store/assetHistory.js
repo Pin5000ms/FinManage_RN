@@ -25,6 +25,6 @@ const slice = createSlice({
 const assetHistoryReducer = slice.reducer;
 
 
-export const { assetHistoryAdded, assetHistoryDeleted } = slice.actions;
+export const { assetHistoryAdded } = slice.actions;
 
 export default assetHistoryReducer;

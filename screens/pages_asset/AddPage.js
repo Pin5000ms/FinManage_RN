@@ -1,13 +1,11 @@
 import { Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import React, { useState } from 'react';
-import store  from '../../store/configureStore';
-import { accountAdded } from '../../store/account';
 import { SwitchIconSrc } from '../components/SwitchIconSrc';
 import AddEditStyles from '../components/Styles';
-import { assetHistoryAdded } from '../../store/assetHistory';
+import { AddAccount, generateUniqueKey } from '../components/Utility';
 
 
-function SwitchNormalDetailEdit({navigation, id}){
+function SwitchNormalDetailEdit({navigation, type}){
 
   const [inputText, setText] = useState('');
   const [inputValue, setVal] = useState(0);
@@ -45,7 +43,7 @@ function SwitchNormalDetailEdit({navigation, id}){
   };
 
   //股票、外幣、黃金、虛擬貨幣，等有單位價值的東西
-  if (id == 'stock' || id == 'foreign' || id == 'gold' || id == 'digit')
+  if (type == 'stock' || type == 'foreign' || type == 'gold' || type == 'digit')
   {
     return (
       <>
@@ -80,16 +78,13 @@ function SwitchNormalDetailEdit({navigation, id}){
                 onChangeText={handleValPerUnitChange}  
                 placeholder="單價"
                 keyboardType="numeric"
-
               />
         </View>
       </View>
       <TouchableOpacity style={AddEditStyles.button} onPress = 
           {() => 
             { 
-              store.dispatch(accountAdded({name: inputText, value: inputValue, type: id, amount: inputAmount, unitValue: inputUnitVal}));
-              var a = store.getState().accounts.find( o=>o.name === inputText);
-              store.dispatch(assetHistoryAdded({id: a.Key, value: inputValue}));//紀錄資產歷史
+              AddAccount(generateUniqueKey(), inputText, inputValue, inputAmount, inputUnitVal, type)
               navigation.navigate('AssetPage');
             }  
           }>
@@ -130,9 +125,7 @@ function SwitchNormalDetailEdit({navigation, id}){
       <TouchableOpacity style={AddEditStyles.button} onPress = 
           {() => 
             { 
-              store.dispatch(accountAdded({name: inputText, value: inputValue, type: id}));
-              var a = store.getState().accounts.find( o=>o.name === inputText);//TODO:如何對應accountAdded和assetHistoryAdded的key
-              store.dispatch(assetHistoryAdded({id: a.Key, value: inputValue}));//紀錄資產歷史
+              AddAccount(generateUniqueKey(), inputText, inputValue, type)
               navigation.navigate('AssetPage');
             }  
           }>
@@ -153,10 +146,10 @@ function SwitchNormalDetailEdit({navigation, id}){
 function AddPage ({navigation}) {
 
     const [inputType, setType] = useState('bank');
-    function RadioButton( {label , id}) {
+    function RadioButton( {label , type}) {
       return (
-        <TouchableOpacity style={inputType === id ? AddEditStyles.selected : AddEditStyles.unselected} 
-                 onPress = {  () => setType(id)  }>
+        <TouchableOpacity style={inputType === type ? AddEditStyles.selected : AddEditStyles.unselected} 
+                 onPress = {  () => setType(type)  }>
                   <Text style={AddEditStyles.buttonText}>{label}</Text>
         </TouchableOpacity>
         
@@ -175,19 +168,19 @@ function AddPage ({navigation}) {
           </View>
           <View flex= {2} style={{flexDirection: 'column'}}>
             <View style={{flexDirection: 'row'}}>
-              <RadioButton label={'銀行'} id={'bank'}></RadioButton>
-              <RadioButton label={'現金'} id={'cash'} ></RadioButton>
-              <RadioButton label={'股票'} id={'stock'} ></RadioButton>
+              <RadioButton label={'銀行'} type={'bank'}></RadioButton>
+              <RadioButton label={'現金'} type={'cash'} ></RadioButton>
+              <RadioButton label={'股票'} type={'stock'} ></RadioButton>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <RadioButton label={'外幣'} id={'foreign'} ></RadioButton>
-              <RadioButton label={'黃金'} id={'gold'} ></RadioButton>
-              <RadioButton label={'數位'} id={'digit'} ></RadioButton>
+              <RadioButton label={'外幣'} type={'foreign'} ></RadioButton>
+              <RadioButton label={'黃金'} type={'gold'} ></RadioButton>
+              <RadioButton label={'數位'} type={'digit'} ></RadioButton>
             </View>
           </View>
         </View>
 
-        <SwitchNormalDetailEdit navigation={navigation} id={inputType}/>
+        <SwitchNormalDetailEdit navigation={navigation} type={inputType}/>
         
       </View>
     );
