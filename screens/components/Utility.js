@@ -44,7 +44,7 @@ class EventDelegate {
 const addEvent = new EventDelegate();
 
 //定義一個事件處理函數
-function Handler1(args1, args2, args3, args4, args5, args6) {
+function Handler_Add1(args1, args2, args3, args4, args5, args6) {
     if(args5 === null || args5 === undefined){
         store.dispatch(accountAdded({key: args1, name: args2, value: args3, type: args4}))
     }
@@ -57,13 +57,13 @@ function Handler1(args1, args2, args3, args4, args5, args6) {
 }
 
 //記錄資產歷史
-function Handler2(args1, args2, args3, args4, args5, args6) {
+function Handler_Add2(args1, args2, args3, args4, args5, args6) {
     store.dispatch(assetHistoryAdded({id: args1, value: args3}))
 }
 
 //將事件處理函數添加到事件委派中(綁定兩個Handler到一個Event)
-addEvent.addHandler(Handler1);
-addEvent.addHandler(Handler2);
+addEvent.addHandler(Handler_Add1);
+addEvent.addHandler(Handler_Add2);
 
 
 export function AddAccount(args1, args2, args3, args4, args5, args6){
@@ -74,16 +74,16 @@ export function AddAccount(args1, args2, args3, args4, args5, args6){
 //=========================================DELETE=========================================
 const deleteEvent = new EventDelegate();
 
-function Handler3(args1) {
+function Handler_Delete1(args1) {
     store.dispatch(accountDeleted({key: args1}));
 }
 
-function Handler4(args1) {
+function Handler_Delete2(args1) {
     store.dispatch(assetHistoryAdded({id: args1, value: 0}));
 }
 
-deleteEvent.addHandler(Handler3);
-deleteEvent.addHandler(Handler4);
+deleteEvent.addHandler(Handler_Delete1);
+deleteEvent.addHandler(Handler_Delete2);
 
 export function DeleteAccount(args1){
     deleteEvent.invoke(args1)
@@ -97,7 +97,7 @@ export function DeleteAccount(args1){
 //=========================================EDIT=========================================
 const editEvent = new EventDelegate();
 
-function Handler5(args1, args2, args3, args4, args5, args6) {
+function Handler_Edit1(args1, args2, args3, args4, args5, args6) {
     if(args5 === null || args5 === undefined){
         store.dispatch(accountEdited({key: args1, name: args2, value: args3, type: args4}));
     }
@@ -107,12 +107,12 @@ function Handler5(args1, args2, args3, args4, args5, args6) {
     
 }
 
-function Handler6(args1, args2, args3, args4, args5, args6) {
+function Handler_Edit2(args1, args2, args3, args4, args5, args6) {
     store.dispatch(assetHistoryAdded({id: args1, value: args3}));//紀錄資產歷史
 }
 
-editEvent.addHandler(Handler5);
-editEvent.addHandler(Handler6);
+editEvent.addHandler(Handler_Edit1);
+editEvent.addHandler(Handler_Edit2);
 
 
 export function EditAccount(args1, args2, args3, args4, args5, args6){
