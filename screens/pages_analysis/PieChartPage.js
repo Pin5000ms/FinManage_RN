@@ -1,9 +1,7 @@
 import { Text, View} from 'react-native';
 import React, { useState } from 'react';
 import store from '../../store/configureStore';
-import {
-  PieChart
-} from "react-native-chart-kit";
+import {PieChart} from "react-native-chart-kit";
 
 
 const randomColor = () => {

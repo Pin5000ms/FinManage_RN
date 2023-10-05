@@ -1,10 +1,12 @@
 
-import { TouchableOpacity} from 'react-native';
+import { View, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
+
 import AssetStackScreen from './Tabs/AssetStackScreen';
+import AnalysisStackScreen from './Tabs/AnalysisStackScreen';
 import BalanceStackScreen from './Tabs/BalanceStackScreen';
 import SettingsScreen from './Tabs/SettingScreen';
 
@@ -31,11 +33,14 @@ AddAccount(generateUniqueKey(), "兆豐金", 1000*33.1, 1000, 33.1, 'stock')
 
 
 import { negIncomeAdded, posIncomeAdded } from '../store/incomes';
+import AddPage from './pages_asset/AddPage';
+
+
 store.dispatch(posIncomeAdded({name:"薪水", value:80000}));
-store.dispatch(negIncomeAdded({name:'房租', value: 10000}));
+store.dispatch(negIncomeAdded({name:'房租', value: 10500}));
 store.dispatch(negIncomeAdded({name:'生活費', value: 10000}));
 store.dispatch(negIncomeAdded({name:'學貸', value: 3000}));
-store.dispatch(negIncomeAdded({name:'家用', value: 12000}));
+store.dispatch(negIncomeAdded({name:'家用', value: 10000}));
 store.dispatch(negIncomeAdded({name:'手機', value: 1000}));
 
 
@@ -73,6 +78,44 @@ export default function MainScreen() {
             <Icon name="table" color={color} size={size} />),
         }}
       />
+
+      <Tab.Screen
+        name="Add"
+        component={AddPage}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: ({ color, size }) => (
+            <View
+              style={{
+                position: 'absolute',
+                borderColor: color,
+                borderWidth: 2,
+                bottom: 5, // space from bottombar
+                height: 60,
+                width: 60,
+                borderRadius: 60,
+                backgroundColor: colors._2,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Icon name = "plus" color ={color} size={30}/>
+            </View>
+              
+            ),
+        }}
+      />
+
+
+      <Tab.Screen
+        name="Analysis"
+        component={AnalysisStackScreen}
+        options={{
+          tabBarLabel: 'Analysis',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="chart-line" color={color} size={size} />),
+        }}
+      />
+
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}

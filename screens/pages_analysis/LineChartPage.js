@@ -91,9 +91,68 @@ function XMonthAgoDateStr(datepicked, n){
   
 }
 
+
+
 const LineChartPage = () => {
     const [showCalendar, setShowCalendar] = useState(false);
     const handleShowCalendar = () => {setShowCalendar(!showCalendar);};
+
+    //usestate 要放在function裡面
+    const [chartdata, setChartData] = useState({
+      labels: [XMonthAgoDateStr(datepicked,5),
+                XMonthAgoDateStr(datepicked,4),
+                  XMonthAgoDateStr(datepicked,3),
+                    XMonthAgoDateStr(datepicked,2),
+                      XMonthAgoDateStr(datepicked,1),
+                        XMonthAgoDateStr(datepicked,0)],
+      datasets: [
+        {
+          data: [
+            calculateTotalValue(XMonthAgoDate(datepicked, 5)),
+            calculateTotalValue(XMonthAgoDate(datepicked, 4)),
+            calculateTotalValue(XMonthAgoDate(datepicked, 3)),
+            calculateTotalValue(XMonthAgoDate(datepicked, 2)),
+            calculateTotalValue(XMonthAgoDate(datepicked, 1)),
+            calculateTotalValue(datepicked)
+          ]
+        }
+      ]
+    });
+    
+    const updateChartData = () => {
+      const newLabels = [
+        XMonthAgoDateStr(datepicked, 5),
+        XMonthAgoDateStr(datepicked, 4),
+        XMonthAgoDateStr(datepicked, 3),
+        XMonthAgoDateStr(datepicked, 2),
+        XMonthAgoDateStr(datepicked, 1),
+        XMonthAgoDateStr(datepicked, 0),
+      ];
+  
+      const newData = [
+        calculateTotalValue(XMonthAgoDate(datepicked, 5)),
+        calculateTotalValue(XMonthAgoDate(datepicked, 4)),
+        calculateTotalValue(XMonthAgoDate(datepicked, 3)),
+        calculateTotalValue(XMonthAgoDate(datepicked, 2)),
+        calculateTotalValue(XMonthAgoDate(datepicked, 1)),
+        calculateTotalValue(datepicked),
+      ];
+  
+      //利用setChartData更新圖表數據
+      setChartData({
+        labels: newLabels,
+        datasets: [
+          {
+            data: newData,
+          },
+        ],
+      });
+    };
+
+    //store發生變化時，呼叫updateChartData
+    const unsubscribe = store.subscribe(() => {
+      updateChartData()
+    })
 
     if (showCalendar)
     {
@@ -124,26 +183,7 @@ const LineChartPage = () => {
             </TouchableOpacity>
 
             <LineChart
-              data={{
-                labels: [XMonthAgoDateStr(datepicked,5),
-                          XMonthAgoDateStr(datepicked,4),
-                            XMonthAgoDateStr(datepicked,3),
-                              XMonthAgoDateStr(datepicked,2),
-                                XMonthAgoDateStr(datepicked,1),
-                                  XMonthAgoDateStr(datepicked,0)],
-                datasets: [
-                  {
-                    data: [
-                      calculateTotalValue(XMonthAgoDate(datepicked, 5)),
-                      calculateTotalValue(XMonthAgoDate(datepicked, 4)),
-                      calculateTotalValue(XMonthAgoDate(datepicked, 3)),
-                      calculateTotalValue(XMonthAgoDate(datepicked, 2)),
-                      calculateTotalValue(XMonthAgoDate(datepicked, 1)),
-                      calculateTotalValue(datepicked)
-                    ]
-                  }
-                ]
-              }}
+              data={chartdata}
               width={Dimensions.get("window").width} // from react-native
               height={220}
               yAxisLabel="$"

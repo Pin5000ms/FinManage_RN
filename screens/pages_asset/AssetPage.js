@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 
 function AssetPage({navigation}) {
 
-  
+  //usestate 要放在function裡面
   const [data,setData] = useState(store.getState().accounts);
 
 
@@ -76,21 +76,9 @@ function AssetPage({navigation}) {
       </View> */}
 
       <View style={{flexDirection: 'row', alignItems:'center'}}>
-        <View style={{flex:1, marginLeft:20, marginRight:20}}>
-          <TouchableOpacity onPress={() => {navigation.navigate('PieChart');}}>
-                <Icon name = "chart-pie" color ={colors._3} size={50}/>
-          </TouchableOpacity>
-        </View>
         <View style={{marginBottom:15,flex:3}}>
           <Text style = {styles.header1}>Total Balance :</Text>
           <Text style = {styles.header2}>$ {totalValue}</Text>
-        </View>
-        <View style={{flex:1}}>
-        </View>
-        <View style={{flex:1, marginRight:20}}>
-          <TouchableOpacity onPress={() => {navigation.navigate('LineChart');}}>
-                <Icon name = "chart-line" color ={colors._3} size={50}/>
-          </TouchableOpacity>
         </View>
       </View>
       
@@ -110,12 +98,6 @@ function AssetPage({navigation}) {
           //    <View style = {styles.separatorLine}></View>
           // }
       />
-      
-      
-      <TouchableOpacity style={styles.add} onPress={() => {navigation.navigate('Add');}}>
-            <Icon name = "plus" color ={colors._1} size={30}/>
-      </TouchableOpacity>
-
     </View>
       
     
