@@ -8,18 +8,20 @@ export default function Header({ iconName, title }) {
     return (
       //在此處 Icon的 fontSize可以控制Icon大小
       <View style={{ 
-        flexDirection: 'row', 
-        justifyContent: 'flex-start', 
-        alignItems: 'center', 
+        flexDirection: 'column', 
+        justifyContent: 'flex-start',
         height: 70,
         backgroundColor: colors._1,
-        paddingTop: insets.top,//避免蓋到手機上方狀態列
-        paddingBottom: insets.bottom,
-        paddingLeft: insets.left,
-        paddingRight: insets.right,
+        // paddingTop: insets.top,//避免蓋到手機上方狀態列
+        // paddingBottom: insets.bottom,
+        // paddingLeft: insets.left,
+        // paddingRight: insets.right,
         }}>
-        <Icon name={iconName} style={{color: colors._2,  marginHorizontal: 10, fontSize:20, justifyContent: 'center', alignItems: 'center'}} /> 
-        <Text style={{fontSize:20, color: colors._2, marginBottom:5}}>{title}</Text>
+        <View style={{height: insets.top, backgroundColor: colors._5}}/>
+        <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingTop : 5}}>
+          <Icon name={iconName} style={{color: colors._2,  marginHorizontal: 10, fontSize:20, justifyContent: 'center', alignItems: 'center'}} /> 
+          <Text style={{fontSize:20, color: colors._2, marginBottom:5}}>{title}</Text>
+        </View>
       </View>
     );
 }
