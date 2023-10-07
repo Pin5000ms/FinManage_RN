@@ -85,7 +85,7 @@ function SwitchNormalDetailEdit({navigation, type}){
       <TouchableOpacity style={AddEditStyles.button} onPress = 
           {() => 
             { 
-              AddAccount(generateUniqueKey(), inputText, inputValue, inputAmount, inputUnitVal, type)
+              AddAccount(generateUniqueKey(), inputText, inputValue, type, inputAmount, inputUnitVal)
               navigation.navigate('AssetPage');
             }  
           }>

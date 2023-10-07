@@ -48,11 +48,11 @@ function Handler_Add1(args1, args2, args3, args4, args5, args6) {
     if(args5 === null || args5 === undefined){
         store.dispatch(accountAdded({key: args1, name: args2, value: args3, type: args4}))
     }
-    else if(args6 === null || args6 === undefined){
-        store.dispatch(accountAdded({key: args1, name: args2, amount: args3, unitValue: args4, type: args5}))
-    }
+    // else if(args6 === null || args6 === undefined){
+    //     store.dispatch(accountAdded({key: args1, name: args2, amount: args3, unitValue: args4, type: args5}))
+    // }
     else{
-        store.dispatch(accountAdded({key: args1, name: args2, value:args3, amount: args4, unitValue: args5, type: args6}))
+        store.dispatch(accountAdded({key: args1, name: args2, value:args3, type: args4, amount: args5, unitValue: args6, }))
     }
 }
 
@@ -102,7 +102,7 @@ function Handler_Edit1(args1, args2, args3, args4, args5, args6) {
         store.dispatch(accountEdited({key: args1, name: args2, value: args3, type: args4}));
     }
     else{
-        store.dispatch(accountEdited({key: args1, name: args2, value: args3, amount: args4, unitValue: args5, type: args6}));
+        store.dispatch(accountEdited({key: args1, name: args2, value: args3, type: args4, amount: args5, unitValue: args6}));
     }
     
 }

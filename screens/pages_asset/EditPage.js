@@ -7,7 +7,7 @@ import { EditAccount, DeleteAccount } from '../components/Utility';
 
 
 
-function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
+function SwitchNormalDetailEdit({navigation, type, Key, p1, p2, p3, p4}){
 
   const [inputText, setText] = useState(p1);
   const [inputValue, setVal] = useState(p2);
@@ -58,7 +58,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
   };
 
   //股票、外幣、黃金、虛擬貨幣，等有單位價值的東西
-  if (id == 'stock' || id == 'foreign' || id == 'gold' || id == 'digit')
+  if (type == 'stock' || type == 'foreign' || type == 'gold' || type == 'digit')
   {
     return (
       <>
@@ -102,7 +102,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = //Save
           {() => 
             { 
-              EditAccount(Key, inputText, inputValue, inputAmount, inputUnitVal, id)
+              EditAccount(Key, inputText, inputValue, type, inputAmount, inputUnitVal)
               navigation.navigate('AssetPage');
             }  
           }>
@@ -149,7 +149,7 @@ function SwitchNormalDetailEdit({navigation, id, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = 
           {() => 
             { 
-              EditAccount(Key, inputText, inputValue, id)
+              EditAccount(Key, inputText, inputValue, type)
               navigation.navigate('AssetPage');
             }  
           }>
@@ -184,8 +184,8 @@ function EditPage ({route, navigation}) {
     const [inputType, setType] = useState(Type);
     function RadioButton(props) {
       return (
-          <TouchableOpacity style={inputType === props.id ? AddEditStyles.selected : AddEditStyles.unselected} 
-                 onPress = {  () => setType(props.id)  }>
+          <TouchableOpacity style={inputType === props.type ? AddEditStyles.selected : AddEditStyles.unselected} 
+                 onPress = {  () => setType(props.type)  }>
                   <Text style={AddEditStyles.buttonText}>{props.label}</Text>
           </TouchableOpacity>
       );
@@ -203,19 +203,19 @@ function EditPage ({route, navigation}) {
           </View>
           <View flex= {2} style={{flexDirection: 'column'}}>
             <View style={{flexDirection: 'row'}}>
-              <RadioButton label={'銀行'} id={'bank'}></RadioButton>
-              <RadioButton label={'現金'} id={'cash'} ></RadioButton>
-              <RadioButton label={'股票'} id={'stock'} ></RadioButton>
+              <RadioButton label={'銀行'} type={'bank'}></RadioButton>
+              <RadioButton label={'現金'} type={'cash'} ></RadioButton>
+              <RadioButton label={'股票'} type={'stock'} ></RadioButton>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <RadioButton label={'外幣'} id={'foreign'} ></RadioButton>
-              <RadioButton label={'黃金'} id={'gold'} ></RadioButton>
-              <RadioButton label={'數位'} id={'digit'} ></RadioButton>
+              <RadioButton label={'外幣'} type={'foreign'} ></RadioButton>
+              <RadioButton label={'黃金'} type={'gold'} ></RadioButton>
+              <RadioButton label={'數位'} type={'digit'} ></RadioButton>
             </View>
           </View>
         </View>
 
-        <SwitchNormalDetailEdit navigation={navigation} id={inputType} Key={Key} p1={Name} p2={Val} p3={Amount} p4={UnitVal}/>
+        <SwitchNormalDetailEdit navigation={navigation} type={inputType} Key={Key} p1={Name} p2={Val} p3={Amount} p4={UnitVal}/>
         
       </View>
     );
