@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { SwitchIconSrc } from '../components/SwitchIconSrc';
 import AddEditStyles from '../components/Styles';
 import { AddAccount, generateUniqueKey } from '../components/Utility';
+import Header from '../components/NavigationHeader';
 
 
 function SwitchNormalDetailEdit({navigation, type}){
@@ -159,6 +160,8 @@ function AddPage ({navigation}) {
   
     return (
       <View>
+        <Header iconName={"plus"}  title="新增"></Header>
+
         <View style={{flexDirection: 'row', alignItems:'center'}}>
           <View flex= {1}>
             <Image

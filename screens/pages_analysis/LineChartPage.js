@@ -11,13 +11,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 var datepicked = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59)
 
 
-const onDateChange = (date) => {
-    datepicked = new Date(date)
-    const year = datepicked.getFullYear()
-    const month = datepicked.getMonth()
-    const day = datepicked.getDate()
-    datepicked = new Date(year, month, day, 23, 59, 59)
-  }
+
 
 function convertToDate(item) {
     const dateStr = item.timeStamp.split('-')[0]
@@ -153,6 +147,16 @@ const LineChartPage = () => {
     const unsubscribe = store.subscribe(() => {
       updateChartData()
     })
+
+
+    const onDateChange = (date) => {
+      datepicked = new Date(date)
+      const year = datepicked.getFullYear()
+      const month = datepicked.getMonth()
+      const day = datepicked.getDate()
+      datepicked = new Date(year, month, day, 23, 59, 59)
+      updateChartData()
+    }
 
     if (showCalendar)
     {

@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
-import {accountReducer} from "./account";
+import accountReducer from "./account";
 import incomeReducer from "./incomes"
-
 import assetHistoryReducer from "./assetHistory";
 
 

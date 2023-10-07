@@ -1,17 +1,64 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
-
+import { createAction, createReducer, createSlice } from "@reduxjs/toolkit";
 // const ADD = "add";
 // const DELETE = "delete";
 // const EDIT = "edit";
-export const accountAdded = createAction("add"); //"add"為accountAdded的type  意即accountAdded.type = "add"
-export const accountDeleted = createAction("delete")
-export const accountEdited = createAction("edit")
+// export const accountAdded = createAction("add"); //"add"為accountAdded的type  意即accountAdded.type = "add"
+// export const accountDeleted = createAction("delete")
+// export const accountEdited = createAction("edit")
 
-//https://redux-toolkit.js.org/api/createReducer
+// //https://redux-toolkit.js.org/api/createReducer
 
-export const accountReducer = createReducer([], (builder) => {
-    builder
-      .addCase(accountAdded, (state, action) => {
+// export const accountReducer = createReducer([], (builder) => {
+//     builder
+//       .addCase(accountAdded, (state, action) => {
+//         //如果value沒有定義 改用amount*unitValue取代
+//         let tmpVal = 0;
+//         if(action.payload.value === undefined){
+//           tmpVal = action.payload.amount*action.payload.unitValue;
+//         }
+//         else{
+//           tmpVal = action.payload.value;
+//         }
+//         //如果有mutate state，就不用return
+//         state.push({
+//             key: action.payload.key, 
+//             name: action.payload.name, 
+//             value: tmpVal,
+//             type: action.payload.type,
+//             amount : action.payload.amount,
+//             unitValue: action.payload.unitValue
+//           });
+        
+//       })
+
+//       .addCase(accountDeleted, (state, action) => {
+//         //沒有mutate state，要加return
+//         return state.filter(item => item.key!==action.payload.key);
+//       })
+
+//       .addCase(accountEdited, (state, action) => {
+//         return state.map(item => item.key===action.payload.key ? 
+//             {...item, 
+//               date: new Date().toLocaleDateString(),
+//               time: new Date().toLocaleTimeString(),
+//               name: action.payload.name, 
+//               value: action.payload.value, 
+//               type: action.payload.type,
+//               amount : action.payload.amount,
+//               unitValue: action.payload.unitValue
+//             } :item);
+        
+//       })
+
+// })
+
+
+
+const slice = createSlice({
+  name: 'account',
+  initialState: [],
+  reducers:{
+      accountAdded:(state, action) =>{
         //如果value沒有定義 改用amount*unitValue取代
         let tmpVal = 0;
         if(action.payload.value === undefined){
@@ -20,7 +67,6 @@ export const accountReducer = createReducer([], (builder) => {
         else{
           tmpVal = action.payload.value;
         }
-        //assetHistoryAdded({id: newKey, value: tmpVal})
         //如果有mutate state，就不用return
         state.push({
             key: action.payload.key, 
@@ -30,33 +76,36 @@ export const accountReducer = createReducer([], (builder) => {
             amount : action.payload.amount,
             unitValue: action.payload.unitValue
           });
-        
-      })
-
-      .addCase(accountDeleted, (state, action) => {
-        //assetHistoryAdded({id: action.payload.key, value: 0});
+      },
+      accountDeleted: (state, action) =>{
         //沒有mutate state，要加return
         return state.filter(item => item.key!==action.payload.key);
-      })
-
-      .addCase(accountEdited, (state, action) => {
-        //assetHistoryAdded({id: action.payload.key, value: action.payload.value})
+      },
+      accountEdited: (state, action) =>{
         return state.map(item => item.key===action.payload.key ? 
-            {...item, 
-              date: new Date().toLocaleDateString(),
-              time: new Date().toLocaleTimeString(),
-              name: action.payload.name, 
-              value: action.payload.value, 
-              type: action.payload.type,
-              amount : action.payload.amount,
-              unitValue: action.payload.unitValue
-            } :item);
-        
-      })
+          {...item, 
+            date: new Date().toLocaleDateString(),
+            time: new Date().toLocaleTimeString(),
+            name: action.payload.name, 
+            value: action.payload.value, 
+            type: action.payload.type,
+            amount : action.payload.amount,
+            unitValue: action.payload.unitValue
+          } :item);
 
-}
+      },
+  }
+})
 
-)
+const accountReducer = slice.reducer;
+
+
+export const { accountAdded, accountDeleted,  accountEdited} = slice.actions;
+
+export default accountReducer;
+
+
+
 //export default accountReducer;
 
 // export default function reducer(state = []/*預設為空*/, action){

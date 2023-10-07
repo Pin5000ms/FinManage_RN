@@ -50,7 +50,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MainScreen() {
   return (
-    <Tab.Navigator initialRouteName="Home" 
+    <Tab.Navigator initialRouteName="Analysis" 
     //tabBarHideOnKeyboard: true 鍵盤出現自動隱藏
     screenOptions={{
       tabBarActiveTintColor: colors._1,
@@ -90,7 +90,7 @@ export default function MainScreen() {
                 position: 'absolute',
                 borderColor: color,
                 borderWidth: 2,
-                bottom: 5, // space from bottombar
+                bottom: -5, // space from bottombar
                 height: 60,
                 width: 60,
                 borderRadius: 60,
