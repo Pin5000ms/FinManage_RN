@@ -69,7 +69,7 @@ const slice = createSlice({
         }
         //如果有mutate state，就不用return
         state.push({
-            key: action.payload.key, 
+            id: action.payload.id, 
             name: action.payload.name, 
             value: tmpVal,
             type: action.payload.type,
@@ -79,10 +79,10 @@ const slice = createSlice({
       },
       accountDeleted: (state, action) =>{
         //沒有mutate state，要加return
-        return state.filter(item => item.key!==action.payload.key);
+        return state.filter(item => item.id!==action.payload.id);
       },
       accountEdited: (state, action) =>{
-        return state.map(item => item.key===action.payload.key ? 
+        return state.map(item => item.id === action.payload.id ? 
           {...item, 
             date: new Date().toLocaleDateString(),
             time: new Date().toLocaleTimeString(),

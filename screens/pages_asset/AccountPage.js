@@ -3,9 +3,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 import colors from '../../config/colors';
 import store from '../../store/configureStore';
-import RowData from '../components/RowData';
-
-//import { DraggableFlatListProps } from "react-native-draggable-flatlist"
+import SubRowData from '../components/SubRowData';
 
 
 const styles = StyleSheet.create({
@@ -49,59 +47,60 @@ const styles = StyleSheet.create({
     }
     });
 
+function AccountPage({route, navigation}) {
+    const {Id} = route.params;
+    const {Name} = route.params;
+    const {Val} = route.params;
+    const {Type} = route.params;
+    const {Amount} = route.params;
+    const {UnitVal} = route.params;
 
-function AssetPage({navigation}) {
+    console.log(store.getState().assetHistory)
+    //usestate 要放在function裡面
+    const [data, setData] = useState(store.getState().assetHistory);
+  
+  
+    //若store發生改變，觸發setData事件
+    const unsubscribe = store.subscribe(() => {
+      setData(store.getState().assetHistory)
+    })
+  
 
-  //usestate 要放在function裡面
-  const [data,setData] = useState(store.getState().accounts);
-
-
-  //若store發生改變，觸發setData事件
-  const unsubscribe = store.subscribe(() => {
-    setData(store.getState().accounts)
-  })
-
-
-
-  const totalValue = data.reduce((sum, next) => {
-    return sum + parseInt(next.value)
-  }, 0)
-
-  return (
-
-    <View style={styles.container}>
-
-      {/* <View style={styles.headerContainer}>
-        <Text >Asset</Text>
-      </View> */}
-
-      <View style={{flexDirection: 'row', alignItems:'center'}}>
-        <View style={{marginBottom:15,flex:3}}>
-          <Text style = {styles.header1}>Total Balance :</Text>
-          <Text style = {styles.header2}>$ {totalValue}</Text>
+  
+    return (
+  
+      <View style={styles.container}>
+  
+        {/* <View style={styles.headerContainer}>
+          <Text >Asset</Text>
+        </View> */}
+  
+        <View style={{flexDirection: 'row', alignItems:'center'}}>
+          <View style={{marginBottom:15,flex:3}}>
+            <Text>{Name}</Text>
+          </View>
         </View>
-      </View>
-      
-      
-      <FlatList style={styles.container}
+        
+        <FlatList style={styles.container}
           data={data}
           /*使用一個自定義的元件RowData，將item和navigation傳入 */
           renderItem={({item}) => 
-            <RowData
+            <SubRowData
               curitem={item}
               navigation={navigation}
             />
           }
-          /*告訴RN 每個item的辨別項是 叫做id (預設是id)*/
+          /*告訴RN 每個item的辨別項是 叫做key (預設是id)*/
           keyExtractor={(item) => item.id}
           // ItemSeparatorComponent ={
           //    <View style = {styles.separatorLine}></View>
           // }
-      />
-    </View>
+        />
+        
+      </View>
+        
       
-    
-  );
-}
-
-export default AssetPage;
+    );
+  }
+  
+  export default AccountPage;

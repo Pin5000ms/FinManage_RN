@@ -7,7 +7,7 @@ import { EditAccount, DeleteAccount } from '../components/Utility';
 
 
 
-function SwitchNormalDetailEdit({navigation, type, Key, p1, p2, p3, p4}){
+function SwitchNormalDetailEdit({navigation, type, Id, p1, p2, p3, p4}){
 
   const [inputText, setText] = useState(p1);
   const [inputValue, setVal] = useState(p2);
@@ -102,7 +102,7 @@ function SwitchNormalDetailEdit({navigation, type, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = //Save
           {() => 
             { 
-              EditAccount(Key, inputText, inputValue, type, inputAmount, inputUnitVal)
+              EditAccount(Id, inputText, inputValue, type, inputAmount, inputUnitVal)
               navigation.navigate('AssetPage');
             }  
           }>
@@ -111,7 +111,7 @@ function SwitchNormalDetailEdit({navigation, type, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = //Delete
         {() => 
           { 
-            DeleteAccount(Key)
+            DeleteAccount(Id)
             navigation.navigate('AssetPage');
           }
         }>
@@ -149,7 +149,7 @@ function SwitchNormalDetailEdit({navigation, type, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = 
           {() => 
             { 
-              EditAccount(Key, inputText, inputValue, type)
+              EditAccount(Id, inputText, inputValue, type)
               navigation.navigate('AssetPage');
             }  
           }>
@@ -158,7 +158,7 @@ function SwitchNormalDetailEdit({navigation, type, Key, p1, p2, p3, p4}){
       <TouchableOpacity style={AddEditStyles.button} onPress = 
         {() => 
           { 
-            DeleteAccount(Key)
+            DeleteAccount(Id)
             navigation.navigate('AssetPage');
           }  
         }>
@@ -174,7 +174,7 @@ function SwitchNormalDetailEdit({navigation, type, Key, p1, p2, p3, p4}){
 
 
 function EditPage ({route, navigation}) {
-    const {Key} = route.params;
+    const {Id} = route.params;
     const {Name} = route.params;
     const {Val} = route.params;
     const {Type} = route.params;
@@ -215,7 +215,7 @@ function EditPage ({route, navigation}) {
           </View>
         </View>
 
-        <SwitchNormalDetailEdit navigation={navigation} type={inputType} Key={Key} p1={Name} p2={Val} p3={Amount} p4={UnitVal}/>
+        <SwitchNormalDetailEdit navigation={navigation} type={inputType} Id={Id} p1={Name} p2={Val} p3={Amount} p4={UnitVal}/>
         
       </View>
     );

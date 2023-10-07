@@ -102,13 +102,15 @@ export default function RowData ({curitem, navigation}) {
     return (
             <Swipeable renderLeftActions={swipeRight} rightThreshold={0.7} friction={1.5}>
                     <View style={styles.container}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Edit', 
-                        {   Key: curitem.key, 
+                        <TouchableOpacity onPress={() => 
+                        navigation.navigate('Edit', 
+                           {Id: curitem.id, 
                             Name : curitem.name, 
                             Val : curitem.value, 
                             Type: curitem.type, 
                             Amount: curitem.amount, 
-                            UnitVal: curitem.unitValue})}>
+                            UnitVal: curitem.unitValue})
+                        }>
 
                             <View flex= {3} style = {{flexDirection:'row', alignItems: 'center'}} >
                                 <Image
@@ -116,8 +118,8 @@ export default function RowData ({curitem, navigation}) {
                                     source={SwitchIconSrc(curitem.type)} //根據type選擇Icon
                                 />
                                 <View style={{flexDirection: 'column',alignItems:"flex-start"}}>
-                                <Text style={styles.itemText}> {curitem.name}  </Text>
-                                <Text style={styles.itemText}>$ {curitem.value} </Text>
+                                    <Text style={styles.itemText}> {curitem.name}  </Text>
+                                    <Text style={styles.itemText}>$ {curitem.value} </Text>
                                 </View>
                             </View>
                         </TouchableOpacity> 

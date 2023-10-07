@@ -15,20 +15,20 @@ import colors from '../config/colors';
 
 import store from '../store/configureStore';
 
-import {generateUniqueKey, AddAccount} from './components/Utility';
+import {generateUniqueID, AddAccount} from './components/Utility';
 
-AddAccount(generateUniqueKey(), "Richart", 50000, 'bank')
-AddAccount(generateUniqueKey(), "富邦", 330000, 'bank')
-AddAccount(generateUniqueKey(), "永豐大戶", 500000, 'bank')
-AddAccount(generateUniqueKey(), "聯邦銀行", 100000, 'bank')
-AddAccount(generateUniqueKey(), "LineBank", 50000, 'bank')
-AddAccount(generateUniqueKey(), "合作金庫", 130000, 'bank')
-AddAccount(generateUniqueKey(), "國泰", 92000, 'bank')
+AddAccount(generateUniqueID(), "Richart", 50000, 'bank')
+AddAccount(generateUniqueID(), "富邦", 330000, 'bank')
+AddAccount(generateUniqueID(), "永豐大戶", 500000, 'bank')
+AddAccount(generateUniqueID(), "聯邦銀行", 100000, 'bank')
+AddAccount(generateUniqueID(), "LineBank", 50000, 'bank')
+AddAccount(generateUniqueID(), "合作金庫", 130000, 'bank')
+AddAccount(generateUniqueID(), "國泰", 92000, 'bank')
 
-AddAccount(generateUniqueKey(), "台積電", 110*525, 'stock', 110, 525, )
-AddAccount(generateUniqueKey(), "華南金", 2000*22.1, 'stock', 2000, 22.1)
-AddAccount(generateUniqueKey(), "台中銀", 1000*13.8, 'stock', 1000, 13.8)
-AddAccount(generateUniqueKey(), "兆豐金", 1000*33.1, 'stock', 1000, 33.1)
+AddAccount(generateUniqueID(), "台積電", 110*525, 'stock', 110, 525, )
+AddAccount(generateUniqueID(), "華南金", 2000*22.1, 'stock', 2000, 22.1)
+AddAccount(generateUniqueID(), "台中銀", 1000*13.8, 'stock', 1000, 13.8)
+AddAccount(generateUniqueID(), "兆豐金", 1000*33.1, 'stock', 1000, 33.1)
 
 
 

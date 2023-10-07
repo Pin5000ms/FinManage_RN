@@ -2,7 +2,7 @@ import { Text, View, TouchableOpacity, TextInput, Image} from 'react-native';
 import React, { useState } from 'react';
 import { SwitchIconSrc } from '../components/SwitchIconSrc';
 import AddEditStyles from '../components/Styles';
-import { AddAccount, generateUniqueKey } from '../components/Utility';
+import { AddAccount, generateUniqueID } from '../components/Utility';
 import Header from '../components/NavigationHeader';
 
 
@@ -85,7 +85,7 @@ function SwitchNormalDetailEdit({navigation, type}){
       <TouchableOpacity style={AddEditStyles.button} onPress = 
           {() => 
             { 
-              AddAccount(generateUniqueKey(), inputText, inputValue, type, inputAmount, inputUnitVal)
+              AddAccount(generateUniqueID(), inputText, inputValue, type, inputAmount, inputUnitVal)
               navigation.navigate('AssetPage');
             }  
           }>
@@ -126,7 +126,7 @@ function SwitchNormalDetailEdit({navigation, type}){
       <TouchableOpacity style={AddEditStyles.button} onPress = 
           {() => 
             { 
-              AddAccount(generateUniqueKey(), inputText, inputValue, type)
+              AddAccount(generateUniqueID(), inputText, inputValue, type)
               navigation.navigate('AssetPage');
             }  
           }>
