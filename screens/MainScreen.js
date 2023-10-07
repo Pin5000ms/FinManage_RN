@@ -50,7 +50,7 @@ const Tab = createBottomTabNavigator();
 
 export default function MainScreen() {
   return (
-    <Tab.Navigator initialRouteName="Analysis" 
+    <Tab.Navigator initialRouteName="Asset" 
     //tabBarHideOnKeyboard: true 鍵盤出現自動隱藏
     screenOptions={{
       tabBarActiveTintColor: colors._1,

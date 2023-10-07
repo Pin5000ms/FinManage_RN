@@ -17,14 +17,15 @@ const styles = StyleSheet.create({
     header1:{
       fontSize: 20,
       textAlign: 'center',
-      color: colors._3,
+      color: colors._2,
       fontWeight: 'bold',
     },
     header2:{
       fontSize: 30,
       textAlign: 'center',
-      color: colors._3,
+      color: colors._2,
       fontWeight: 'bold',
+      marginBottom: 10
     },
 
     headerContainer: {
@@ -46,8 +47,20 @@ const styles = StyleSheet.create({
     separatorLine:{
       height : 1,
       backgroundColor: colors.black,
-    }
-    });
+    },
+    container2: {
+      borderRadius: 10,
+      padding: 20,
+      alignItems: 'center',
+      marginBottom:15,
+      flex:3
+    },
+    button: {
+      marginTop: 5,
+      padding: 5,
+      borderRadius: 5,
+    },
+  });
 
 
 function AssetPage({navigation}) {
@@ -67,6 +80,12 @@ function AssetPage({navigation}) {
     return sum + parseInt(next.value)
   }, 0)
 
+
+  const [showBalance, setShowBalance] = useState(true); // 預設為顯示餘額
+  const toggleBalance = () => {
+    setShowBalance(!showBalance); // 切換餘額的可見性
+  };
+
   return (
 
     <View style={styles.container}>
@@ -75,12 +94,23 @@ function AssetPage({navigation}) {
         <Text >Asset</Text>
       </View> */}
 
-      <View style={{flexDirection: 'row', alignItems:'center'}}>
-        <View style={{marginBottom:15,flex:3}}>
-          <Text style = {styles.header1}>Total Balance :</Text>
-          <Text style = {styles.header2}>$ {totalValue}</Text>
+      
+      <View style={{marginTop:15, marginBottom:15, marginLeft:10, marginRight:10, backgroundColor:colors._1, borderRadius: 8}}>
+        <View style={{flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
+          <Text style = {styles.header1}>資產總覽 </Text>
+          <TouchableOpacity onPress={toggleBalance} style={styles.button}>
+            <Icon name={showBalance ? 'eye' : 'eye-slash'} // 根據 showBalance 切換Icon
+              size={25}
+              color= {colors._2}>
+            </Icon>
+          </TouchableOpacity>
         </View>
+
+        {showBalance ? 
+          (<Text style={styles.header2}>{totalValue.toLocaleString()}</Text>) : //toLocaleString()可以幫數字每3位加上,
+          (<Text style={styles.header2}>********</Text>)}
       </View>
+        
       
       
       <FlatList style={styles.container}

@@ -36,9 +36,9 @@ function OverViewPage() {
       <TabBar
         {...props}
         indicatorStyle={{ backgroundColor: colors._2 }}
-        style={{ backgroundColor: colors._1, height: 50}} //加justifyContent: 'center', alignItems: 'center'會出問題
+        style={{ backgroundColor: colors._1, height: 40}} //加justifyContent: 'center', alignItems: 'center'字會不見
         renderLabel={({ route, focused, color }) => (
-          <Text style={{ color: color, fontSize:16}}>
+          <Text style={{ color: color, fontSize:14, height:30}}>
               {route.title}
           </Text>
         )}
@@ -53,6 +53,7 @@ function OverViewPage() {
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
+        swipeEnabled={false} //禁用滑動煥頁
       />
     );
 

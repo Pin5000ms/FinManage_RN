@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import CalendarPicker from 'react-native-calendar-picker';
 import { LineChart } from 'react-native-chart-kit';
-import { Dimensions } from 'react-native';
+import { ScrollView, Dimensions } from 'react-native';
 import store from '../../store/configureStore';
 // https://morioh.com/p/4d176b3d77be
 // https://www.npmjs.com/package/react-native-calendar-picker
@@ -84,7 +84,6 @@ function XMonthAgoDateStr(datepicked, n){
   }
   
 }
-
 
 
 const LineChartPage = () => {
@@ -185,36 +184,47 @@ const LineChartPage = () => {
             <TouchableOpacity style = {{borderRadius:5, elevation: 5, margin:20}} title="選擇日期" onPress={handleShowCalendar}>
                 <Text style = {{margin:20,textAlign: 'center'}}>選擇日期</Text>
             </TouchableOpacity>
-
-            <LineChart
-              data={chartdata}
-              width={Dimensions.get("window").width} // from react-native
-              height={220}
-              yAxisLabel="$"
-              yAxisSuffix="k"
-              yAxisInterval={1} // optional, defaults to 1
-              chartConfig={{
-                backgroundColor: "#e26a00",
-                backgroundGradientFrom: "#fb8c00",
-                backgroundGradientTo: "#ffa726",
-                decimalPlaces: 0, // optional, defaults to 2dp
-                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                style: {
+            
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={true} // to hide scroll bar
+            >
+              
+              <LineChart
+                data={chartdata}
+                width={chartdata.labels.length*Dimensions.get("window").width/6} // 一個畫面寬度放6個label
+                height={220}
+                //yAxisLabel="$"
+                //yAxisSuffix="k"
+                //yAxisInterval={1} // optional, defaults to 1
+                withHorizontalLabels={false} // 移除Y軸標籤
+                withDots={true}
+                chartConfig={{
+                  backgroundColor: "#e26a00",
+                  backgroundGradientFrom: "#fb8c00",
+                  backgroundGradientTo: "#ffa726",
+                  decimalPlaces: 0, // optional, defaults to 2dp
+                  color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                  labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                  style: {
+                    borderRadius: 16
+                  },
+                  propsForDots: {
+                    r: "6",
+                    strokeWidth: "2",
+                    stroke: "#ffa726"
+                  }
+                }}
+                bezier
+                fromZero
+                style={{
+                  paddingRight:20, //移除左邊的空白處 https://github.com/indiespirit/react-native-chart-kit/issues/90
+                  marginVertical: 8,
                   borderRadius: 16
-                },
-                propsForDots: {
-                  r: "6",
-                  strokeWidth: "2",
-                  stroke: "#ffa726"
-                }
-              }}
-              bezier
-              style={{
-                marginVertical: 8,
-                borderRadius: 16
-              }}
-            />
+                }}
+              />
+            </ScrollView>
+
 
           </View>
             

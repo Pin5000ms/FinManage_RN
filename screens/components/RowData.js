@@ -119,7 +119,7 @@ export default function RowData ({curitem, navigation}) {
                                 />
                                 <View style={{flexDirection: 'column',alignItems:"flex-start"}}>
                                     <Text style={styles.itemText}> {curitem.name}  </Text>
-                                    <Text style={styles.itemText}>$ {curitem.value} </Text>
+                                    <Text style={styles.itemText}>$ {curitem.value.toLocaleString()} </Text>
                                 </View>
                             </View>
                         </TouchableOpacity> 
