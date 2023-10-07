@@ -27,8 +27,8 @@ function OverViewPage() {
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-      { key: 'first', title: 'LineChart' },
-      { key: 'second', title: 'PieChart' },
+      { key: 'first', title: '趨勢' },
+      { key: 'second', title: '比例' },
     ]);
 
     //客製化TabView的Header

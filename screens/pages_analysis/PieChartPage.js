@@ -24,7 +24,9 @@ function transformData(inputData) {
     legendFontSize: 15
   }
   ));
-  return result;
+  //依照val排序，由大到小
+  const sortedResult = result.slice().sort((a, b) => b.val - a.val);
+  return sortedResult;
 }
 
 function transformDataByType(inputData) {
@@ -44,8 +46,9 @@ function transformDataByType(inputData) {
     legendFontColor: '#7F7F7F',
     legendFontSize: 15
   }));
-
-  return result;
+  //依照sum排序，由大到小
+  const sortedResult = result.slice().sort((a, b) => b.sum - a.sum);
+  return sortedResult;
 }
 
 function PieChartPage() {
@@ -69,7 +72,7 @@ function PieChartPage() {
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Pie Chart Analysis by Account</Text>
+          <Text>資金組成比例(根據帳戶)</Text>
 
           <PieChart
             data={data1}
@@ -93,7 +96,7 @@ function PieChartPage() {
           />
           
 
-          <Text>Pie Chart Analysis by Type</Text>
+          <Text>資金組成比例(根據類型)</Text>
           <PieChart
             data={data2}
             width={300}

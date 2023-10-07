@@ -25,10 +25,10 @@ AddAccount(generateUniqueKey(), "LineBank", 50000, 'bank')
 AddAccount(generateUniqueKey(), "合作金庫", 130000, 'bank')
 AddAccount(generateUniqueKey(), "國泰", 92000, 'bank')
 
-AddAccount(generateUniqueKey(), "台積電", 110*525, 110, 525, 'stock')
-AddAccount(generateUniqueKey(), "華南金", 2000*22.1, 2000, 22.1, 'stock')
-AddAccount(generateUniqueKey(), "台中銀", 1000*13.8, 1000, 13.8, 'stock')
-AddAccount(generateUniqueKey(), "兆豐金", 1000*33.1, 1000, 33.1, 'stock')
+AddAccount(generateUniqueKey(), "台積電", 110*525, 'stock', 110, 525, )
+AddAccount(generateUniqueKey(), "華南金", 2000*22.1, 'stock', 2000, 22.1)
+AddAccount(generateUniqueKey(), "台中銀", 1000*13.8, 'stock', 1000, 13.8)
+AddAccount(generateUniqueKey(), "兆豐金", 1000*33.1, 'stock', 1000, 33.1)
 
 
 
