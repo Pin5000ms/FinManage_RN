@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/NavigationHeader';
-import BalancePage from '../pages_netincome/BalancePage';
-import AddPage from '../pages_netincome/AddPage';
+import BalancePage from '../pages_balance/BalancePage';
+import AddPage from '../pages_balance/AddPage';
 
 const Stack = createStackNavigator();
 

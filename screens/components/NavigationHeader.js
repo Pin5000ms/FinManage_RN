@@ -1,8 +1,5 @@
 import { View, Text} from 'react-native';
-import {
-    SafeAreaProvider,
-    useSafeAreaInsets,
-  } from 'react-native-safe-area-context';
+import { SafeAreaProvider, useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../config/colors';
 
