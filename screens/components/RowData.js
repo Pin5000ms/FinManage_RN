@@ -112,11 +112,11 @@ export default function RowData ({curitem, navigation}) {
                     <TouchableOpacity style = {styles.editBox} onPress={() => navigation.navigate('Edit', 
                     {
                         Id: curitem.id, 
-                        Name : curitem.name, 
-                        Val : curitem.value, 
-                        Type: curitem.type, 
-                        Amount: curitem.amount, 
-                        UnitVal: curitem.unitValue})}>
+                        Name : getAccountById(curitem.id).name, 
+                        Val : getAccountById(curitem.id).value, 
+                        Type: getAccountById(curitem.id).type, 
+                        Amount: getAccountById(curitem.id).amount, 
+                        UnitVal: getAccountById(curitem.id).unitValue})}>
                         <Icon name = "edit" size={25} color ={colors._2} />
                     </TouchableOpacity> 
                 </Animated.View>

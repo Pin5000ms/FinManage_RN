@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 function AssetPage({navigation}) {
 
   //usestate 要放在function裡面
-  const [data, setData] = useState(getLatestAsset());
+  const [data, setData] = useState(getLatestAsset()); //改為使用assetHistory
 
 
   //若store發生改變，觸發setData事件
@@ -106,7 +106,7 @@ function AssetPage({navigation}) {
     const filteredData = getLatestAsset().filter((item) => getAccountById(item.id).name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase()) );
     return filteredData
   }
-  
+
   const [search, setSearch] = useState(null);
 
   useEffect(()=>{
