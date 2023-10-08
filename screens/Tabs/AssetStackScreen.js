@@ -18,6 +18,7 @@ function AssetStackScreen() {
       <HomeStack.Screen 
         name="Edit" 
         component={EditPage}
+        options={{headerTitle: "編輯"}}
         />
       <HomeStack.Screen 
         name="Account" 

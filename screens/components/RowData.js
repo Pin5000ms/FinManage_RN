@@ -5,21 +5,10 @@ import colors from '../../config/colors';
 import { Swipeable } from 'react-native-gesture-handler';
 import { SwitchIconSrc } from './SwitchIconSrc';
 import { Animated } from 'react-native';
-import { DeleteAccount } from './Utility';
-import store from '../../store/configureStore';
+import { DeleteAccount, getLatestAsset, getAccountById } from './Utility';
 
-function getLastestTime(id) 
+function getLastestDate(dateString) 
 {
-    // 將資料以 id 為鍵進行分組，取每個 id 最新的一筆資料
-    const latestDataById = store.getState().assetHistory.reduce((result, item) => {
-    if (!result[item.id] || new Date(item.timeStamp) > new Date(result[item.id].timeStamp) ) 
-        {
-        result[item.id] = item;
-        }
-        return result;
-    }, {});
-    const latestData = Object.values(latestDataById);
-    const dateString = latestData.filter(item => item.id === id)[0].timeStamp;
     const parts = dateString.split("-");
     // 提取 "-" 之前的部分
     const result = parts[0];
@@ -52,7 +41,7 @@ const styles = StyleSheet.create({
     },
     deleteBox: {
         flex:1,
-        backgroundColor: 'red',
+        backgroundColor: colors.red,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
@@ -61,7 +50,7 @@ const styles = StyleSheet.create({
     },
     editBox: {
         flex:1,
-        backgroundColor: 'green',
+        backgroundColor: colors.green,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
@@ -115,14 +104,14 @@ export default function RowData ({curitem, navigation}) {
         return (
             <>
                 <Animated.View style ={ {transform:[{scale:scale}]}}>
-                    <TouchableOpacity style = {styles.deleteBox} onPress={()=> DeleteAccount(curitem.key)}>
+                    <TouchableOpacity style = {styles.deleteBox} onPress={()=> DeleteAccount(curitem.id)}>
                         <Icon name = "trash" size={25} color ={colors._2} />
                     </TouchableOpacity>
                 </Animated.View>
                 <Animated.View style ={ {transform:[{scale:scale}]}}>
                     <TouchableOpacity style = {styles.editBox} onPress={() => navigation.navigate('Edit', 
                     {
-                        Key: curitem.key, 
+                        Id: curitem.id, 
                         Name : curitem.name, 
                         Val : curitem.value, 
                         Type: curitem.type, 
@@ -141,22 +130,22 @@ export default function RowData ({curitem, navigation}) {
                         style ={{flex:1}}
                         onPress={() => navigation.navigate('Edit', 
                            {Id: curitem.id, 
-                            Name : curitem.name, 
-                            Val : curitem.value, 
-                            Type: curitem.type, 
-                            Amount: curitem.amount, 
-                            UnitVal: curitem.unitValue})
+                            Name : getAccountById(curitem.id).name, 
+                            Val : getAccountById(curitem.id).value, 
+                            Type: getAccountById(curitem.id).type, 
+                            Amount: getAccountById(curitem.id).amount, 
+                            UnitVal: getAccountById(curitem.id).unitValue})
                         }>
 
                             <View style = {{flexDirection:'row', alignItems: 'center', flex: 1}} >
                                 <Image style={styles.icon}
-                                    source={SwitchIconSrc(curitem.type)} //根據type選擇Icon
+                                    source={SwitchIconSrc(getAccountById(curitem.id).type)} //根據type選擇Icon
                                 />
                                 <View style={styles.itemContainer}>
-                                    <Text style={styles.itemName}> {curitem.name} </Text>
+                                    <Text style={styles.itemName}> {getAccountById(curitem.id).name} </Text>
                                     <Text style={styles.itemValue}>$ {curitem.value.toLocaleString()} </Text>
                                 </View>
-                                <Text style={styles.itemTime}>{getLastestTime(curitem.id)}</Text>
+                                <Text style={styles.itemTime}>{getLastestDate(curitem.timeStamp)}</Text>
                             </View>
                         </TouchableOpacity>
 

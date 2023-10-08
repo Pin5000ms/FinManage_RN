@@ -5,6 +5,8 @@ export default{
     _4: 'rgba(220, 159, 180, 1.0)', //pink
     _5: 'rgba(83, 134, 135, 1.0)', //blue
     _6: 'rgba(230, 230, 230, 1.0)', //lightgray
+    red: 'rgba(203, 27, 69, 1.0)',
+    green: 'rgba(34, 125, 81, 1.0)',
     black: 'rgba(11, 16, 19, 1.0)',
     gray: 'rgba(130, 130, 130, 1.0)',
     silver: 'rgba(145, 152, 159, 1.0)',
