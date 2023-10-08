@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     column: {
         flexDirection:'column',
         flex:1,
+
     },
     columnWithBackground1: {
         flexDirection:'column',
@@ -169,7 +170,7 @@ function BalancePage({navigation}){
     }, 0)
     return(
         <View style = {styles.column}>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', backgroundColor: colors._6}}>
                 <View style={styles.container_net}>
                     <Text style={{color:colors._2, fontSize:12}}>淨收入: </Text>
                     <Text style={{color:colors._2, fontSize:20}}>${totalIncome - totalOutcome}</Text>

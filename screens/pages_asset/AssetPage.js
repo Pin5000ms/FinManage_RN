@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection:'column', //避免下面的導覽列擋到
         flex : 1,
+        backgroundColor: colors._6
     },
     header1:{
       fontSize: 20,

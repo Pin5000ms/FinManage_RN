@@ -11,16 +11,16 @@ export default function Header({ iconName, title }) {
         flexDirection: 'column', 
         justifyContent: 'flex-start',
         height: 70,
-        backgroundColor: colors._1,
+        backgroundColor: colors._6,
         // paddingTop: insets.top,//避免蓋到手機上方狀態列
         // paddingBottom: insets.bottom,
         // paddingLeft: insets.left,
         // paddingRight: insets.right,
         }}>
-        <View style={{height: insets.top, backgroundColor: colors._5}}/>
+        <View style={{height: insets.top, backgroundColor: colors._6}}/>
         <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingTop : 5}}>
-          <Icon name={iconName} style={{color: colors._2,  marginHorizontal: 10, fontSize:20, justifyContent: 'center', alignItems: 'center'}} /> 
-          <Text style={{fontSize:20, color: colors._2, marginBottom:5}}>{title}</Text>
+          <Icon name={iconName} style={{color: colors.gray,  marginHorizontal: 10, fontSize:20, justifyContent: 'center', alignItems: 'center'}} /> 
+          <Text style={{fontSize:20, color: colors.gray, marginBottom:5}}>{title}</Text>
         </View>
       </View>
     );
