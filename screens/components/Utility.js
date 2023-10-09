@@ -34,6 +34,19 @@ export function getLatestAsset(){
         return latestData;
 }
 
+export function getLatestAssetById(id){
+    // 將資料以 id 為鍵進行分組，取每個 id 最新的一筆資料
+    const latestDataById = store.getState().assetHistory.reduce((result, item) => {
+        if (!result[item.id] || new Date(item.timeStamp) > new Date(result[item.id].timeStamp) ) 
+            {
+            result[item.id] = item;
+            }
+            return result;
+        }, {});
+        const latestData = Object.values(latestDataById);
+    return latestData.filter(item => item.id === id)[0];
+}
+
 export function getAccountById(id){
     return store.getState().accounts.filter(item => item.id === id)[0];
 }

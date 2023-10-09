@@ -11,7 +11,7 @@ import {
   } from 'react-native-popup-menu';
 import { SwitchIconSrc } from './SwitchIconSrc';
 import { Animated } from 'react-native';
-import { DeleteAccount, getLatestAsset, getAccountById } from './Utility';
+import { DeleteAccount, getLatestAssetById } from './Utility';
 
 function getLastestDate(dateString) 
 {
@@ -157,12 +157,12 @@ export default function RowData ({curitem, navigation}) {
                         
                     </TouchableOpacity>
 
-                    <Text style={styles.itemTime}>{}</Text>
+                    <Text style={styles.itemTime}>{getLastestDate(getLatestAssetById(curitem.id).timeStamp)}</Text>
 
 
                     <Menu>
                         <MenuTrigger style={{width:20, height:20, justifyContent:'center', alignItems:'center', borderRadius:20, bottom:20}}>
-                                <Icon name='ellipsis-v' style={{fontSize:16, color: colors.black}} />
+                                <Icon name='ellipsis-v' style={{fontSize:16, color: colors.gray}} />
                         </MenuTrigger>
                         <MenuOptions customStyles={{
                                 optionsContainer: {
