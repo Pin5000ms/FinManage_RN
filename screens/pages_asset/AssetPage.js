@@ -5,7 +5,6 @@ import colors from '../../config/colors';
 import store from '../../store/configureStore';
 import RowData from '../components/RowData';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
-import { getAccountById, getLatestAsset } from '../components/Utility';
 
 //import { DraggableFlatListProps } from "react-native-draggable-flatlist"
 
@@ -97,17 +96,17 @@ const styles = StyleSheet.create({
 function AssetPage({navigation}) {
 
   //usestate 要放在function裡面
-  const [data, setData] = useState(getLatestAsset()); //改為使用assetHistory
+  const [data, setData] = useState(store.getState().accounts);
 
 
   //若store發生改變，觸發setData事件
   const unsubscribe = store.subscribe(() => {
-    setData(getLatestAsset())
+    setData(store.getState().accounts)
   })
 
 
   //總額
-  const totalValue = getLatestAsset().reduce((sum, next) => {
+  const totalValue = store.getState().accounts.reduce((sum, next) => {
     return sum + parseInt(next.value)
   }, 0)
 
@@ -121,7 +120,7 @@ function AssetPage({navigation}) {
 
   //搜尋功能
   const filterList = (searchWord) => {
-    const filteredData = getLatestAsset().filter((item) => getAccountById(item.id).name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase()) );
+    const filteredData = store.getState().accounts.filter((item) => item.name.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase()) );
     return filteredData
   }
 
@@ -132,7 +131,7 @@ function AssetPage({navigation}) {
       setData(filterList(search))
     }
     else{
-      setData(getLatestAsset())
+      setData(store.getState().accounts)
     }
   }, [search])
 

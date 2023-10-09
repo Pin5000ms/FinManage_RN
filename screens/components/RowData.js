@@ -1,8 +1,14 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, Dimensions} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../config/colors';
 
 import { Swipeable } from 'react-native-gesture-handler';
+import {
+    Menu,
+    MenuOptions,
+    MenuOption,
+    MenuTrigger,
+  } from 'react-native-popup-menu';
 import { SwitchIconSrc } from './SwitchIconSrc';
 import { Animated } from 'react-native';
 import { DeleteAccount, getLatestAsset, getAccountById } from './Utility';
@@ -38,6 +44,14 @@ const styles = StyleSheet.create({
       //shadowOpacity: 0.5,
       //shadowRadius: 10,
       //elevation: 5,//每張卡片下要有陰影
+    },
+    menuContainer:{
+        flex: 1,
+        backgroundColor: "#fff",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 50,
+        flexDirection: "column",
     },
     deleteBox: {
         flex:1,
@@ -109,44 +123,78 @@ export default function RowData ({curitem, navigation}) {
                     </TouchableOpacity>
                 </Animated.View>
                 <Animated.View style ={ {transform:[{scale:scale}]}}>
-                    <TouchableOpacity style = {styles.editBox} onPress={() => navigation.navigate('Edit', 
-                    {
-                        Id: curitem.id, 
-                        Name : getAccountById(curitem.id).name, 
-                        Val : getAccountById(curitem.id).value, 
-                        Type: getAccountById(curitem.id).type, 
-                        Amount: getAccountById(curitem.id).amount, 
-                        UnitVal: getAccountById(curitem.id).unitValue})}>
+                    <TouchableOpacity style = {styles.editBox} onPress={toEditPage}>
                         <Icon name = "edit" size={25} color ={colors._2} />
                     </TouchableOpacity> 
                 </Animated.View>
             </>
         )
     }
+
+    const toEditPage = () => navigation.navigate('Edit', 
+    {Id: curitem.id, 
+        Name : curitem.name, 
+        Val : curitem.value, 
+        Type: curitem.type, 
+        Amount: curitem.amount, 
+        UnitVal: curitem.unitValue})
+
     return (
         <View style={styles.container}>
-            <TouchableOpacity 
-            style ={{flex:1}}
-            onPress={() => navigation.navigate('Edit', 
-            {Id: curitem.id, 
-                Name : getAccountById(curitem.id).name, 
-                Val : getAccountById(curitem.id).value, 
-                Type: getAccountById(curitem.id).type, 
-                Amount: getAccountById(curitem.id).amount, 
-                UnitVal: getAccountById(curitem.id).unitValue})
-            }>
+            
 
                 <View style = {{flexDirection:'row', alignItems: 'center', flex: 1}} >
-                    <Image style={styles.icon}
-                        source={SwitchIconSrc(getAccountById(curitem.id).type)} //根據type選擇Icon
-                    />
-                    <View style={styles.itemContainer}>
-                        <Text style={styles.itemName}> {getAccountById(curitem.id).name} </Text>
-                        <Text style={styles.itemValue}>$ {curitem.value.toLocaleString()} </Text>
-                    </View>
-                    <Text style={styles.itemTime}>{getLastestDate(curitem.timeStamp)}</Text>
+                    <TouchableOpacity 
+                        style ={{flexDirection:'row', alignItems: 'center', flex:1}}
+                        onPress={toEditPage}>
+                        <Image style={styles.icon}
+                            source={SwitchIconSrc(curitem.type)} //根據type選擇Icon
+                        />
+                        <View style={styles.itemContainer}>
+                            <Text style={styles.itemName}> {curitem.name} </Text>
+                            <Text style={styles.itemValue}>$ {curitem.value.toLocaleString()} </Text>
+                        </View>
+                        
+                    </TouchableOpacity>
+
+                    <Text style={styles.itemTime}>{}</Text>
+
+
+                    <Menu>
+                        <MenuTrigger style={{width:20, height:20, justifyContent:'center', alignItems:'center', borderRadius:20, bottom:20}}>
+                                <Icon name='ellipsis-v' style={{fontSize:16, color: colors.black}} />
+                        </MenuTrigger>
+                        <MenuOptions customStyles={{
+                                optionsContainer: {
+                                    borderRadius: 10,
+                                    padding:10,
+                                    width:100
+                                },
+                            }}>
+                            <MenuOption onSelect={toEditPage}>
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <Text style={{color: colors.green, marginHorizontal:10}}>編輯</Text>
+                                    <Icon style={styles.editdelete} name = "edit" size={16} color ={colors.green} />
+                                </View>
+                            </MenuOption>
+                            <MenuOption onSelect={()=> DeleteAccount(curitem.id)} >
+                                <View style={{flexDirection:'row', alignItems:'center'}}>
+                                    <Text style={{color: colors.red, marginHorizontal:10}}>刪除</Text>
+                                    <Icon style={styles.editdelete} name = "trash" size={16} color ={colors.red} />
+                                </View>
+                                
+                            </MenuOption>
+                        </MenuOptions>
+                    </Menu>
+
+
+                    {/* <TouchableOpacity onPress={toggleMenu}>
+                        <Icon name='ellipsis-v'/>
+                    </TouchableOpacity> */}
                 </View>
-            </TouchableOpacity>
+
+
+            
 
 
             {/* <View flex= {1} >
