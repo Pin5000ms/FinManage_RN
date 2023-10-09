@@ -13,7 +13,6 @@ import { getAccountById, getLatestAsset } from '../components/Utility';
 //https://muhammetaydinn.medium.com/hide-header-when-scrolling-down-in-react-native-without-package-2bc74c35e23
 const scrollY = new Animated.Value(0);
 const diffClamp = Animated.diffClamp(scrollY, 0, 70);
-
 const moveY = diffClamp.interpolate({
   inputRange: [ 0, 70],
   outputRange: [ 0, -70],
@@ -87,9 +86,9 @@ const styles = StyleSheet.create({
       width: Dimensions.get("window").width - 30,
       height: 50,
       backgroundColor:colors.white,
-      zIndex:1,
-      position: 'absolute',
-      top:115,
+      zIndex:1, //auto hide when scroll up
+      position: 'absolute', //auto hide when scroll up
+      top:115, //auto hide when scroll up
       transform: [{translateY: moveY}], //透過moveY控制移動
     }
   });
@@ -161,8 +160,8 @@ function AssetPage({navigation}) {
           (<Text style={styles.header2}>{"$ " + totalValue.toLocaleString() + "  "}</Text>) : //toLocaleString()可以幫數字每3位加上,
           (<Text style={styles.header2}>********</Text>)}
       </View>
-      {/* 搜尋欄 宣告成Animated.View, transform才有用*/}
 
+      {/* 搜尋欄 宣告成Animated.View, transform才有用*/}
       <Animated.View style={styles.searchBox}>
         <Icon name='search' style={{fontSize:25, color: colors._6, marginLeft:10}}></Icon>
         <TextInput style={{
@@ -180,14 +179,13 @@ function AssetPage({navigation}) {
       </Animated.View>
       
 
-
+      {/* auto hide when scroll up */}
       <ScrollView onScroll={e => {
           if(e.nativeEvent.contentOffset.y > 0){ //避免回彈效果造成diffClamp值增加
           scrollY.setValue(e.nativeEvent.contentOffset.y);
           }
         }}
       >
-
         {/** This View For AppBar Because zIndex 非常重要*/}
         <View style={{height: 50}}></View>
 
