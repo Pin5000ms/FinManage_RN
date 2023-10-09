@@ -12,19 +12,14 @@ import { getAccountById, getLatestAsset } from '../components/Utility';
 //向上滾動時，設定scrollY (0~70)  => 經過clamp(超過70輸出70) => 內插輸出成 moveY (0~-70) 
 //https://muhammetaydinn.medium.com/hide-header-when-scrolling-down-in-react-native-without-package-2bc74c35e23
 const scrollY = new Animated.Value(0);
-const diffClamp = Animated.diffClamp(scrollY, 0, 50);
+const diffClamp = Animated.diffClamp(scrollY, 0, 70);
 
 const moveY = diffClamp.interpolate({
-  inputRange: [ 0, 50],
-  outputRange: [ 0, -50],
+  inputRange: [ 0, 70],
+  outputRange: [ 0, -70],
   extrapolate:'clamp'
 });
 
-const sizeY = diffClamp.interpolate({
-  inputRange: [0, 50],
-  outputRange: [ 50, 0],
-  extrapolate:'clamp'
-})
 
 const styles = StyleSheet.create({
     /*整個List的容器 */
@@ -89,9 +84,13 @@ const styles = StyleSheet.create({
       borderRadius: 20,
       marginLeft: 15,
       marginRight: 15,
+      width: Dimensions.get("window").width - 30,
       height: 50,
       backgroundColor:colors.white,
-      //transform: [{translateY: moveY}], //透過moveY控制移動
+      zIndex:1,
+      position: 'absolute',
+      top:115,
+      transform: [{translateY: moveY}], //透過moveY控制移動
     }
   });
 
@@ -147,7 +146,7 @@ function AssetPage({navigation}) {
     <View style={styles.container}>
 
       {/* 資產總額 */}
-      <View style={{marginTop:10, marginBottom: 10, marginLeft:10, marginRight:10, backgroundColor:colors._1, borderRadius: 8, zIndex:1}}>
+      <View style={{marginTop:10, marginBottom: 10, marginLeft:10, marginRight:10, backgroundColor:colors._1, borderRadius: 8, zIndex:2}}>
         <View style={{flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
           <Text style = {styles.header1}>資產總覽 </Text>
           <TouchableOpacity onPress={toggleBalance} style={styles.button}>
@@ -162,26 +161,35 @@ function AssetPage({navigation}) {
           (<Text style={styles.header2}>{"$ " + totalValue.toLocaleString() + "  "}</Text>) : //toLocaleString()可以幫數字每3位加上,
           (<Text style={styles.header2}>********</Text>)}
       </View>
+      {/* 搜尋欄 宣告成Animated.View, transform才有用*/}
+
+      <Animated.View style={styles.searchBox}>
+        <Icon name='search' style={{fontSize:25, color: colors._6, marginLeft:10}}></Icon>
+        <TextInput style={{
+          marginLeft:10, 
+          fontSize:16, 
+          width:Dimensions.get("window").width - 120,}}
+          placeholder='搜尋帳戶'
+          placeholderTextColor={colors._6}//單獨設定placeholder的顏色
+          onChangeText={(val) => setSearch(val)}
+        />
+        <View style={styles.separatorLineV}></View>
+        <TouchableOpacity onPress={{}}>
+          <Icon name='filter' style={{fontSize:20, color: colors._6, marginLeft:10}}></Icon>
+        </TouchableOpacity>
+      </Animated.View>
       
 
 
-      <ScrollView>
-        {/* 搜尋欄 宣告成Animated.View, transform才有用*/}
-        <View style={styles.searchBox}>
-          <Icon name='search' style={{fontSize:25, color: colors._6, marginLeft:10}}></Icon>
-          <TextInput style={{
-            marginLeft:10, 
-            fontSize:16, 
-            width:Dimensions.get("window").width - 140,}}
-            placeholder='搜尋帳戶'
-            placeholderTextColor={colors._6}//單獨設定placeholder的顏色
-            onChangeText={(val) => setSearch(val)}
-          />
-          <View style={styles.separatorLineV}></View>
-          <TouchableOpacity onPress={{}}>
-            <Icon name='filter' style={{fontSize:20, color: colors._6, marginLeft:10}}></Icon>
-          </TouchableOpacity>
-        </View>
+      <ScrollView onScroll={e => {
+          if(e.nativeEvent.contentOffset.y > 0){ //避免回彈效果造成diffClamp值增加
+          scrollY.setValue(e.nativeEvent.contentOffset.y);
+          }
+        }}
+      >
+
+        {/** This View For AppBar Because zIndex 非常重要*/}
+        <View style={{height: 50}}></View>
 
         {/* 清單 */}
         <FlatList style={{marginTop:10}}
@@ -196,12 +204,6 @@ function AssetPage({navigation}) {
             /*告訴RN 每個item的辨別項是 叫做id (預設是id)*/
             keyExtractor={(item) => item.id}
             scrollEnabled={false}//FlatList要裝在ScrollView裡面，本身的滾動功能要停用才不會報錯
-            // onScroll={e => {
-            //   if(e.nativeEvent.contentOffset.y > 0){ //避免回彈效果造成diffClamp值增加
-            //     scrollY.setValue(e.nativeEvent.contentOffset.y);
-            //   }
-            //   //console.log(diffClamp)
-            // }}
             // ItemSeparatorComponent ={
             //    <View style = {styles.separatorLineH}></View>
             // }
