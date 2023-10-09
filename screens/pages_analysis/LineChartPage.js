@@ -218,7 +218,7 @@ const LineChartPage = () => {
                 bezier
                 fromZero
                 style={{
-                  paddingRight:20, //移除左邊的空白處 https://github.com/indiespirit/react-native-chart-kit/issues/90
+                  paddingRight:20, //移除Y軸標籤後，移除左邊的空白處 https://github.com/indiespirit/react-native-chart-kit/issues/90
                   marginVertical: 8,
                   borderRadius: 16
                 }}

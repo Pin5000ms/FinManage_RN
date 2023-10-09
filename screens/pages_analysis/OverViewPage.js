@@ -35,10 +35,10 @@ function OverViewPage() {
     const renderTabBar = props => (
       <TabBar
         {...props}
-        indicatorStyle={{ backgroundColor: colors._2 }}
-        style={{ backgroundColor: colors._1, height: 40}} //加justifyContent: 'center', alignItems: 'center'字會不見
+        indicatorStyle={{ backgroundColor: colors._1 }}
+        style={{ backgroundColor: colors._6, height: 40}} //加justifyContent: 'center', alignItems: 'center'字會不見
         renderLabel={({ route, focused, color }) => (
-          <Text style={{ color: color, fontSize:14, height:30}}>
+          <Text style={{ color: colors._1, fontSize:14, height:30}}>
               {route.title}
           </Text>
         )}

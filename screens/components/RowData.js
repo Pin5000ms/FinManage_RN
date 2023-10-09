@@ -124,42 +124,43 @@ export default function RowData ({curitem, navigation}) {
         )
     }
     return (
-            <Swipeable renderLeftActions={swipeRight} rightThreshold={0.7} friction={1.5}>
-                    <View style={styles.container}>
-                        <TouchableOpacity 
-                        style ={{flex:1}}
-                        onPress={() => navigation.navigate('Edit', 
-                           {Id: curitem.id, 
-                            Name : getAccountById(curitem.id).name, 
-                            Val : getAccountById(curitem.id).value, 
-                            Type: getAccountById(curitem.id).type, 
-                            Amount: getAccountById(curitem.id).amount, 
-                            UnitVal: getAccountById(curitem.id).unitValue})
-                        }>
+        <View style={styles.container}>
+            <TouchableOpacity 
+            style ={{flex:1}}
+            onPress={() => navigation.navigate('Edit', 
+            {Id: curitem.id, 
+                Name : getAccountById(curitem.id).name, 
+                Val : getAccountById(curitem.id).value, 
+                Type: getAccountById(curitem.id).type, 
+                Amount: getAccountById(curitem.id).amount, 
+                UnitVal: getAccountById(curitem.id).unitValue})
+            }>
 
-                            <View style = {{flexDirection:'row', alignItems: 'center', flex: 1}} >
-                                <Image style={styles.icon}
-                                    source={SwitchIconSrc(getAccountById(curitem.id).type)} //根據type選擇Icon
-                                />
-                                <View style={styles.itemContainer}>
-                                    <Text style={styles.itemName}> {getAccountById(curitem.id).name} </Text>
-                                    <Text style={styles.itemValue}>$ {curitem.value.toLocaleString()} </Text>
-                                </View>
-                                <Text style={styles.itemTime}>{getLastestDate(curitem.timeStamp)}</Text>
-                            </View>
-                        </TouchableOpacity>
-
-
-                        {/* <View flex= {1} >
-                            <TouchableOpacity onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value})}>
-                                <Icon style={styles.editdelete} name = "edit"  size={25} color ={colors.shironeri} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={()=> store.dispatch(accountDeleted(curitem.key))}>
-                                <Icon style={styles.editdelete} name = "trash" size={25} color ={colors.shironeri} />
-                            </TouchableOpacity>                        
-                        </View> */}
+                <View style = {{flexDirection:'row', alignItems: 'center', flex: 1}} >
+                    <Image style={styles.icon}
+                        source={SwitchIconSrc(getAccountById(curitem.id).type)} //根據type選擇Icon
+                    />
+                    <View style={styles.itemContainer}>
+                        <Text style={styles.itemName}> {getAccountById(curitem.id).name} </Text>
+                        <Text style={styles.itemValue}>$ {curitem.value.toLocaleString()} </Text>
                     </View>
-                    
-            </Swipeable>
+                    <Text style={styles.itemTime}>{getLastestDate(curitem.timeStamp)}</Text>
+                </View>
+            </TouchableOpacity>
+
+
+            {/* <View flex= {1} >
+                <TouchableOpacity onPress={() => navigation.navigate('Edit', {Key: curitem.key, Name : curitem.name, Val : curitem.value})}>
+                    <Icon style={styles.editdelete} name = "edit"  size={25} color ={colors.shironeri} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={()=> store.dispatch(accountDeleted(curitem.key))}>
+                    <Icon style={styles.editdelete} name = "trash" size={25} color ={colors.shironeri} />
+                </TouchableOpacity>                        
+            </View> */}
+        </View>
+
+        // <Swipeable renderLeftActions={swipeRight} rightThreshold={0.7} friction={1.5}>
+                
+        // </Swipeable>
     );
   };

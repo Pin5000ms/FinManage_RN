@@ -19,8 +19,8 @@ export default function Header({ iconName, title }) {
         }}>
         <View style={{height: insets.top, backgroundColor: colors._6}}/>
         <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingTop : 5}}>
-          <Icon name={iconName} style={{color: colors.gray,  marginHorizontal: 10, fontSize:20, justifyContent: 'center', alignItems: 'center'}} /> 
-          <Text style={{fontSize:20, color: colors.gray, marginBottom:5}}>{title}</Text>
+          {/* <Icon name={iconName} style={{color: colors.gray,  marginHorizontal: 10, fontSize:20, justifyContent: 'center', alignItems: 'center'}} />  */}
+          <Text style={{fontSize:20, color: colors.gray, marginHorizontal: 10, marginBottom:5}}>{title}</Text>
         </View>
       </View>
     );
