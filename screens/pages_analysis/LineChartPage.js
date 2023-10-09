@@ -11,7 +11,22 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 var datepicked = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59)
 
 
+const getDate = (timeStamp)=> {
+  const dateParts = timeStamp.split('-')[0].split('/');
+  const timeParts = timeStamp.split('-')[1].split(':');
 
+  const year = parseInt(dateParts[0]);
+  const month = parseInt(dateParts[1]) - 1; // 月份从0开始，所以需要减1
+  const day = parseInt(dateParts[2]);
+
+  const hour = parseInt(timeParts[0]);
+  const minute = parseInt(timeParts[1]);
+  const second = parseInt(timeParts[2]);
+
+  // 创建 Date 对象
+  const dateObject = new Date(year, month, day, hour, minute, second);
+  return dateObject;
+}
 
 function convertToDate(item) {
     const dateStr = item.timeStamp.split('-')[0]
@@ -29,7 +44,7 @@ function convertToDate(item) {
 function calculateTotalValue(targetDate) {
   // 將資料以 id 為鍵進行分組，取每個 id 最新的一筆資料
   const latestDataById = store.getState().assetHistory.reduce((result, item) => {
-    if (!result[item.id] || new Date(item.timeStamp) > new Date(result[item.id].timeStamp) ) 
+    if (!result[item.id] || getDate(item.timeStamp) > getDate(result[item.id].timeStamp) ) 
     {
       result[item.id] = item;
     }
@@ -111,8 +126,11 @@ const LineChartPage = () => {
         }
       ]
     });
+
+    
     
     const updateChartData = () => {
+
       const newLabels = [
         XMonthAgoDateStr(datepicked, 5),
         XMonthAgoDateStr(datepicked, 4),
@@ -196,8 +214,8 @@ const LineChartPage = () => {
                 height={220}
                 //yAxisLabel="$"
                 //yAxisSuffix="k"
-                //yAxisInterval={1} // optional, defaults to 1
-                withHorizontalLabels={false} // 移除Y軸標籤
+                yAxisInterval={1} // optional, defaults to 1
+                //withHorizontalLabels={false} // 移除Y軸標籤
                 withDots={true}
                 chartConfig={{
                   backgroundColor: "#e26a00",
@@ -218,7 +236,7 @@ const LineChartPage = () => {
                 bezier
                 fromZero
                 style={{
-                  paddingRight:20, //移除Y軸標籤後，移除左邊的空白處 https://github.com/indiespirit/react-native-chart-kit/issues/90
+                  paddingRight:50, //移除Y軸標籤後，移除左邊的空白處 https://github.com/indiespirit/react-native-chart-kit/issues/90
                   marginVertical: 8,
                   borderRadius: 16
                 }}
