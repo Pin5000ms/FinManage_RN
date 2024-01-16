@@ -13,7 +13,7 @@ function AssetStackScreen() {
       <HomeStack.Screen 
         name="AssetPage" 
         component={AssetPage}
-        options={{ header: (props) => <Header iconName={"coins"}  title="資產" {...props} />}}
+        options={ { header: (props) => <Header iconName={"coins"}  title="資產" {...props}/>} }
         />             
       <HomeStack.Screen 
         name="Edit" 
@@ -23,11 +23,11 @@ function AssetStackScreen() {
       <HomeStack.Screen 
         name="AccountDetail"
         component={AccountDetailPage}
-        options={({ route, navigation }) => ({
-          header: (props) => (
-            <Header title="" showBackButton={navigation.canGoBack()} onBackPress={()=>navigation.goBack()} {...props} />
-          ),
-        })}
+        options={
+          ({ route, navigation }) =>{
+            return { header: (props) => <Header title="" showBackButton={navigation.canGoBack()} onBackPress={()=>navigation.goBack()} {...props}/>}
+          }
+        }
         />
    </HomeStack.Navigator>
   );
