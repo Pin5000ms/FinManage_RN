@@ -15,25 +15,47 @@ import colors from '../config/colors';
 
 import store from '../store/configureStore';
 
-import {generateUniqueID, AddAccount} from './components/Utility';
+import {AddAccount, generateUniqueID} from './components/Utility';
+import { accountHistoryAdded, accountHistoryDeleted} from '../store/accountHistory';
 
-AddAccount(generateUniqueID(), "Richart", 50000, 'bank')
-AddAccount(generateUniqueID(), "富邦", 330000, 'bank')
-AddAccount(generateUniqueID(), "永豐大戶", 500000, 'bank')
-AddAccount(generateUniqueID(), "聯邦銀行", 100000, 'bank')
-AddAccount(generateUniqueID(), "LineBank", 50000, 'bank')
-AddAccount(generateUniqueID(), "合作金庫", 130000, 'bank')
-AddAccount(generateUniqueID(), "國泰", 92000, 'bank')
-
-AddAccount(generateUniqueID(), "台積電", 110*525, 'stock', 110, 525, )
-AddAccount(generateUniqueID(), "華南金", 2000*22.1, 'stock', 2000, 22.1)
-AddAccount(generateUniqueID(), "台中銀", 1000*13.8, 'stock', 1000, 13.8)
-AddAccount(generateUniqueID(), "兆豐金", 1000*33.1, 'stock', 1000, 33.1)
+// const myArray = {
+//   1:{ id: 1, description: "Item 1" },
+//   2:{ id: 2, description: "Item 2" },
+//   3:{ id: 3, description: "Item 3" }
+// };
+// console.log(myArray[1])
 
 
+// AddAccount(generateUniqueID(), "RichBank", 11111, 'bank')
+// AddAccount(generateUniqueID(), "TreeBank", 22222, 'bank')
+// AddAccount(generateUniqueID(), "UnionBank", 33333, 'bank')
+// AddAccount(generateUniqueID(), "PointBank", 44444, 'bank')
+
+
+// AddAccount(generateUniqueID(), "Stock 2330", 110*525, 'stock', 110, 525, )
+// AddAccount(generateUniqueID(), "Stock 3034", 2000*22.1, 'stock', 2000, 22.1)
+
+
+AddAccount(generateUniqueID(), "RichBank", 'bank')
+AddAccount(generateUniqueID(), "TreeBank", 'bank')
+AddAccount(generateUniqueID(), "UnionBank", 'bank')
+
+var date = new Date();
+var datestr = date.getFullYear()+ '/' + (date.getMonth()+1) + '/' + date.getDate();
+const stamp = datestr + '-' + date.toTimeString()
+
+const newItem = {accountId:1, itemId: 0, description:"item0", timeStamp: stamp} ;
+const newItem2 = {accountId:1, itemId: 1, description:"item1", timeStamp: stamp} ;
+const newItem3 = {accountId:0, itemId: 2, description:"item3", timeStamp: stamp} ;
+const newItem4 = {accountId:0, itemId: 3, description:"item4", timeStamp: stamp} ;
+store.dispatch(accountHistoryAdded(newItem))
+store.dispatch(accountHistoryAdded(newItem2))
+store.dispatch(accountHistoryAdded(newItem3))
+store.dispatch(accountHistoryAdded(newItem4))
+store.dispatch(accountHistoryDeleted(newItem4))
 
 import { negIncomeAdded, posIncomeAdded } from '../store/incomes';
-import AddPage from './pages_asset/AddPage';
+import AddPage from './pages_asset/Accounts/CRUD/AddPage';
 
 
 store.dispatch(posIncomeAdded({name:"薪水", value:80000}));
@@ -127,4 +149,6 @@ export default function MainScreen() {
       />
     </Tab.Navigator>
   );
+
+
 }

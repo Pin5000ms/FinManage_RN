@@ -1,8 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import Header from '../components/NavigationHeader';
-import AssetPage from '../pages_asset/AssetPage';
-import EditPage from '../pages_asset/EditPage';
-import AccountPage from '../pages_asset/AccountPage';
+import AssetPage from '../pages_asset/Accounts/AssetPage';
+import EditPage from '../pages_asset/Accounts/CRUD/EditPage';
+import AccountDetailPage from '../pages_asset/AccountDetails/AccountDetailPage';
 
 
 const HomeStack = createStackNavigator();
@@ -21,8 +21,8 @@ function AssetStackScreen() {
         options={{headerTitle: "編輯"}}
         />
       <HomeStack.Screen 
-        name="Account" 
-        component={AccountPage}
+        name="AccountDetail" 
+        component={AccountDetailPage}
         />
    </HomeStack.Navigator>
   );

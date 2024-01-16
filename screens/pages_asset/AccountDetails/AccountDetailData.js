@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import colors from '../../config/colors';
+import colors from '../../../config/colors';
 
 import { Swipeable } from 'react-native-gesture-handler';
-import { SwitchIconSrc } from './SwitchIconSrc';
+import { SwitchIconSrc } from '../../components/SwitchIconSrc';
 
 const styles = StyleSheet.create({
     /*List中每個item的樣式 */
@@ -15,9 +15,8 @@ const styles = StyleSheet.create({
       /*item中的物件與邊緣的間隔 */
       padding: 20,
       /*每個item的上下間隔 */
-      marginVertical: 6,
+      marginVertical: 3,
       marginHorizontal: 10,
-      borderRadius: 10,
       shadowColor: colors.black,
       shadowOffset: {
         width: 5,
@@ -64,15 +63,15 @@ const styles = StyleSheet.create({
     });
 
 
-export default function SubRowData ({curitem, navigation}) {
+export default function AccountDetailData ({accountDetail, navigation}) {
     return (
         <View style={styles.container}>
         <TouchableOpacity>
-
             <View flex= {3} style = {{flexDirection:'row', alignItems: 'center'}} >
                 <View style={{flexDirection: 'column',alignItems:"flex-start"}}>
-                    <Text style={styles.itemText}>$ {curitem.value}  </Text>
-                    <Text style={styles.itemText}>{curitem.timeStamp} </Text>
+                    <Text style={styles.itemText}>$ {accountDetail.itemId}  </Text>
+                    <Text style={styles.itemText}>{accountDetail.description} </Text>
+                    <Text style={styles.itemText}>{accountDetail.timeStamp} </Text>
                 </View>
             </View>
         </TouchableOpacity> 
