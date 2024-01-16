@@ -1,9 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../../config/colors';
-
-import { Swipeable } from 'react-native-gesture-handler';
-import { SwitchIconSrc } from '../../components/SwitchIconSrc';
 
 const styles = StyleSheet.create({
     /*List中每個item的樣式 */
@@ -11,21 +7,12 @@ const styles = StyleSheet.create({
       /*控制圖示及文字是以水平方式排列*/
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors._1,
+      backgroundColor: colors.white,
       /*item中的物件與邊緣的間隔 */
-      padding: 20,
+      padding: 10,
       /*每個item的上下間隔 */
-      marginVertical: 3,
+      marginVertical: 1,
       marginHorizontal: 10,
-      shadowColor: colors.black,
-      shadowOffset: {
-        width: 5,
-        height: 5,
-      },
-      shadowOpacity: 0.5,
-      shadowRadius: 10,
-      elevation: 5,//每張卡片下要有陰影
-
     },
     deleteBox: {
         flex:1,
@@ -46,8 +33,8 @@ const styles = StyleSheet.create({
         width: 50
     },
     itemText: {
-        fontSize: 20,
-        color: colors._2,
+        fontSize: 15,
+        color: colors._1,
       },
     icon: {
       /*圖示大小*/
@@ -58,24 +45,22 @@ const styles = StyleSheet.create({
       /*圓形圖示*/
       borderRadius : 10,
     },
+});
 
 
-    });
-
-
-export default function AccountDetailData ({accountDetail, navigation}) {
+export default function HistoryData ({eachdata, navigation}) {
     return (
         <View style={styles.container}>
-        <TouchableOpacity>
-            <View flex= {3} style = {{flexDirection:'row', alignItems: 'center'}} >
-                <View style={{flexDirection: 'column',alignItems:"flex-start"}}>
-                    <Text style={styles.itemText}>$ {accountDetail.itemId}  </Text>
-                    <Text style={styles.itemText}>{accountDetail.description} </Text>
-                    <Text style={styles.itemText}>{accountDetail.timeStamp} </Text>
+            <TouchableOpacity>
+                <View flex= {3} style = {{flexDirection:'row', alignItems: 'center'}} >
+                    <View style={{flexDirection: 'column',alignItems:"flex-start"}}>
+                        <Text style={styles.itemText}>{eachdata.itemId}  </Text>
+                        <Text style={styles.itemText}>{eachdata.itemName} </Text>
+                        <Text style={styles.itemText}>{eachdata.itemVal} </Text>
+                    </View>
                 </View>
-            </View>
-        </TouchableOpacity> 
-    </View>
+            </TouchableOpacity> 
+        </View>
 
     );
 };

@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import React, { useEffect, useState } from 'react';
 import colors from '../../../config/colors';
 import store from '../../../store/configureStore';
-import RowData from './RowData';
+import AccountData from './AccountData';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 
 //import { DraggableFlatListProps } from "react-native-draggable-flatlist"
@@ -193,7 +193,7 @@ function AssetPage({navigation}) {
             data={data}
             /*使用一個自定義的元件RowData，將item和navigation傳入 */
             renderItem={({item}) => 
-              <RowData
+              <AccountData
                 account={item}
                 navigation={navigation}
               />

@@ -1,8 +1,11 @@
 import {StyleSheet, Text, View, TouchableOpacity, Image, Dimensions} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import colors from '../../../config/colors';
+import store from '../../../store/configureStore';
 
 import { Swipeable } from 'react-native-gesture-handler';
+
 import {
     Menu,
     MenuOptions,
@@ -12,15 +15,7 @@ import {
   } from 'react-native-popup-menu';
 import { SwitchIconSrc } from '../../components/SwitchIconSrc';
 import { Animated } from 'react-native';
-import { DeleteAccount, getLatestAssetById } from '../../components/Utility';
-
-function getLastestDate(dateString) 
-{
-    const parts = dateString.split("-");
-    // 提取 "-" 之前的部分
-    const result = parts[0];
-    return result;
-}
+import { DeleteAccount, getAccountHistoryByAccountId, getAccountSumByAccountId} from '../../components/Utility';
 
 
 const styles = StyleSheet.create({
@@ -106,9 +101,9 @@ const styles = StyleSheet.create({
 
 
 /*自定義元件，開頭必須大寫 */
-export default function RowData ({account, navigation}) {
+export default function AccountData ({account, navigation}) {
     //curitem => account : {id, name, type}
-    const toAccountDetailPage = ()=> navigation.navigate('AccountDetail',{id: account.id})
+    const toAccountDetailPage = ()=> navigation.navigate('AccountDetail',{accountId: account.id})
 
     const toEditAccountPage = ()=> navigation.navigate('Edit',{id: account.id, name: account.name, type: account.type})
 
@@ -137,6 +132,15 @@ export default function RowData ({account, navigation}) {
         )
     }
 
+    const [count, setCount] = useState(getAccountHistoryByAccountId(account.id).length);
+    const [sum, setSum] = useState(getAccountSumByAccountId(account.id));
+
+    //若store發生改變，觸發setCount事件
+    const unsubscribe = store.subscribe(() => {
+        setCount(getAccountHistoryByAccountId(account.id).length)
+        setSum(getAccountSumByAccountId(account.id))
+    })
+
     return (
         <View style={styles.container}>
             <View style = {{flexDirection:'row', alignItems: 'center', flex: 1}} >
@@ -148,12 +152,12 @@ export default function RowData ({account, navigation}) {
                     />
                     <View style={styles.itemContainer}>
                         <Text style={styles.itemName}> {account.id} </Text>
-                        <Text style={styles.itemValue}>$ {account.name.toLocaleString()} </Text>
+                        <Text style={styles.itemName}> {account.name} </Text>
+                        <Text style={styles.itemName}> {account.type} </Text>
+                        <Text style={styles.itemName}> 共有 {count} 筆項目 </Text>
+                        <Text style={styles.itemName}> 帳戶餘額{sum} </Text>
                     </View>
-                    
                 </TouchableOpacity>
-
-
                 <Menu renderer={renderers.Popover}>
                     <MenuTrigger style={{width:20, height:20, justifyContent:'center', alignItems:'center', borderRadius:20, bottom:20}}>
                         <Icon name='ellipsis-v' style={{fontSize:16, color: colors.gray}} />
@@ -164,7 +168,6 @@ export default function RowData ({account, navigation}) {
                                 padding:10,
                                 width:100
                             },
-                            
                         }}>
                         <MenuOption onSelect={toEditAccountPage}>
                             <View style={{flexDirection:'row', alignItems:'center'}}>
@@ -177,7 +180,6 @@ export default function RowData ({account, navigation}) {
                                 <Text style={{color: colors.red, marginHorizontal:10}}>刪除</Text>
                                 <Icon style={styles.editdelete} name = "trash" size={16} color ={colors.red} />
                             </View>
-                            
                         </MenuOption>
                     </MenuOptions>
                 </Menu>

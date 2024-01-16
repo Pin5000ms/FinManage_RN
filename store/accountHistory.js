@@ -9,6 +9,9 @@ const slice = createSlice({
         },
         accountHistoryDeleted:(state, action) =>{
             return state.filter(item => item.itemId!==action.payload.itemId);
+        },
+        accountHistoryDeleted_whole:(state, action) =>{
+            return state.filter(item => item.accountId!==action.payload.accountId);
         }
     }
 })
@@ -16,6 +19,6 @@ const slice = createSlice({
 const accountHistoryReducer = slice.reducer;
 
 
-export const { accountHistoryAdded, accountHistoryDeleted } = slice.actions;
+export const { accountHistoryAdded, accountHistoryDeleted, accountHistoryDeleted_whole } = slice.actions;
 
 export default accountHistoryReducer;

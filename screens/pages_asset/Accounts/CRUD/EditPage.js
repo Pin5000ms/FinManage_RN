@@ -8,7 +8,7 @@ import { EditAccount } from '../../../components/Utility';
 
 
 function AccountEdit({navigation, id, name, type}){
-  const [inputText, setText] = useState(name);
+    const [inputText, setText] = useState(name);
     return (
       <>
       <View  style = {{flexDirection:'column', justifyContent: 'center', alignItems: 'center'}} >
@@ -40,25 +40,24 @@ function AccountEdit({navigation, id, name, type}){
 
 
 
-function EditPage ({route, navigation}) {
+function EditPage ({navigation, route}) {
     const {id} = route.params;
     const {name} = route.params;
     const {type} = route.params;
-    
-  
+
     const [inputType, setType] = useState(type);
     function RadioButton(props) {
       return (
-          <TouchableOpacity style={inputType === props.type ? AddEditStyles.selected : AddEditStyles.unselected} 
-                 onPress = {  () => setType(props.type)  }>
-                  <Text style={AddEditStyles.buttonText}>{props.label}</Text>
-          </TouchableOpacity>
+        <TouchableOpacity style={inputType === props.type ? AddEditStyles.selected : AddEditStyles.unselected} onPress = {() => setType(props.type)}>
+          <Text style={AddEditStyles.buttonText}>{props.label}</Text>
+        </TouchableOpacity>
       );
     }
 
     
     return (
       <View flex= {1}>
+
         <View style={{flexDirection: 'row', alignItems:'center'}}>
           <View flex= {1}>
             <Image

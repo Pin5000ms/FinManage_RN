@@ -22,7 +22,6 @@ const slice = createSlice({
             name: action.payload.name, 
             type: action.payload.type,
           } :item);
-
       },
   }
 })

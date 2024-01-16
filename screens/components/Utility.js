@@ -1,5 +1,5 @@
 import store from "../../store/configureStore";
-import { accountHistoryAdded } from "../../store/accountHistory";
+import { accountHistoryAdded, accountHistoryDeleted_whole } from "../../store/accountHistory";
 import { accountAdded, accountEdited, accountDeleted } from "../../store/account";
 
 export function generateUniqueID() {
@@ -20,39 +20,40 @@ export function generateUniqueID() {
     return newId;
 }
 
-
-export function getLatestAsset(){
-    // 將資料以 id 為鍵進行分組，取每個 id 最新的一筆資料
-    const latestDataById = store.getState().accountHistory.reduce((result, item) => {
-        if (!result[item.id] || new Date(item.timeStamp) > new Date(result[item.id].timeStamp) ) 
-            {
-            result[item.id] = item;
-            }
-            return result;
-        }, {});
-        const latestData = Object.values(latestDataById);
-        return latestData;
+export function generateUniqueItemId(accountId) {
+    let newId = 0;
+    let i = 0;
+    for (i = 0; i < 999999; i++) {
+      const accountData = store.getState().accountHistory.filter(item => item.accountId === accountId )
+      // Check if there is an element with id equal to i in the current state
+      const index = accountData.findIndex(function (element) {
+        return element.itemId === i;
+      });
+      // If no element has id equal to i, use i as the new id
+      if (index === -1) {
+        newId = i;
+        break;
+      }
+    }
+    //console.log(newId)
+    return newId;
 }
 
-export function getLatestAssetById(id){
-    // 將資料以 id 為鍵進行分組，取每個 id 最新的一筆資料
-    const latestDataById = store.getState().accountHistory.reduce((result, item) => {
-        if (!result[item.id] || new Date(item.timeStamp) > new Date(result[item.id].timeStamp) ) 
-            {
-            result[item.id] = item;
-            }
-            return result;
-        }, {});
-        const latestData = Object.values(latestDataById);
-    return latestData.filter(item => item.id === id)[0];
-}
-
-export function getAccountById(id){
-    return store.getState().accounts.filter(item => item.id === id)[0];
+export function getAccountHistoryByAccountId(accountId){
+    return store.getState().accountHistory.filter(item => item.accountId === accountId )
 }
 
 
-// 創建一個事件委派（事件管理器）
+export function getAccountSumByAccountId(accountId){
+    const accountData = store.getState().accountHistory.filter(item => item.accountId === accountId )
+    const accountTotalValue = accountData.reduce((sum, next) => {
+        return sum + parseInt(next.itemVal)
+    }, 0)
+    return accountTotalValue
+}
+
+
+
 class EventDelegate {
     constructor() {
       this.handlers = [];
@@ -71,7 +72,6 @@ class EventDelegate {
 
 
 //=========================================ADD=========================================
-//創建一個事件委派實例
 const addEvent = new EventDelegate();
 
 //定義一個事件處理函數
@@ -96,7 +96,7 @@ function Handler_Delete1(args1) {
 }
 
 function Handler_Delete2(args1) {
-    store.dispatch(accountHistoryAdded({id: args1, value: 0}));
+    store.dispatch(accountHistoryDeleted_whole({accountId: args1}));
 }
 
 deleteEvent.addHandler(Handler_Delete1);
@@ -118,14 +118,13 @@ function Handler_Edit1(args1, args2, args3) {
     store.dispatch(accountEdited({id: args1, name: args2, type: args3})); 
 }
 
-function Handler_Edit2(args1, args2, args3, args4, args5, args6) {
-    store.dispatch(accountHistoryAdded({id: args1, value: args3}));//紀錄資產歷史
-}
-
 editEvent.addHandler(Handler_Edit1);
-//editEvent.addHandler(Handler_Edit2);
-
 
 export function EditAccount(args1, args2, args3){
     editEvent.invoke(args1, args2, args3)
 }
+
+
+
+
+
