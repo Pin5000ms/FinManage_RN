@@ -26,6 +26,7 @@ export function generateUniqueItemId(accountId) {
     for (i = 0; i < 999999; i++) {
       const accountData = store.getState().accountHistory.filter(item => item.accountId === accountId )
       // Check if there is an element with id equal to i in the current state
+      //console.log(accountData)
       const index = accountData.findIndex(function (element) {
         return element.itemId === i;
       });
@@ -43,13 +44,17 @@ export function getAccountHistoryByAccountId(accountId){
     return store.getState().accountHistory.filter(item => item.accountId === accountId )
 }
 
-
 export function getAccountSumByAccountId(accountId){
     const accountData = store.getState().accountHistory.filter(item => item.accountId === accountId )
     const accountTotalValue = accountData.reduce((sum, next) => {
         return sum + parseInt(next.itemVal)
     }, 0)
     return accountTotalValue
+}
+
+export function getAccountsSum(){
+    const sum = store.getState().accountHistory.reduce((sum, next) => {return sum + parseInt(next.itemVal)}, 0)
+    return sum
 }
 
 

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, StatusBar, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import React, { useState } from 'react';
 import { TextInput } from 'react-native-gesture-handler';
@@ -25,7 +25,7 @@ const Separator = () => <View style={styles.separatorLine} />;
 
 function AccountDetailPage({navigation, route}) {
   const {accountId} = route.params;
-  console.log(accountId)
+  //console.log(accountId)
 
   //usestate 要放在function裡面
   const [data, setData] = useState(getAccountHistoryByAccountId(accountId));
@@ -44,7 +44,7 @@ function AccountDetailPage({navigation, route}) {
   const handleClick = () => {
     //console.log(inputName)
     //console.log(inputVal)
-    const newItem = {accountId:accountId, itemId: generateUniqueItemId(accountId), itemName:inputName, itemVal: inputVal}
+    const newItem = {accountId:accountId, itemId: generateUniqueItemId(accountId), itemName: inputName, itemVal: inputVal}
     store.dispatch(accountHistoryAdded(newItem))
   }
 
@@ -68,11 +68,11 @@ function AccountDetailPage({navigation, route}) {
       />
       <TextInput 
         placeholder="請輸入數值"
-        value={inputVal}
+        value={inputVal.toString()}
         keyboardType='numeric'
         onChangeText={setVal}
       />
-      <button onClick={handleClick}>新增</button>
+      <Button onPress={handleClick} title="新增"></Button>
 
     </View>
   );

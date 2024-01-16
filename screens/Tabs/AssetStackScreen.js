@@ -21,8 +21,13 @@ function AssetStackScreen() {
         options={{headerTitle: "編輯"}}
         />
       <HomeStack.Screen 
-        name="AccountDetail" 
+        name="AccountDetail"
         component={AccountDetailPage}
+        options={({ route, navigation }) => ({
+          header: (props) => (
+            <Header title="" showBackButton={navigation.canGoBack()} onBackPress={()=>navigation.goBack()} {...props} />
+          ),
+        })}
         />
    </HomeStack.Navigator>
   );

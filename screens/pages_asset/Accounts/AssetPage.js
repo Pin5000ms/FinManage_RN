@@ -5,6 +5,7 @@ import colors from '../../../config/colors';
 import store from '../../../store/configureStore';
 import AccountData from './AccountData';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import { getAccountsSum } from '../../components/Utility';
 
 //import { DraggableFlatListProps } from "react-native-draggable-flatlist"
 
@@ -98,17 +99,18 @@ function AssetPage({navigation}) {
   //usestate 要放在function裡面
   const [data, setData] = useState(store.getState().accounts);
 
+  //總額
+  const [totalValue, setTotalValue] = useState(getAccountsSum());
+
 
   //若store發生改變，觸發setData事件
   const unsubscribe = store.subscribe(() => {
     setData(store.getState().accounts)
+    setTotalValue(getAccountsSum())
   })
 
 
-  //總額
-  const totalValue = store.getState().accounts.reduce((sum, next) => {
-    return sum + parseInt(next.value)
-  }, 0)
+
 
 
   //切換總額的可見性
@@ -140,9 +142,7 @@ function AssetPage({navigation}) {
 
   return (
 
-    
     <View style={styles.container}>
-
       {/* 資產總額 */}
       <View style={{marginTop:10, marginBottom: 10, marginLeft:10, marginRight:10, backgroundColor:colors._1, borderRadius: 8, zIndex:2}}>
         <View style={{flexDirection: 'row', justifyContent:'center', alignItems:'center'}}>
@@ -156,7 +156,7 @@ function AssetPage({navigation}) {
         </View>
         
         {showBalance ? 
-          (<Text style={styles.header2}>{"$ " + totalValue.toLocaleString() + "  "}</Text>) : //toLocaleString()可以幫數字每3位加上,
+          (<Text style={styles.header2}>{"$ " + totalValue.toLocaleString() + "  "}</Text>) : //toLocaleString()可以幫數字每3位加上逗號
           (<Text style={styles.header2}>********</Text>)}
       </View>
 
@@ -181,36 +181,33 @@ function AssetPage({navigation}) {
       {/* auto hide when scroll up */}
       <ScrollView onScroll={e => {
           if(e.nativeEvent.contentOffset.y > 0){ //避免回彈效果造成diffClamp值增加
-          scrollY.setValue(e.nativeEvent.contentOffset.y);
+            scrollY.setValue(e.nativeEvent.contentOffset.y)
           }
         }}
       >
-        {/** This View For AppBar Because zIndex 非常重要*/}
-        <View style={{height: 50}}></View>
+        
+            {/** This View For AppBar Because zIndex 非常重要*/}
+            <View style={{height: 50}}/>
 
-        {/* 清單 */}
-        <FlatList style={{marginTop:10}}
-            data={data}
-            /*使用一個自定義的元件RowData，將item和navigation傳入 */
-            renderItem={({item}) => 
-              <AccountData
-                account={item}
-                navigation={navigation}
-              />
-            }
-            /*告訴RN 每個item的辨別項是 叫做id (預設是id)*/
-            keyExtractor={(item) => item.id}
-            scrollEnabled={false}//FlatList要裝在ScrollView裡面，本身的滾動功能要停用才不會報錯
-            // ItemSeparatorComponent ={
-            //    <View style = {styles.separatorLineH}></View>
-            // }
-        />
+            {/* 清單 */}
+            <FlatList style={{marginTop:10}}
+                data={data}
+                /*使用一個自定義的元件RowData，將item和navigation傳入 */
+                renderItem={({item}) => 
+                  <AccountData
+                    account={item}
+                    navigation={navigation}
+                  />
+                }
+                /*告訴RN 每個item的辨別項是 叫做id (預設是id)*/
+                keyExtractor={(item) => item.id}
+                scrollEnabled={false}//FlatList要裝在ScrollView裡面，本身的滾動功能要停用才不會報錯
+                // ItemSeparatorComponent ={
+                //    <View style = {styles.separatorLineH}></View>
+                // }
+            />
+        
       </ScrollView>
-
-      
-      
-
-
 
     </View>
       

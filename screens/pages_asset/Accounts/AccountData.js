@@ -132,10 +132,11 @@ export default function AccountData ({account, navigation}) {
         )
     }
 
+    //每個account內的項目數和餘額
     const [count, setCount] = useState(getAccountHistoryByAccountId(account.id).length);
     const [sum, setSum] = useState(getAccountSumByAccountId(account.id));
 
-    //若store發生改變，觸發setCount事件
+    //若store發生改變，觸發setCount、setSum事件
     const unsubscribe = store.subscribe(() => {
         setCount(getAccountHistoryByAccountId(account.id).length)
         setSum(getAccountSumByAccountId(account.id))
