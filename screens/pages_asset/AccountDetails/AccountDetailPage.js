@@ -6,7 +6,7 @@ import colors from '../../../config/colors';
 import store from '../../../store/configureStore';
 import HistoryData from './HistoryData';
 import { accountHistoryAdded } from '../../../store/accountHistory';
-import { generateUniqueItemId, getAccountHistoryByAccountId} from '../../components/Utility';
+import { generateUniqueItemId, getAccountHistoryByAccountId, getCurrentTimeStamp} from '../../components/Utility';
 
 
 
@@ -34,11 +34,31 @@ function InputArea({account}){
   //console.log(account)
   
   if(account.type == 'bank' || account.type == 'cash'){
-    const addClick = () => {
+    const depositClick = () => {
       //console.log(inputName)
       //console.log(inputVal)
       
-      let newItem = {accountId: account.id, itemId: generateUniqueItemId(account.id), itemName: inputName, itemVal: inputVal, type: account.type}
+      let newItem = {
+        accountId: account.id, 
+        itemId: generateUniqueItemId(account.id), 
+        itemName: inputName, 
+        itemVal: inputVal, 
+        type: account.type, 
+        timeStamp: getCurrentTimeStamp()}
+      
+      store.dispatch(accountHistoryAdded(newItem))
+    }
+    const withdrawClick = () => {
+      //console.log(inputName)
+      //console.log(inputVal)
+      
+      let newItem = {
+        accountId: account.id, 
+        itemId: generateUniqueItemId(account.id), 
+        itemName: inputName, 
+        itemVal: -inputVal, 
+        type: account.type, 
+        timeStamp: getCurrentTimeStamp()}
       
       store.dispatch(accountHistoryAdded(newItem))
     }
@@ -56,8 +76,8 @@ function InputArea({account}){
           onChangeText={setVal}
         />
         <View style={{flexDirection: 'row', alignItems:"flex-end"}}>
-          <Button onPress={addClick} title="存入"></Button>
-          <Button onPress={addClick} title="提出"></Button>
+          <Button onPress={depositClick} title="存入"></Button>
+          <Button onPress={withdrawClick} title="提/支出"></Button>
         </View>
       </>
     )
@@ -67,14 +87,20 @@ function InputArea({account}){
       //console.log(inputName)
       //console.log(inputVal)
       
-      let newItem = {accountId: account.id, itemId: generateUniqueItemId(account.id), itemName: inputName, unitVal: inputUnitVal, amount: inputAmount, type: account.type}
+      let newItem = {
+        accountId: account.id, 
+        itemId: generateUniqueItemId(account.id), 
+        itemName: inputName, 
+        unitVal: inputUnitVal, amount: inputAmount, 
+        type: account.type, 
+        timeStamp: getCurrentTimeStamp()}
       
       store.dispatch(accountHistoryAdded(newItem))
     }
     return(
       <>
         <TextInput 
-          placeholder="請輸入描述"
+          placeholder="請輸入名稱"
           value={inputName}
           onChangeText={setName}
         />
@@ -94,8 +120,7 @@ function InputArea({account}){
         </View>
         
         <View style={{flexDirection: 'row', alignItems:"flex-end"}}>
-          <Button onPress={addClick} title="存入"></Button>
-          <Button onPress={addClick} title="提出"></Button>
+          <Button onPress={addClick} title="新增"></Button>
         </View>
       </>
     )
@@ -137,7 +162,10 @@ function AccountDetailPage({navigation, route}) {
         keyExtractor={(item) => item.itemId}
         //ItemSeparatorComponent={Separator}
       />
-      <InputArea account={account}/>
+      <View style={{alignItems:'flex-end'}}>
+        <InputArea account={account} />
+      </View>
+      
       
 
     </View>

@@ -12,7 +12,7 @@ import SettingsScreen from './Tabs/SettingScreen';
 
 import colors from '../config/colors';
 import store from '../store/configureStore';
-import {AddAccount, generateUniqueID, generateUniqueItemId} from './components/Utility';
+import {AddAccount, generateUniqueID, generateUniqueItemId, getCurrentTimeStamp} from './components/Utility';
 import { accountHistoryAdded, accountHistoryDeleted} from '../store/accountHistory';
 import { negIncomeAdded, posIncomeAdded } from '../store/incomes';
 
@@ -32,17 +32,16 @@ AddAccount(generateUniqueID(), "LineBank", 'bank')
 AddAccount(generateUniqueID(), "華南證券", 'stock')
 AddAccount(generateUniqueID(), "合作金庫", 'bank')
 
-let date = new Date();
-let datestr = date.getFullYear()+ '/' + (date.getMonth()+1) + '/' + date.getDate();
-const stamp = datestr + '-' + date.toTimeString()// 2024/3/31 - 00:19:42 GMT+0800 (台北標準時間)
+
+const stamp = getCurrentTimeStamp();
 
 console.log(stamp)
 
-const newItem = {accountId:0, itemId: generateUniqueItemId(0), itemName:"萬用罐", itemVal: 600000, type:'bank', timeStamp: stamp} ;
+const newItem = {accountId:0, itemId: generateUniqueItemId(0), itemName:"萬用罐", itemVal: 600000, type:'bank', timeStamp: '2023/5/1'} ;
 store.dispatch(accountHistoryAdded(newItem))
-const newItem2 = {accountId:0, itemId: generateUniqueItemId(0), itemName:"日幣", itemVal: 32000, type:'bank', timeStamp: stamp} ;
+const newItem2 = {accountId:0, itemId: generateUniqueItemId(0), itemName:"日幣", itemVal: 32000, type:'bank', timeStamp: '2023/5/1'} ;
 store.dispatch(accountHistoryAdded(newItem2))
-const newItem3 = {accountId:0, itemId: generateUniqueItemId(0), itemName:"活存", itemVal: 15000, type:'bank', timeStamp: stamp} ;
+const newItem3 = {accountId:0, itemId: generateUniqueItemId(0), itemName:"活存", itemVal: 15000, type:'bank', timeStamp: '2023/5/1'} ;
 store.dispatch(accountHistoryAdded(newItem3))
 
  

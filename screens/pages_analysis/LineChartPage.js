@@ -8,71 +8,24 @@ import store from '../../store/configureStore';
 // https://www.npmjs.com/package/react-native-calendar-picker
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
+import { getTotalSumByDate } from '../components/Utility';
+
 let datepicked = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59)
 
-
-const getDate = (timeStamp)=> {
-  const dateParts = timeStamp.split('-')[0].split('/');
-  const timeParts = timeStamp.split('-')[1].split(':');
-
-  const year = parseInt(dateParts[0]);
-  const month = parseInt(dateParts[1]) - 1; // 月份从0开始，所以需要减1
-  const day = parseInt(dateParts[2]);
-
-  const hour = parseInt(timeParts[0]);
-  const minute = parseInt(timeParts[1]);
-  const second = parseInt(timeParts[2]);
-
-  // 创建 Date 对象
-  const dateObject = new Date(year, month, day, hour, minute, second);
-  return dateObject;
-}
-
-function convertToDate(item) {
-    const dateStr = item.timeStamp.split('-')[0]
-    const timeStr = item.timeStamp.split('-')[1]
-    const dateparts = dateStr.split('/'); // 將日期字串分割成 [月, 日, 年]
-    const year = parseInt(dateparts[0]);
-    const month = parseInt(dateparts[1]);
-    const day = parseInt(dateparts[2]);
-    const [time, period] = timeStr.split(" ");
-    const [hours, minutes, seconds] = time.split(":");
-    const date = new Date(year, month - 1, day, hours, minutes, seconds)
-  return date;
-}
-
-function calculateTotalValue(targetDate) {
-  // 將資料以 id 為鍵進行分組，取每個 id 最新的一筆資料
-  const latestDataById = store.getState().assetHistory.reduce((result, item) => {
-    if (!result[item.id] || getDate(item.timeStamp) > getDate(result[item.id].timeStamp) ) 
-    {
-      result[item.id] = item;
-    }
-    return result;
-  }, {});
-
-  const latestData = Object.values(latestDataById)
-
-  const filteredData = latestData.filter(item => {
-    const date = convertToDate(item)
-    return date <= targetDate;
-  });
-
-  //選取日期之前的總資產
-  const totalValue = filteredData.reduce((accumulator, item) => accumulator + item.value, 0);
-
-  return totalValue/1000;
-}
 
 function XMonthAgoDate(datepicked, n){
   if(datepicked !== undefined){
     // 複製日期物件以免修改原始日期
     const oneMonthAgo = new Date(datepicked);
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - n);
+    // 將日期設置為下個月的第一天
+    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - n + 1, 1);
+
+    // 減去一天
+    oneMonthAgo.setDate(oneMonthAgo.getDate() - 1);
 
     // 複製日期物件以免修改上一個步驟的日期
     const lastDayOfLastMonth = new Date(oneMonthAgo);
-    lastDayOfLastMonth.setMonth(lastDayOfLastMonth.getMonth() + 1, 0);
+
     return lastDayOfLastMonth;
   }
 }
@@ -80,17 +33,11 @@ function XMonthAgoDate(datepicked, n){
 function XMonthAgoDateStr(datepicked, n){
   
   if(datepicked !== undefined){
-    // 複製日期物件以免修改原始日期
-    const oneMonthAgo = new Date(datepicked);
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - n);
 
-    // 複製日期物件以免修改上一個步驟的日期
-    const lastDayOfLastMonth = new Date(oneMonthAgo);
-    lastDayOfLastMonth.setMonth(lastDayOfLastMonth.getMonth() + 1, 0);
-  
+    const lastDayOfLastMonth = XMonthAgoDate(datepicked, n)
 
     if(n!=0){
-      return lastDayOfLastMonth.getMonth() + 1 + '/31';
+      return lastDayOfLastMonth.getMonth() + 1 + '/' + lastDayOfLastMonth.getDate();
     }
     else{
       let curDate = new Date(datepicked);
@@ -116,12 +63,12 @@ const LineChartPage = () => {
       datasets: [
         {
           data: [
-            calculateTotalValue(XMonthAgoDate(datepicked, 5)),
-            calculateTotalValue(XMonthAgoDate(datepicked, 4)),
-            calculateTotalValue(XMonthAgoDate(datepicked, 3)),
-            calculateTotalValue(XMonthAgoDate(datepicked, 2)),
-            calculateTotalValue(XMonthAgoDate(datepicked, 1)),
-            calculateTotalValue(datepicked)
+            getTotalSumByDate(XMonthAgoDate(datepicked, 5)),
+            getTotalSumByDate(XMonthAgoDate(datepicked, 4)),
+            getTotalSumByDate(XMonthAgoDate(datepicked, 3)),
+            getTotalSumByDate(XMonthAgoDate(datepicked, 2)),
+            getTotalSumByDate(XMonthAgoDate(datepicked, 1)),
+            getTotalSumByDate(datepicked)
           ]
         }
       ]
@@ -141,12 +88,12 @@ const LineChartPage = () => {
       ];
   
       const newData = [
-        calculateTotalValue(XMonthAgoDate(datepicked, 5)),
-        calculateTotalValue(XMonthAgoDate(datepicked, 4)),
-        calculateTotalValue(XMonthAgoDate(datepicked, 3)),
-        calculateTotalValue(XMonthAgoDate(datepicked, 2)),
-        calculateTotalValue(XMonthAgoDate(datepicked, 1)),
-        calculateTotalValue(datepicked),
+        getTotalSumByDate(XMonthAgoDate(datepicked, 5)),
+        getTotalSumByDate(XMonthAgoDate(datepicked, 4)),
+        getTotalSumByDate(XMonthAgoDate(datepicked, 3)),
+        getTotalSumByDate(XMonthAgoDate(datepicked, 2)),
+        getTotalSumByDate(XMonthAgoDate(datepicked, 1)),
+        getTotalSumByDate(datepicked),
       ];
   
       //利用setChartData更新圖表數據
@@ -206,7 +153,7 @@ const LineChartPage = () => {
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={true} // to hide scroll bar
-            >
+              >
               
               <LineChart
                 data={chartdata}
@@ -236,7 +183,7 @@ const LineChartPage = () => {
                 bezier
                 fromZero
                 style={{
-                  paddingRight:50, //移除Y軸標籤後，移除左邊的空白處 https://github.com/indiespirit/react-native-chart-kit/issues/90
+                  paddingRight:60, //移除Y軸標籤後，移除左邊的空白處 https://github.com/indiespirit/react-native-chart-kit/issues/90
                   marginVertical: 8,
                   borderRadius: 16
                 }}

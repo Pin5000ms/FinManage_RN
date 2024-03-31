@@ -70,6 +70,63 @@ export function getTotalSum(){
 }
 
 
+export function getTotalSumByDate(targetDate){
+  const sum = store.getState().accounts.reduce((sum, next) => {return sum + getAccountSumByAccountIdAndDate(next.id, targetDate)}, 0)
+  
+  //console.log(sum)
+  return sum
+}
+
+export function getAccountSumByAccountIdAndDate(accountId, targetDate){
+  const account = store.getState().accounts.find(o => o.id === accountId);
+  if(account === null || account === undefined)
+    return;
+
+  const accountData = store.getState().accountHistory.filter(o => (o.accountId === accountId && getDate(o.timeStamp) < targetDate))
+
+  let accountTotalValue = 0;
+  if(account.type === 'bank' || account.type === 'cash'){
+    accountTotalValue = accountData.reduce((sum, next) => {
+        return sum + parseInt(next.itemVal)
+    }, 0)
+  }
+  else{
+    accountTotalValue = accountData.reduce((sum, next) => {
+      return sum + parseInt(next.unitVal* next.amount)
+  }, 0)
+  }
+
+  return accountTotalValue
+}
+
+const getDate = (timeStamp)=> {
+  let l = timeStamp.split('-').length;
+  const dateParts = timeStamp.split('-')[0].split('/');
+  const year = parseInt(dateParts[0]);
+  const month = parseInt(dateParts[1]) - 1; // 月份从0开始，所以需要减1
+  const day = parseInt(dateParts[2]);
+  let dateObject;
+  if(l > 1){
+    const timeParts = timeStamp.split('-')[1].split(':');
+    const hour = parseInt(timeParts[0]);
+    const minute = parseInt(timeParts[1]);
+    const second = parseInt(timeParts[2]);
+    dateObject = new Date(year, month, day, hour, minute, second);
+  }
+  else{
+    dateObject = new Date(year, month, day);
+  }
+  return dateObject;
+}
+
+
+export function getCurrentTimeStamp(){
+  let date = new Date();
+  let datestr = date.getFullYear()+ '/' + (date.getMonth()+1) + '/' + date.getDate();
+  const stamp = datestr + '-' + date.toTimeString()// 2024/3/31 - 00:19:42 GMT+0800 (台北標準時間)
+  return stamp;
+}
+
 
 class EventDelegate {
     constructor() {

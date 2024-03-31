@@ -47,14 +47,15 @@ function OverViewPage() {
     
 
     return (
-      <TabView
-        renderTabBar={renderTabBar}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
-        swipeEnabled={false} //禁用滑動煥頁
-      />
+      // <TabView
+      //   renderTabBar={renderTabBar}
+      //   navigationState={{ index, routes }}
+      //   renderScene={renderScene}
+      //   onIndexChange={setIndex}
+      //   initialLayout={{ width: layout.width }}
+      //   swipeEnabled={false} //禁用滑動煥頁
+      // />
+      <LineChartPage/>
     );
 
 }

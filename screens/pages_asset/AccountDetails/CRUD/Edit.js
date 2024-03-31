@@ -27,8 +27,8 @@ function EditArea({navigation, record}){
     if(type === 'bank' || type === 'cash')
     {
         return(
-            <View style={{flexDirection: 'column'}}>
-                <TextInput flex = {1}
+            <View style={{flexDirection: 'column', alignItems:'center'}}>
+                <TextInput
                   style={AddEditStyles.textInput}
                   onChangeText={setName}
                   placeholder="請輸入名稱"
@@ -57,7 +57,7 @@ function EditArea({navigation, record}){
 
                 {/* 取消 */}
                 <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-                    navigation.navigate(AccountDetailTag) }  }>
+                    navigation.goBack() }  }>
                     <Text style={AddEditStyles.buttonText}>Cancel</Text>
                 </TouchableOpacity>
             </View>
@@ -66,8 +66,8 @@ function EditArea({navigation, record}){
     else
     {
         return(
-            <View style={{flexDirection: 'column'}}>
-                <TextInput flex = {1}
+            <View style={{flexDirection: 'column', alignItems:'center'}}>
+                <TextInput
                   style={AddEditStyles.textInput}
                   onChangeText={setName}
                   placeholder="請輸入名稱"
@@ -83,6 +83,8 @@ function EditArea({navigation, record}){
                         keyboardType='numeric'
                         onChangeText={setUnit}
                     />
+
+                    <Text> x </Text>
 
                     <TextInput 
                         placeholder="請輸入數量"
@@ -110,7 +112,7 @@ function EditArea({navigation, record}){
 
                 {/* 取消 */}
                 <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-                    navigation.navigate(AccountDetailTag) }  }>
+                    navigation.goBack() }  }>
                     <Text style={AddEditStyles.buttonText}>Cancel</Text>
                 </TouchableOpacity>
             </View>
