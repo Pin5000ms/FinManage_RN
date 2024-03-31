@@ -3,6 +3,7 @@ import Header from '../components/NavigationHeader';
 import AssetPage from '../pages_asset/Accounts/AssetPage';
 import EditPage from '../pages_asset/Accounts/CRUD/EditPage';
 import AccountDetailPage from '../pages_asset/AccountDetails/AccountDetailPage';
+import EditRecord from '../pages_asset/AccountDetails/CRUD/Edit';
 
 
 const HomeStack = createStackNavigator();
@@ -16,7 +17,7 @@ function AssetStackScreen() {
         options={ { header: (props) => <Header iconName={"coins"}  title="資產" {...props}/>} }
         />             
       <HomeStack.Screen 
-        name="Edit" 
+        name="EditAccount" 
         component={EditPage}
         options={{headerTitle: "編輯"}}
         />
@@ -28,6 +29,11 @@ function AssetStackScreen() {
             return { header: (props) => <Header title="" showBackButton={navigation.canGoBack()} onBackPress={()=>navigation.goBack()} {...props}/>}
           }
         }
+        />
+      <HomeStack.Screen 
+        name="EditRecord"
+        component={EditRecord}
+        options={{headerTitle: "紀錄編輯"}}
         />
    </HomeStack.Navigator>
   );

@@ -5,7 +5,7 @@ import colors from '../../../config/colors';
 import store from '../../../store/configureStore';
 import AccountData from './AccountData';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
-import { getAccountsSum } from '../../components/Utility';
+import { getTotalSum } from '../../components/Utility';
 
 //import { DraggableFlatListProps } from "react-native-draggable-flatlist"
 
@@ -97,16 +97,16 @@ const styles = StyleSheet.create({
 function AssetPage({navigation}) {
 
   //usestate 要放在function裡面
-  const [data, setData] = useState(store.getState().accounts);
+  const [accountList, setData] = useState(store.getState().accounts);
 
   //總額
-  const [totalValue, setTotalValue] = useState(getAccountsSum());
+  const [totalValue, setTotalValue] = useState(getTotalSum());
 
 
   //若store發生改變，觸發setData事件
   const unsubscribe = store.subscribe(() => {
     setData(store.getState().accounts)
-    setTotalValue(getAccountsSum())
+    setTotalValue(getTotalSum())
   })
 
 
@@ -191,8 +191,8 @@ function AssetPage({navigation}) {
 
             {/* 清單 */}
             <FlatList style={{marginTop:10}}
-                data={data}
-                /*使用一個自定義的元件RowData，將item和navigation傳入 */
+                data={accountList}
+                /*使用一個自定義的元件AccountData，將item和navigation傳入 */
                 renderItem={({item}) => 
                   <AccountData
                     account={item}

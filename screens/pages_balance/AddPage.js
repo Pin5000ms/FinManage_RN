@@ -11,7 +11,7 @@ function AddPage({route, navigation}){
     const [inputText, setText] = useState('');
     const [inputValue, setVal] = useState(0);
     const handleValChange = (value) => {
-        var newValue = parseFloat(value)
+        let newValue = parseFloat(value)
         if(value === ''){
           newValue = 0;
         }

@@ -6,46 +6,17 @@ import { EditAccount } from '../../../components/Utility';
 
 
 
-
-function AccountEdit({navigation, id, name, type}){
-    const [inputText, setText] = useState(name);
-    return (
-      <>
-      <View  style = {{flexDirection:'column', justifyContent: 'center', alignItems: 'center'}} >
-        <View style = {{flexDirection:'row', alignItems: 'center'}}>
-          <TextInput flex = {1}
-                style={AddEditStyles.textInput}
-                onChangeText={setText}
-                placeholder="請輸入名稱"
-                value= {inputText}
-              />
-        </View>
-      </View>
-      <TouchableOpacity style={AddEditStyles.button} onPress = 
-          {() => 
-            { 
-              EditAccount(id, inputText, type)
-              navigation.navigate('AssetPage');
-            }  
-          }>
-          <Text style={AddEditStyles.buttonText}>Save</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-        navigation.navigate('AssetPage') }  }>
-        <Text style={AddEditStyles.buttonText}>Cancle</Text>
-      </TouchableOpacity>
-      </>
-    )
-}
-
-
-
 function EditPage ({navigation, route}) {
-    const {id} = route.params;
-    const {name} = route.params;
-    const {type} = route.params;
+    
+    const {account} = route.params;
+    
+    const id = account.id
+    const name = account.name
+    const type = account.type
 
     const [inputType, setType] = useState(type);
+    const [inputName, setName] = useState(name);
+
     function RadioButton(props) {
       return (
         <TouchableOpacity style={inputType === props.type ? AddEditStyles.selected : AddEditStyles.unselected} onPress = {() => setType(props.type)}>
@@ -79,7 +50,34 @@ function EditPage ({navigation, route}) {
           </View>
         </View>
 
-        <AccountEdit navigation={navigation} id={id} name={name} type={inputType}/>
+        <View  style = {{flexDirection:'column', justifyContent: 'center', alignItems: 'center'}} >
+          <View style = {{flexDirection:'row', alignItems: 'center'}}>
+            <TextInput flex = {1}
+                  style={AddEditStyles.textInput}
+                  onChangeText={setName}
+                  placeholder="請輸入名稱"
+                  value= {inputName}
+                />
+          </View>
+        </View>
+
+
+        {/* 儲存 */}
+        <TouchableOpacity style={AddEditStyles.button} onPress = 
+            {() => 
+              { 
+                EditAccount(id, inputName, inputType)
+                navigation.goBack();
+              }  
+            }>
+            <Text style={AddEditStyles.buttonText}>Save</Text>
+        </TouchableOpacity>
+
+        {/* 取消 */}
+        <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
+          navigation.goBack() }  }>
+          <Text style={AddEditStyles.buttonText}>Cancel</Text>
+        </TouchableOpacity>
         
       </View>
     );

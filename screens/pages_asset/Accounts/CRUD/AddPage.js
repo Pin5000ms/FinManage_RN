@@ -25,13 +25,13 @@ function AccountAdd({navigation, type}){
         {() => 
           { 
             AddAccount(generateUniqueID(), inputText, type)
-            navigation.navigate('AssetPage');
+            navigation.goBack();
           }  
         }>
         <Text style={AddEditStyles.buttonText}>Save</Text>
     </TouchableOpacity>
     <TouchableOpacity style={AddEditStyles.button} onPress = {() => { 
-      navigation.navigate('AssetPage') }  }>
+      navigation.goBack() }  }>
       <Text style={AddEditStyles.buttonText}>Cancle</Text>
     </TouchableOpacity>
     </>

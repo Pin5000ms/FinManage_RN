@@ -24,7 +24,7 @@ export function generateUniqueItemId(accountId) {
     let newId = 0;
     let i = 0;
     for (i = 0; i < 999999; i++) {
-      const accountData = store.getState().accountHistory.filter(item => item.accountId === accountId )
+      const accountData = store.getState().accountHistory.filter(o => o.accountId === accountId )
       // Check if there is an element with id equal to i in the current state
       //console.log(accountData)
       const index = accountData.findIndex(function (element) {
@@ -41,19 +41,31 @@ export function generateUniqueItemId(accountId) {
 }
 
 export function getAccountHistoryByAccountId(accountId){
-    return store.getState().accountHistory.filter(item => item.accountId === accountId )
+    return store.getState().accountHistory.filter(o => o.accountId === accountId )
 }
 
 export function getAccountSumByAccountId(accountId){
-    const accountData = store.getState().accountHistory.filter(item => item.accountId === accountId )
-    const accountTotalValue = accountData.reduce((sum, next) => {
-        return sum + parseInt(next.itemVal)
+    const account = store.getState().accounts.find(o => o.id === accountId);
+    if(account === null || account === undefined)
+      return;
+    const accountData = store.getState().accountHistory.filter(o => o.accountId === accountId )
+    let accountTotalValue = 0;
+    if(account.type === 'bank' || account.type === 'cash'){
+      accountTotalValue = accountData.reduce((sum, next) => {
+          return sum + parseInt(next.itemVal)
+      }, 0)
+    }
+    else{
+      accountTotalValue = accountData.reduce((sum, next) => {
+        return sum + parseInt(next.unitVal* next.amount)
     }, 0)
+    }
     return accountTotalValue
 }
 
-export function getAccountsSum(){
-    const sum = store.getState().accountHistory.reduce((sum, next) => {return sum + parseInt(next.itemVal)}, 0)
+export function getTotalSum(){
+    const sum = store.getState().accounts.reduce((sum, next) => {return sum + getAccountSumByAccountId(next.id)}, 0)
+    //const sum = store.getState().accountHistory.reduce((sum, next) => {return sum + parseInt(next.itemVal)}, 0)
     return sum
 }
 

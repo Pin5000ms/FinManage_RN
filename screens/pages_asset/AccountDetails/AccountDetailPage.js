@@ -9,6 +9,8 @@ import { accountHistoryAdded } from '../../../store/accountHistory';
 import { generateUniqueItemId, getAccountHistoryByAccountId} from '../../components/Utility';
 
 
+
+
 const styles = StyleSheet.create({
     /*整個List的容器 */
     container: {
@@ -23,56 +25,120 @@ const styles = StyleSheet.create({
 
 const Separator = () => <View style={styles.separatorLine} />;
 
+
+function InputArea({account}){
+  const [inputName, setName] = useState('');
+  const [inputVal, setVal] = useState(0);
+  const [inputUnitVal, setUnitVal] = useState(0);
+  const [inputAmount, setAmount] = useState(0);
+  //console.log(account)
+  
+  if(account.type == 'bank' || account.type == 'cash'){
+    const addClick = () => {
+      //console.log(inputName)
+      //console.log(inputVal)
+      
+      let newItem = {accountId: account.id, itemId: generateUniqueItemId(account.id), itemName: inputName, itemVal: inputVal, type: account.type}
+      
+      store.dispatch(accountHistoryAdded(newItem))
+    }
+    return(
+      <>
+        <TextInput 
+          placeholder="請輸入描述"
+          value={inputName}
+          onChangeText={setName}
+        />
+        <TextInput 
+          placeholder="請輸入數值"
+          value={inputVal.toString()}
+          keyboardType='numeric'
+          onChangeText={setVal}
+        />
+        <View style={{flexDirection: 'row', alignItems:"flex-end"}}>
+          <Button onPress={addClick} title="存入"></Button>
+          <Button onPress={addClick} title="提出"></Button>
+        </View>
+      </>
+    )
+  }
+  else{
+    const addClick = () => {
+      //console.log(inputName)
+      //console.log(inputVal)
+      
+      let newItem = {accountId: account.id, itemId: generateUniqueItemId(account.id), itemName: inputName, unitVal: inputUnitVal, amount: inputAmount, type: account.type}
+      
+      store.dispatch(accountHistoryAdded(newItem))
+    }
+    return(
+      <>
+        <TextInput 
+          placeholder="請輸入描述"
+          value={inputName}
+          onChangeText={setName}
+        />
+        <View style={{flexDirection: 'row', alignItems:"flex-end"}}>
+          <TextInput 
+            placeholder="請輸入單位價值"
+            value={inputUnitVal.toString()}
+            keyboardType='numeric'
+            onChangeText={setUnitVal}
+          />
+          <TextInput 
+            placeholder="請輸入數量"
+            value={inputAmount.toString()}
+            keyboardType='numeric'
+            onChangeText={setAmount}
+          />
+        </View>
+        
+        <View style={{flexDirection: 'row', alignItems:"flex-end"}}>
+          <Button onPress={addClick} title="存入"></Button>
+          <Button onPress={addClick} title="提出"></Button>
+        </View>
+      </>
+    )
+  }
+  
+}
+
+
 function AccountDetailPage({navigation, route}) {
-  const {accountId} = route.params;
+  const {account} = route.params;
+
   //console.log(accountId)
 
   //usestate 要放在function裡面
-  const [data, setData] = useState(getAccountHistoryByAccountId(accountId));
+  const [historyList, setData] = useState(getAccountHistoryByAccountId(account.id));
 
 
   //若store發生改變，觸發setData事件
   const unsubscribe = store.subscribe(() => {
-    setData(getAccountHistoryByAccountId(accountId))
+    setData(getAccountHistoryByAccountId(account.id))
   })
 
   
 
-  const [inputName, setName] = useState('');
-  const [inputVal, setVal] = useState(0);
+  
 
-  const handleClick = () => {
-    //console.log(inputName)
-    //console.log(inputVal)
-    const newItem = {accountId:accountId, itemId: generateUniqueItemId(accountId), itemName: inputName, itemVal: inputVal}
-    store.dispatch(accountHistoryAdded(newItem))
-  }
+  
 
   return (
     <View style={styles.container}>
       <FlatList style={styles.container}
-        data={data}
+        data={historyList}
         renderItem={({item}) => 
           <HistoryData
-            eachdata={item}
+            record={item}
             navigation={navigation}
           />
         }
         keyExtractor={(item) => item.itemId}
         //ItemSeparatorComponent={Separator}
       />
-      <TextInput 
-        placeholder="請輸入名稱"
-        value={inputName}
-        onChangeText={setName}
-      />
-      <TextInput 
-        placeholder="請輸入數值"
-        value={inputVal.toString()}
-        keyboardType='numeric'
-        onChangeText={setVal}
-      />
-      <Button onPress={handleClick} title="新增"></Button>
+      <InputArea account={account}/>
+      
 
     </View>
   );

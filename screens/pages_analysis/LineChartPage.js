@@ -8,7 +8,7 @@ import store from '../../store/configureStore';
 // https://www.npmjs.com/package/react-native-calendar-picker
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-var datepicked = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59)
+let datepicked = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate(), 23, 59, 59)
 
 
 const getDate = (timeStamp)=> {
@@ -93,7 +93,7 @@ function XMonthAgoDateStr(datepicked, n){
       return lastDayOfLastMonth.getMonth() + 1 + '/31';
     }
     else{
-      var curDate = new Date(datepicked);
+      let curDate = new Date(datepicked);
       return curDate.getMonth() + 1 + '/' + curDate.getDate();
     }
   }

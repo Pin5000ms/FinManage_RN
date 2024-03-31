@@ -16,6 +16,7 @@ import {
 import { SwitchIconSrc } from '../../components/SwitchIconSrc';
 import { Animated } from 'react-native';
 import { DeleteAccount, getAccountHistoryByAccountId, getAccountSumByAccountId} from '../../components/Utility';
+import { AssetTag, EditAccountTag, AccountDetailTag, EditRecordTag } from '../../components/NavigationTag';
 
 
 const styles = StyleSheet.create({
@@ -103,9 +104,9 @@ const styles = StyleSheet.create({
 /*自定義元件，開頭必須大寫 */
 export default function AccountData ({account, navigation}) {
     //curitem => account : {id, name, type}
-    const toAccountDetailPage = ()=> navigation.navigate('AccountDetail',{accountId: account.id})
+    const toAccountDetailPage = ()=> navigation.navigate(AccountDetailTag,{account})
 
-    const toEditAccountPage = ()=> navigation.navigate('Edit',{id: account.id, name: account.name, type: account.type})
+    const toEditAccountPage = ()=> navigation.navigate(EditAccountTag,{account})
 
     //右滑動作
     const swipeRight = (progress, dragX) =>{

@@ -25,46 +25,50 @@ import { negIncomeAdded, posIncomeAdded } from '../store/incomes';
 // console.log(myArray[1])
 
 AddAccount(generateUniqueID(), "Richart", 'bank')
-AddAccount(generateUniqueID(), "國泰", 'bank')
+AddAccount(generateUniqueID(), "國泰證券", 'stock')
 AddAccount(generateUniqueID(), "聯邦銀行", 'bank')
 AddAccount(generateUniqueID(), "永豐大戶", 'bank')
 AddAccount(generateUniqueID(), "LineBank", 'bank')
-AddAccount(generateUniqueID(), "華南", 'bank')
+AddAccount(generateUniqueID(), "華南證券", 'stock')
 AddAccount(generateUniqueID(), "合作金庫", 'bank')
 
-var date = new Date();
-var datestr = date.getFullYear()+ '/' + (date.getMonth()+1) + '/' + date.getDate();
-const stamp = datestr + '-' + date.toTimeString()
+let date = new Date();
+let datestr = date.getFullYear()+ '/' + (date.getMonth()+1) + '/' + date.getDate();
+const stamp = datestr + '-' + date.toTimeString()// 2024/3/31 - 00:19:42 GMT+0800 (台北標準時間)
 
+console.log(stamp)
 
-
-const newItem = {accountId:0, itemId: generateUniqueItemId(0), itemName:"萬用罐", itemVal: 600000, timeStamp: stamp} ;
+const newItem = {accountId:0, itemId: generateUniqueItemId(0), itemName:"萬用罐", itemVal: 600000, type:'bank', timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem))
-const newItem2 = {accountId:0, itemId: generateUniqueItemId(0), itemName:"日幣", itemVal: 32000, timeStamp: stamp} ;
+const newItem2 = {accountId:0, itemId: generateUniqueItemId(0), itemName:"日幣", itemVal: 32000, type:'bank', timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem2))
-const newItem3 = {accountId:0, itemId: generateUniqueItemId(0), itemName:"活存", itemVal: 15000, timeStamp: stamp} ;
+const newItem3 = {accountId:0, itemId: generateUniqueItemId(0), itemName:"活存", itemVal: 15000, type:'bank', timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem3))
 
-
-const newItem4 = {accountId:1, itemId: generateUniqueItemId(1), itemName:"股票", itemVal: 290000, timeStamp: stamp} ;
+ 
+const newItem4 = {accountId:1, itemId: generateUniqueItemId(1), itemName:"台塑", unitVal: 69, amount:1000, type:'stock', timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem4))
-const newItem5 = {accountId:1, itemId: generateUniqueItemId(1), itemName:"活存", itemVal: 47000, timeStamp: stamp} ;
+const newItem5 = {accountId:1, itemId: generateUniqueItemId(1), itemName:"合庫金", unitVal: 25, amount:2000, type:'stock', timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem5))
 
-const newItem6 = {accountId:2, itemId: generateUniqueItemId(2), itemName:"活存", itemVal: 100000, timeStamp: stamp} ;
+const newItem6 = {accountId:2, itemId: generateUniqueItemId(2), itemName:"活存", itemVal: 100000, type:'bank', timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem6))
 
-const newItem7 = {accountId:3, itemId: generateUniqueItemId(3), itemName:"活存", itemVal: 500000, timeStamp: stamp} ;
+const newItem7 = {accountId:3, itemId: generateUniqueItemId(3), itemName:"活存", itemVal: 500000, type:'bank', timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem7))
 
-const newItem8 = {accountId:4, itemId: generateUniqueItemId(4), itemName:"活存", itemVal: 50000, timeStamp: stamp} ;
+const newItem8 = {accountId:4, itemId: generateUniqueItemId(4), itemName:"活存", itemVal: 50000, type:'bank', timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem8))
 
-const newItem9 = {accountId:5, itemId: generateUniqueItemId(5), itemName:"股票", itemVal: 65000, timeStamp: stamp} ;
+const newItem9 = {accountId:5, itemId: generateUniqueItemId(5), itemName:"兆豐金", unitVal: 40, type:'stock', amount:1000, timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem9))
 
-const newItem10 = {accountId:5, itemId: generateUniqueItemId(6), itemName:"活存", itemVal: 47000, timeStamp: stamp} ;
+const newItem10 = {accountId:5, itemId: generateUniqueItemId(5), itemName:"華南金", unitVal: 23, type:'stock', amount:1000, timeStamp: stamp} ;
 store.dispatch(accountHistoryAdded(newItem10))
+
+const newItem11 = {accountId:5, itemId: generateUniqueItemId(5), itemName:"台中銀", unitVal: 17, type:'stock', amount:1000, timeStamp: stamp} ;
+store.dispatch(accountHistoryAdded(newItem11))
+
 
 
 store.dispatch(posIncomeAdded({name:"薪水", value:80000}));
